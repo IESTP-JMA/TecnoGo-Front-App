@@ -1,9 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Text, TextInput, Pressable } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  TouchableWithoutFeedback,
+  Modal,
+} from "react-native";
 import { useRouter } from "expo-router";
+import { Image } from "expo-image";
+import { ArrowLeftIcon } from "../../components/Icons";
+import { useLoginContext } from "../../contexts/LoginContext";
 
 export default function OTP() {
+  const { setLoginVisible } = useLoginContext();
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
   const [timer, setTimer] = useState(150); // 2:30 in seconds
@@ -38,38 +48,69 @@ export default function OTP() {
   };
 
   return (
-    <View>
-      <Text className="text-2xl font-bold text-green-700 mb-4">
-        Verificación OTP
-      </Text>
-      <Text className="mb-4">
-        Ingrese el código de 6 dígitos enviado a su correo electrónico
-      </Text>
-      <View className="flex-row justify-between mb-4">
-        {otp.map((digit, index) => (
-          <TextInput
-            key={index}
-            ref={(ref) => (inputRefs.current[index] = ref)}
-            className="w-12 h-12 border border-gray-300 rounded-md text-center text-lg"
-            maxLength={1}
-            keyboardType="number-pad"
-            value={digit}
-            onChangeText={(value) => handleOtpChange(value, index)}
-          />
-        ))}
-      </View>
-      <Text className="text-center mb-4">
-        Tiempo restante: {formatTime(timer)}
-      </Text>
-      <Pressable
-        className="bg-green-700 py-3 rounded-md items-center"
-        onPress={handleVerify}
-      >
-        <Text className="text-white font-bold text-lg">Verificar</Text>
-      </Pressable>
-      <Pressable className="mt-4 items-center" onPress={() => setTimer(150)}>
-        <Text className="text-green-700">Reenviar</Text>
-      </Pressable>
-    </View>
+    <Modal animationType="fade" transparent={true} onRequestClose={() => {}}>
+      <TouchableWithoutFeedback onPress={() => {}}>
+        <View className="flex-1 justify-center items-center">
+          <View className="bg-[#E6F2EC] p-4 rounded-lg w-80 ">
+            <View className=" flex-row justify-between items-center">
+              <Pressable
+                className="rounded-full py-1 px-2 active:bg-green-300"
+                onPress={() => {
+                  setLoginVisible(true);
+                  router.back();
+                }}
+              >
+                <ArrowLeftIcon />
+              </Pressable>
+              <Image
+                source={require("../../assets/Logo.png")}
+                style={{ width: 52, height: 51.9 }}
+              />
+            </View>
+            <Text className="text-center text-3xl font-SenSemiBold text-green-800 mt-4">
+              Verificación OTP
+            </Text>
+            <Text className="font-SenRegular text-gray-600 text-center my-6">
+              Ingrese el código de 6 dígitos enviado a su correo electrónico
+            </Text>
+            <View className="flex-row justify-between">
+              {otp.map((digit, index) => (
+                <TextInput
+                  key={index}
+                  ref={(ref) => (inputRefs.current[index] = ref)}
+                  className="w-10 h-10 bg-white border border-gray-300 focus:border-green-500 rounded-md text-center text-lg font-SenSemiBold"
+                  maxLength={1}
+                  keyboardType="number-pad"
+                  value={digit}
+                  onChangeText={(value) => handleOtpChange(value, index)}
+                />
+              ))}
+            </View>
+            <Text className="text-center font-SenRegular mb-4 mt-1">
+              Tiempo restante: {formatTime(timer)}
+            </Text>
+            <Pressable
+              className="bg-emerald-600 py-1 rounded-md items-center"
+              onPress={handleVerify}
+            >
+              <Text className="text-white font-SenMedium text-lg">
+                Verificar
+              </Text>
+            </Pressable>
+            <Text className="text-center font-SenRegular text-sm mt-4">
+              ¿No recibiste el código?
+            </Text>
+            <Pressable
+              className="mt-2 items-center"
+              onPress={() => setTimer(150)}
+            >
+              <Text className="text-green-700 font-SenMedium text-base">
+                Reenviar
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </Modal>
   );
 }
