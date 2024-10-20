@@ -1,7 +1,7 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
-export const BellIcon = (color) => (
-  <FontAwesome6 name="bell" size={24} color={color} />
+export const BellIcon = () => (
+  <FontAwesome6 name="bell" size={24} color="white" />
 );
 
 export const NotificationIcon = (props) => (
