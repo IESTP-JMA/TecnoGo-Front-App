@@ -10,26 +10,37 @@ import { useRouter } from "expo-router";
 import { Image } from "expo-image";
 import { useLoginContext } from "../../contexts/LoginContext";
 import { useAuth } from "../../contexts/AuthContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function LoginModal() {
   const { isLoginVisible, setLoginVisible } = useLoginContext();
   const { login } = useAuth();
   const [email, setEmail] = useState("");
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [showError, setShowError] = useState(false);
   const router = useRouter();
 
   function handleLogin() {
-    login(email);
-    setLoginVisible(false);
-    router.push({
-      pathname: "/OTP",
-      params: { email },
-    });
+    if (isValidEmail) {
+      login(email);
+      setLoginVisible(false);
+      router.push({
+        pathname: "/OTP",
+        params: { email },
+      });
+    } else {
+      setShowError(true);
+    }
+  }
+  function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsValidEmail(emailRegex.test(email));
   }
 
-  // useEffect(() => {
-  //   setLoginVisible (true);
-  // });
+  useEffect(() => {
+    validateEmail(email);
+  }, [email]);
+
   return (
     <Modal
       animationType="fade"
@@ -57,14 +68,20 @@ export default function LoginModal() {
                 DNI / Correo
               </Text>
               <TextInput
-                className="bg-white border border-zinc-300 rounded-md p-2 mb-4"
+                className={`bg-white border border-zinc-300 rounded-md p-2 font-SenRegular text-base ${!isValidEmail && email !== "" ? "border-red-500" : ""}`}
                 value={email}
                 onChangeText={setEmail}
-                placeholder="ejemplo@email.com"
-                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="Ingresa tu email"
               />
+              {showError && !isValidEmail && (
+                <Text className="text-red-500 text-xs my-1">
+                  Por favor, ingrese un correo electrónico válido.
+                </Text>
+              )}
               <Pressable
-                className="bg-emerald-600 py-1 rounded-md items-center"
+                className="bg-emerald-600 py-1 mt-3 rounded-md items-center "
                 onPress={handleLogin}
               >
                 <Text className="text-white font-SenMedium text-lg">
