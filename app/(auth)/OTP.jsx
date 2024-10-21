@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -7,12 +7,15 @@ import {
   TouchableWithoutFeedback,
   Modal,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { Image } from "expo-image";
 import { ArrowLeftIcon } from "../../components/Icons";
 import { useLoginContext } from "../../contexts/LoginContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function OTP() {
+  const { login } = useAuth();
+  const { email } = useLocalSearchParams();
   const { setLoginVisible } = useLoginContext();
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
@@ -38,6 +41,7 @@ export default function OTP() {
   };
 
   const handleVerify = () => {
+    login(email);
     router.replace("/(screens)/Home");
   };
 
@@ -71,7 +75,8 @@ export default function OTP() {
               Verificación OTP
             </Text>
             <Text className="font-SenRegular text-gray-600 text-center my-6">
-              Ingrese el código de 6 dígitos enviado a su correo electrónico
+              Ingrese el código de 6 dígitos enviado a su correo electrónico:{" "}
+              <Text className="font-SenMedium text-emerald-800">{email}</Text>
             </Text>
             <View className="flex-row justify-between">
               {otp.map((digit, index) => (

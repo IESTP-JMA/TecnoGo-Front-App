@@ -9,16 +9,22 @@ import {
 import { useRouter } from "expo-router";
 import { Image } from "expo-image";
 import { useLoginContext } from "../../contexts/LoginContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 
 export default function LoginModal() {
-  const { isLoginVisible, setLoginVisible, setOTPVisible } = useLoginContext();
+  const { isLoginVisible, setLoginVisible } = useLoginContext();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const router = useRouter();
 
   function handleLogin() {
+    login(email);
     setLoginVisible(false);
-    router.push("/OTP");
+    router.push({
+      pathname: "/OTP",
+      params: { email },
+    });
   }
 
   // useEffect(() => {
