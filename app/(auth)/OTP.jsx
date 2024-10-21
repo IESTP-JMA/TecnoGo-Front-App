@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   Modal,
+  Keyboard,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Image } from "expo-image";
@@ -13,33 +14,64 @@ import { ArrowLeftIcon } from "../../components/Icons";
 import { useLoginContext } from "../../contexts/LoginContext";
 import { useAuth } from "../../contexts/AuthContext";
 
+/* global clearTimeout setTimeout*/
 export default function OTP() {
   const { login } = useAuth();
   const { email } = useLocalSearchParams();
   const { setLoginVisible } = useLoginContext();
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
-  const [timer, setTimer] = useState(150); // 2:30 in seconds
+  const [timer, setTimer] = useState(150);
+  const [isExpired, setIsExpired] = useState(false);
   const router = useRouter();
+  const timerRef = useRef(null);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
-  //   }, 1000);
+  useEffect(() => {
+    startTimer();
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  });
 
-  //   return () => clearInterval(interval);
-  // }, []);
+  const startTimer = () => {
+    if (timer > 0) {
+      timerRef.current = setTimeout(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer > 1) {
+            return prevTimer - 1;
+          } else {
+            clearTimeout(timerRef.current);
+            setIsExpired(true);
+            return 0;
+          }
+        });
+        startTimer();
+      }, 1000);
+    }
+  };
 
   const handleOtpChange = (value, index) => {
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
 
-    if (value !== "" && index < 5) {
-      inputRefs.current[index + 1].focus();
+    if (value !== "") {
+      if (index < 5) {
+        inputRefs.current[index + 1].focus();
+      } else {
+        Keyboard.dismiss();
+      }
+    } else if (index > 0) {
+      inputRefs.current[index - 1].focus();
     }
   };
-
+  const handleKeyPress = (e, index) => {
+    if (e.nativeEvent.key === "Backspace" && index > 0) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
   const handleVerify = () => {
     login(email);
     router.replace("/(screens)/Home");
@@ -51,6 +83,15 @@ export default function OTP() {
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
+  const handleResend = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    setTimer(5);
+    setIsExpired(false);
+    startTimer();
+  };
+  const isOtpComplete = otp.every((digit) => digit !== "");
   return (
     <Modal animationType="fade" transparent={true} onRequestClose={() => {}}>
       <TouchableWithoutFeedback onPress={() => {}}>
@@ -75,28 +116,35 @@ export default function OTP() {
               Verificación OTP
             </Text>
             <Text className="font-SenRegular text-gray-600 text-center my-6">
-              Ingrese el código de 6 dígitos enviado a su correo electrónico:{" "}
-              <Text className="font-SenMedium text-emerald-800">{email}</Text>
+              Ingrese el código de 6 dígitos enviado a{" "}
+              <Text className="font-SenMedium  text-emerald-800">{email}</Text>
             </Text>
-            <View className="flex-row justify-between">
+            <View className="flex-row justify-center gap-1.5">
               {otp.map((digit, index) => (
                 <TextInput
                   key={index}
                   ref={(ref) => (inputRefs.current[index] = ref)}
-                  className="w-10 h-10 bg-white border border-gray-300 focus:border-green-500 rounded-md text-center text-lg font-SenSemiBold"
+                  className={`w-10 h-10 bg-white border border-gray-300 focus:border-green-500 rounded-md text-center text-lg font-SenSemiBold ${isExpired ? "opacity-50" : ""}`}
                   maxLength={1}
                   keyboardType="number-pad"
                   value={digit}
+                  editable={!isExpired}
                   onChangeText={(value) => handleOtpChange(value, index)}
+                  onKeyPress={(e) => handleKeyPress(e, index)}
                 />
               ))}
             </View>
-            <Text className="text-center font-SenRegular mb-4 mt-1">
-              Tiempo restante: {formatTime(timer)}
+            <Text
+              className={`font-SenRegular text-center mb-4 mt-1 ${isExpired ? "text-red-600" : ""}`}
+            >
+              {isExpired
+                ? "El código ha vencido. Por favor, solicita un nuevo código."
+                : `Tiempo restante: ${formatTime(timer)}`}
             </Text>
             <Pressable
-              className="bg-emerald-600 py-1 rounded-md items-center"
+              className={`bg-emerald-600 py-1 rounded-md items-center ${isOtpComplete ? "" : "bg-emerald-800 opacity-60"}`}
               onPress={handleVerify}
+              disabled={!isOtpComplete}
             >
               <Text className="text-white font-SenMedium text-lg">
                 Verificar
@@ -105,10 +153,7 @@ export default function OTP() {
             <Text className="text-center font-SenRegular text-sm mt-4">
               ¿No recibiste el código?
             </Text>
-            <Pressable
-              className="mt-2 items-center"
-              onPress={() => setTimer(150)}
-            >
+            <Pressable className="mt-2 items-center" onPress={handleResend}>
               <Text className="text-green-700 font-SenMedium text-base">
                 Reenviar
               </Text>
