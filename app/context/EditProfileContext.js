@@ -5,9 +5,16 @@ const EditProfileContext = createContext();
 
 export function EditProfileProvider({ children }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [profileData, setProfileData] = useState({
-    nombre: "",
-    email: "",
+  const [userData, setUserData] = useState({
+    fullName: 'Ruth Marina Castillo Huamani',
+    email: 'castillohuamaniruthm@gmail.com',
+    phoneNumber: '940270449',
+    education: {
+      career: 'APSTI',
+      semester: 'IV'
+    },
+    birthDate: '22/05/2006',
+    dni: '60414454'
   });
 
   return (
@@ -15,8 +22,8 @@ export function EditProfileProvider({ children }) {
       value={{
         isEditing,
         setIsEditing,
-        profileData,
-        setProfileData,
+        profileData: userData,
+        setProfileData: setUserData,
       }}
     >
       {children}

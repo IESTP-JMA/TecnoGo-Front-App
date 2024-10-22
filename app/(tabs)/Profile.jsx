@@ -6,6 +6,7 @@ import { CameraIcon, EmailIcon, PersonIcon } from "../../components/Icons";
 export default function Profile() {
   const { isEditing, profileData, setProfileData } = useEditProfileContext();
 
+
   return (
     <>
       <View className="relative items-center mb-3">
@@ -27,8 +28,7 @@ export default function Profile() {
         {isEditing ? (
           <TextInput
             className="border border-zinc-300 bg-white ml-6 p-2 rounded-lg"
-            placeholder="Email"
-            value={profileData.email}
+            value={userData.fullName}
             onChangeText={(text) =>
               setProfileData((prev) => ({ ...prev, email: text }))
             }
@@ -36,7 +36,7 @@ export default function Profile() {
           />
         ) : (
           <Text className="self-start text-lg font-SenMedium ml-6 text-gray-700 border-b border-emerald-900">
-            Ruth Marina Castillo Huamani
+            {userData.fullName || "No establecido"}
           </Text>
         )}
 
@@ -49,22 +49,19 @@ export default function Profile() {
         {isEditing ? (
           <TextInput
             className="border border-zinc-300 bg-white ml-6 p-2 rounded-lg"
-            placeholder="Email"
-            value={profileData.email}
-            onChangeText={(text) =>
-              setProfileData((prev) => ({ ...prev, email: text }))
-            }
+            value={userData.email}
+            // onChangeText={(text) =>
+            //   setProfileData((prev) => ({ ...prev, email: text }))
+            // }
             keyboardType="email-address"
           />
         ) : (
           <Text className="self-start text-lg font-SenMedium ml-6 text-gray-700 border-b border-emerald-900">
-            castillohuamaniruthm@gmail.com
+            {userData.email || "No establecido"}
           </Text>
         )}
 
-        <Text className="text-lg">
-          Email: {profileData.email || "No establecido"}
-        </Text>
+        
       </View>
     </>
   );
