@@ -7,8 +7,6 @@ import { AuthProvider } from "../contexts/AuthContext";
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
-const delay = (ms) => new Promise((resolve) => global.setTimeout(resolve, ms));
-
 export default function RootLayout() {
   const [loaded] = useFonts({
     SenRegular: require("../assets/fonts/Sen-Regular.ttf"),

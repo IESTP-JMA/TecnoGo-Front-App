@@ -1,15 +1,18 @@
-import { Stack } from "expo-router";
+import { Stack, Tabs } from "expo-router";
 import { View, Text, Image } from "react-native";
 import { BellIcon } from "../../components/Icons";
 import { useAuth } from "../../contexts/AuthContext";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const avatar = require("../../assets/avatar.png");
 
 export default function RootLayout() {
   const { user } = useAuth();
+
   return (
-    <Stack
+    <Tabs
       screenOptions={{
+        tabBarActiveTintColor: "blue",
         headerTitle: "",
         headerStyle: { backgroundColor: "#065F46" },
         headerTintColor: "#166534",
@@ -27,6 +30,27 @@ export default function RootLayout() {
           </View>
         ),
       }}
-    />
+    >
+      <Tabs.Screen
+        name="Home"
+        options={{
+          title: "Home",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={28} name="home" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Profile"
+        options={{
+          unmountOnBlur: true,
+          headerShown: false,
+          title: "Profile",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={28} name="cog" color={color} />
+          ),
+        }}
+      />
+    </Tabs>
   );
 }

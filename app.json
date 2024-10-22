@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "TecnoGO",
-    "slug": "TecnoGO",
+    "slug": "tecno-go",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ietsppjma.tecnogo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -27,6 +28,12 @@
     "plugins": [
       "expo-router",
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "a4752093-0ad8-4117-8065-320eaed9618a"
+      }
+    },
+    "owner": "yerald"
   }
 }
