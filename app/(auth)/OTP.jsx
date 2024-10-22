@@ -12,7 +12,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { Image } from "expo-image";
 import { ArrowLeftIcon } from "../../components/Icons";
 import { useLoginContext } from "../../contexts/LoginContext";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 /* global clearTimeout setTimeout*/
 export default function OTP() {

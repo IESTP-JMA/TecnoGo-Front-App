@@ -2,7 +2,7 @@ import { Slot } from "expo-router";
 import { useEffect } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { AuthProvider } from "../contexts/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();

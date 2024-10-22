@@ -2,10 +2,13 @@ import { Pressable, Text, TextInput, View } from "react-native";
 import { useEditProfileContext } from "../context/EditProfileContext";
 import { Image } from "expo-image";
 import { CameraIcon, EmailIcon, PersonIcon } from "../../components/Icons";
+import { useAuth } from "../context/AuthContext";
 
 export default function Profile() {
+  const { userData, setUserData} = useAuth();
   const { isEditing, profileData, setProfileData } = useEditProfileContext();
-
+  
+  const editData = {...userData};
 
   return (
     <>
@@ -28,7 +31,7 @@ export default function Profile() {
         {isEditing ? (
           <TextInput
             className="border border-zinc-300 bg-white ml-6 p-2 rounded-lg"
-            value={userData.fullName}
+            value={editData.names.first + ' ' + editData.names.last}
             onChangeText={(text) =>
               setProfileData((prev) => ({ ...prev, email: text }))
             }
@@ -36,7 +39,7 @@ export default function Profile() {
           />
         ) : (
           <Text className="self-start text-lg font-SenMedium ml-6 text-gray-700 border-b border-emerald-900">
-            {userData.fullName || "No establecido"}
+            {userData.names.first + ' ' + editData.names.last}
           </Text>
         )}
 
@@ -49,7 +52,7 @@ export default function Profile() {
         {isEditing ? (
           <TextInput
             className="border border-zinc-300 bg-white ml-6 p-2 rounded-lg"
-            value={userData.email}
+            value={editData.email}
             // onChangeText={(text) =>
             //   setProfileData((prev) => ({ ...prev, email: text }))
             // }
@@ -57,7 +60,7 @@ export default function Profile() {
           />
         ) : (
           <Text className="self-start text-lg font-SenMedium ml-6 text-gray-700 border-b border-emerald-900">
-            {userData.email || "No establecido"}
+            {userData.email } {/* || "No establecido"  */}
           </Text>
         )}
 

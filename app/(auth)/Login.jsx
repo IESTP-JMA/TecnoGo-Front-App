@@ -9,7 +9,7 @@ import {
 import { useRouter } from "expo-router";
 import { Image } from "expo-image";
 import { useLoginContext } from "../../contexts/LoginContext";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
 
 export default function LoginModal() {

@@ -10,7 +10,7 @@ import {
   EditIcon,
   ChevronLeftIcon,
 } from "../../components/Icons";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import {
   EditProfileProvider,
   useEditProfileContext,
@@ -68,7 +68,7 @@ function ProfileHeaderRight() {
 
 export default function TabsLayout() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { userData } = useAuth();
 
   //   const handleSaveProfile = async () => {
   //     try {
@@ -117,7 +117,7 @@ export default function TabsLayout() {
                 />
                 <View>
                   <Text className="text-white text-xl font-SenMedium">
-                    Hola, {user} 👋
+                    Hola, {userData.names.first} 👋
                   </Text>
                   <Text className="text-zinc-200 font-SenRegular pl-1">
                     Bienvenida
