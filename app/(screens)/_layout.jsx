@@ -1,7 +1,7 @@
 import { Stack, Tabs } from "expo-router";
 import { View, Text, Image } from "react-native";
 import { BellIcon } from "../../components/Icons";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const avatar = require("../../assets/avatar.png");

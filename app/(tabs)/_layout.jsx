@@ -10,11 +10,11 @@ import {
   HomeIcon,
   HomeIconOutline,
 } from "../../components/Icons";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 import {
   EditProfileProvider,
   useEditProfileContext,
-} from "../context/EditProfileContext";
+} from "../contexts/EditProfileContext";
 
 function ProfileHeaderRight() {
   const { isEditing, setIsEditing } = useEditProfileContext();

@@ -1,8 +1,8 @@
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
-import { useEditProfileContext } from "../context/EditProfileContext";
+import { useEditProfileContext } from "../contexts/EditProfileContext";
 import { Image } from "expo-image";
 import { CameraIcon, EmailIcon, PersonIcon } from "../../components/Icons";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Profile() {
   const { userData, setUserData } = useAuth();
