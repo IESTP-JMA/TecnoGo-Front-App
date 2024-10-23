@@ -24,7 +24,7 @@ export default function IndexEfsrt() {
         </Pressable>
 
         {/* Module II */}
-        <Pressable className="bg-white rounded-lg p-4">
+        <Pressable className="bg-white rounded-lg p-4 opacity-60">
           <View className="flex-row items-center space-x-3">
             <BriefcaseIcon size={32} color="#4ade80" />
 
@@ -33,7 +33,7 @@ export default function IndexEfsrt() {
         </Pressable>
 
         {/* Module III */}
-        <Pressable className="bg-white rounded-lg p-4">
+        <Pressable className="bg-white rounded-lg p-4 opacity-60">
           <View className="flex-row items-center space-x-3">
             <BriefcaseIcon size={32} color="#4ade80" />
             <Text className="text-lg font-SenSemiBold">III Modulo</Text>
