@@ -5,15 +5,12 @@ const EditProfileContext = createContext();
 
 export function EditProfileProvider({ children }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [userData, setUserData] = useState();
 
   return (
     <EditProfileContext.Provider
       value={{
         isEditing,
         setIsEditing,
-        profileData: userData,
-        setProfileData: setUserData,
       }}
     >
       {children}

@@ -1,14 +1,14 @@
 // app/(tabs)/_layout.jsx
-import React, { useState } from "react";
 import { View, Text, Image, StatusBar, Pressable } from "react-native";
 import { Tabs, useRouter } from "expo-router";
-import { FontAwesome6 } from "@expo/vector-icons";
 import {
-  UserIcon,
+  PersonIcon,
   BellIcon,
   CheckIcon,
   EditIcon,
   ChevronLeftIcon,
+  HomeIcon,
+  HomeIconOutline,
 } from "../../components/Icons";
 import { useAuth } from "../context/AuthContext";
 import {
@@ -17,11 +17,12 @@ import {
 } from "../context/EditProfileContext";
 
 function ProfileHeaderRight() {
-  const { isEditing, setIsEditing, profileData } = useEditProfileContext();
+  const { isEditing, setIsEditing } = useEditProfileContext();
+  const { userData } = useAuth();
 
   const handleSaveProfile = async () => {
     try {
-      console.log(profileData);
+      console.log(userData);
       setIsEditing(false);
 
       //   const response = await fetch("TU_URL_API/profile", {
@@ -103,7 +104,6 @@ export default function TabsLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: "Inicio",
             headerTitle: "",
             headerStyle: { backgroundColor: "#064E3B" },
             headerLeft: () => (
@@ -117,7 +117,7 @@ export default function TabsLayout() {
                 />
                 <View>
                   <Text className="text-white text-xl font-SenMedium">
-                    Hola, {userData.names.first} 👋
+                    Hola, {userData.firstNames} 👋
                   </Text>
                   <Text className="text-zinc-200 font-SenRegular pl-1">
                     Bienvenida
@@ -130,9 +130,15 @@ export default function TabsLayout() {
                 <BellIcon />
               </View>
             ),
-            tabBarIcon: ({ color }) => (
-              <FontAwesome6 size={28} name="home" color={color} />
-            ),
+            tabBarIcon: ({ size, color, focused }) => {
+              if (focused) {
+                return <HomeIcon size={size} color={color} />;
+              } else {
+                return <HomeIconOutline size={size} color={color} />;
+              }
+            },
+            tabBarLabel: "Inicio",
+            tabBarLabelStyle: { fontFamily: "SenMedium", fontSize: 12 },
           }}
           //   listeners={{
           //     tabPress: () => setIsEditing(false),
@@ -160,7 +166,11 @@ export default function TabsLayout() {
               </Pressable>
             ),
             headerRight: () => <ProfileHeaderRight />,
-            tabBarIcon: ({ color }) => <UserIcon color={color} />,
+            tabBarIcon: ({ color, focused, size }) => (
+              <PersonIcon size={size} color={color} filled={focused} />
+            ),
+            tabBarLabel: "Mi Perfil",
+            tabBarLabelStyle: { fontFamily: "SenMedium", fontSize: 12 },
           }}
           //   listeners={{
           //     tabPress: () => setIsEditing(false),

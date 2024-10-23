@@ -5,18 +5,18 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [userData, setUserData] = useState({
-    names: {
-      first: 'Ruth Marina',
-      last: 'Castillo Huamani'
-    },
-    email: 'castillohuamaniruthm@gmail.com',
-    phoneNumber: '940270449',
-    education: {
-      career: 'APSTI',
-      semester: 'IV'
-    },
-    birthDate: '22/05/2006',
-    dni: '60414454'
+    firstNames: "Ruth Marina",
+    lastNames: "Castillo Huamani",
+    email: "ejemplo@gmail.com",
+    phoneNumber: "932002001",
+    professionalCareer: "APSTI",
+    semester: "IV",
+    // education: {
+    //   career: "APSTI",
+    //   semester: "IV",
+    // },
+    birthDate: "22/05/2006",
+    dni: "00000001",
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -58,7 +58,9 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ userData: userData, login, logout, isLoading }}>
+    <AuthContext.Provider
+      value={{ userData, setUserData, login, logout, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );
