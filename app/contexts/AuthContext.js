@@ -42,7 +42,10 @@ export function AuthProvider({ children }) {
   const login = async (email) => {
     try {
       await AsyncStorage.setItem("email", email);
-      setUserData(email);
+      setUserData({
+        ...userData,
+        email,
+      });
     } catch (error) {
       console.error("Failed to save user token", error);
     }

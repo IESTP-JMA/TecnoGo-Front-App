@@ -1,4 +1,4 @@
-import { Redirect, useRouter, Slot } from "expo-router";
+import { useRouter } from "expo-router";
 import { useAuth } from "./contexts/AuthContext";
 import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
@@ -9,7 +9,7 @@ export default function Index() {
 
   useEffect(() => {
     if (!isLoading) {
-      if (true) {
+      if (false) {
         router.replace("/(tabs)");
       } else {
         router.replace("/(auth)/Login");
