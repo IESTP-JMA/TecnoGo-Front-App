@@ -74,7 +74,7 @@ export default function OTP() {
   };
   const handleVerify = () => {
     login(email);
-    router.replace("/(tabs)");
+    router.replace("/(tabs)/home");
   };
 
   const formatTime = (time) => {

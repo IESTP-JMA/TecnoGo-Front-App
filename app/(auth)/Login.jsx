@@ -25,7 +25,7 @@ export default function LoginModal() {
       login(email);
       setLoginVisible(false);
       router.push({
-        pathname: "/OTP",
+        pathname: "/otp",
         params: { email },
       });
     } else {

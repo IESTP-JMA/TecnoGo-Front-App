@@ -13,8 +13,8 @@ export default function AuthLayout() {
       >
         <StatusBar barStyle="light-content" backgroundColor="#064E3B" />
         <Stack>
-          <Stack.Screen name="Login" options={{ headerShown: false }} />
-          <Stack.Screen name="OTP" options={{ headerShown: false }} />
+          <Stack.Screen name="login" options={{ headerShown: false }} />
+          <Stack.Screen name="otp" options={{ headerShown: false }} />
         </Stack>
       </ImageBackground>
     </LoginProvider>

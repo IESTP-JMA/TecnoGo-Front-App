@@ -102,14 +102,14 @@ export default function TabsLayout() {
         }}
       >
         <Tabs.Screen
-          name="index"
+          name="home"
           options={{
             headerTitle: "",
             headerStyle: { backgroundColor: "#064E3B" },
             headerLeft: () => (
               <Pressable
                 className="flex-row gap-x-2 pl-2"
-                onPress={() => router.push("./Profile")}
+                onPress={() => router.push("./profile")}
               >
                 <Image
                   className="rounded-full w-12 h-12"
@@ -145,7 +145,7 @@ export default function TabsLayout() {
           //   }}
         />
         <Tabs.Screen
-          name="Profile"
+          name="profile"
           options={{
             title: "Mi Perfil",
             headerTitle: "Mi Perfil",
