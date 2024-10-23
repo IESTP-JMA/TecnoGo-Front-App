@@ -15,7 +15,7 @@ Sigue los pasos para levantar la aplicación en tu entorno local:
 
    ```bash
    git clone https://github.com/IESTP-JMA/TecnoGo-Front-App
-   cd TecnoGo
+   cd TecnoGo-Front-App
    ```
 
 2. **Instalar las dependencias:**
@@ -29,10 +29,11 @@ Sigue los pasos para levantar la aplicación en tu entorno local:
 3. **Levantar la aplicación:**
 
    ```bash
-   expo start
+   npx expo start 
    ```
 
 4. **Probar en un dispositivo o emulador:**
+   Asegúrate de tener **Expo Go** instalada en tu dispositivo. Puedes descargarla desde la [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent) para Android o desde la [App Store](https://apps.apple.com/us/app/expo-go/id982107777) para iOS.
    - Escanea el QR con Expo Go (en Android/iOS).
    - Alternativamente, presiona `a` para emulador de Android o `i` para iOS.
 
@@ -59,4 +60,4 @@ Si deseas contribuir al proyecto:
    ```bash
    git push origin nueva-funcionalidad
    ```
-5. Crea un Pull Request para revisión.
+5. Crea un Pull Request para la revisión.
