@@ -1,7 +1,3 @@
-**TecnoGo**:
-
----
-
 # TecnoGo
 
 **TecnoGo** es una aplicación móvil diseñada para ayudar a los estudiantes de una institución educativa en la gestión y ejecución de sus **Experiencias Formativas en Situaciones Reales de Trabajo**. La aplicación busca simplificar la planificación, seguimiento, permitiendo a los estudiantes y asesores mantenerse organizados y conectados.
