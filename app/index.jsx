@@ -3,7 +3,7 @@ import { useAuth } from "./contexts/AuthContext";
 import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
 
-export default function Index() {
+export default function IndexRoot() {
   const router = useRouter();
   const { userData, isLoading } = useAuth();
 

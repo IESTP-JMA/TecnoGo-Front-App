@@ -6,7 +6,6 @@ import {
   BellIcon,
   CheckIcon,
   EditIcon,
-  ChevronLeftIcon,
   HomeIcon,
   HomeIconOutline,
 } from "../../components/Icons";
@@ -70,6 +69,7 @@ function ProfileHeaderRight() {
 export default function TabsLayout() {
   const router = useRouter();
   const { userData } = useAuth();
+  const visibleTabs = ["home/index", "profile"];
 
   //   const handleSaveProfile = async () => {
   //     try {
@@ -97,19 +97,24 @@ export default function TabsLayout() {
     <EditProfileProvider>
       <StatusBar backgroundColor="#064E3B" barStyle="light-content" />
       <Tabs
-        screenOptions={{
+        screenOptions={({ route }) => ({
           tabBarActiveTintColor: "#065F46",
-        }}
+          tabBarButton: (props) => {
+            if (visibleTabs.includes(route.name)) {
+              return <Pressable {...props} />;
+            }
+          },
+        })}
       >
         <Tabs.Screen
-          name="home"
+          name="home/index"
           options={{
             headerTitle: "",
             headerStyle: { backgroundColor: "#064E3B" },
             headerLeft: () => (
               <Pressable
                 className="flex-row gap-x-2 pl-2"
-                onPress={() => router.push("./profile")}
+                onPress={() => router.push("profile")}
               >
                 <Image
                   className="rounded-full w-12 h-12"
@@ -152,19 +157,19 @@ export default function TabsLayout() {
             headerTitleStyle: {
               fontFamily: "SenSemiBold",
               color: "#064E3B",
-              fontSize: 22,
+              fontSize: 20,
             },
             headerTitleAlign: "center",
             headerStyle: { backgroundColor: "transparent" },
-            headerLeft: () => (
-              <Pressable
-                className="ml-3 flex-row items-center"
-                onPress={() => router.back()}
-              >
-                <ChevronLeftIcon color="#064E3B" size={20} />
-                <Text className="font-SenRegular text-base"> volver</Text>
-              </Pressable>
-            ),
+            // headerLeft: () => {
+            //   <Pressable
+            //     className="ml-3 flex-row items-center"
+            //     onPress={() => router.back()}
+            //   >
+            //     <ChevronLeftIcon color="#064E3B" size={20} />
+            //     <Text className="font-SenRegular text-base"> volver</Text>
+            //   </Pressable>
+            // },
             headerRight: () => <ProfileHeaderRight />,
             tabBarIcon: ({ color, focused, size }) => (
               <PersonIcon size={size} color={color} filled={focused} />
