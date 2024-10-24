@@ -1,3 +1,5 @@
+import { Stack, useRouter } from "expo-router";
+import { useEffect } from "react";
 import { View, Text, Image, ScrollView, Pressable } from "react-native";
 
 const ChatItem = ({ name, module, message, time, image }) => (
@@ -51,9 +53,15 @@ export default function EnhancedChatList() {
       image: "https://i.pravatar.cc/150?img=8",
     },
   ];
+  const router = useRouter();
+
+  useEffect(() => {
+    router.setParams({ headerTitle: "Chats" });
+  }, [router]);
 
   return (
     <ScrollView className="flex-1 bg-[#E6F2EC]">
+      <Stack.Screen options={{ headerTitle: "asd" }} />
       {chats.map((chat) => (
         <ChatItem key={chat.module} {...chat} />
       ))}

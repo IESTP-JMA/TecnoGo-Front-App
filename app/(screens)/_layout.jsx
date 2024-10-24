@@ -12,7 +12,6 @@ export default function ScreensLayout() {
   const router = useRouter();
   const segments = useSegments();
   const { headerTitle } = useGlobalSearchParams();
-
   function backToHome() {
     return (
       <Pressable
@@ -26,7 +25,7 @@ export default function ScreensLayout() {
   }
 
   function headerHandler() {
-    if (segments.includes("efsrt")) {
+    if (segments.slice(-1)[0] === "efsrt") {
       return (
         <Pressable
           className="-mr-3 py-1 pl-3 pr-2"
