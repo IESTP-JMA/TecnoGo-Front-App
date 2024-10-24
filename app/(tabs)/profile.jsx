@@ -53,7 +53,7 @@ export default function Profile() {
   );
 
   return (
-    <ScrollView>
+    <ScrollView className="bg-[#E6F2EC]">
       <View className="relative items-center mb-6">
         <Image
           className="rounded-full w-28 h-28 border border-rose-600"

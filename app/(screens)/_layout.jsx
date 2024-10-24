@@ -29,7 +29,12 @@ export default function ScreensLayout() {
       return (
         <Pressable
           className="-mr-3 py-1 pl-3 pr-2"
-          onPress={() => router.push("/(screens)/efsrt/chats")}
+          onPress={() => {
+            router.push({
+              pathname: "/(screens)/efsrt/chats",
+              params: { headerTitle: "Chats" },
+            });
+          }}
         >
           <View className="flex-row items-center border border-rose-500 py-0.5 px-2.5 rounded-full gap-x-1.5">
             <ChatsIcon size={25} strokeWidth={1} color="#F43F5E" />
@@ -57,9 +62,11 @@ export default function ScreensLayout() {
           },
         }}
       />
-      <View>
-        <Text>Loading....</Text>
-      </View>
+      {/* <View>
+        <Text className="text-center font-SenRegular">
+          Loading Indicator ....
+        </Text>
+      </View> */}
     </>
   );
 }

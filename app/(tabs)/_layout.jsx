@@ -160,7 +160,7 @@ export default function TabsLayout() {
               fontSize: 20,
             },
             headerTitleAlign: "center",
-            headerStyle: { backgroundColor: "transparent" },
+            headerStyle: { backgroundColor: "#E6F2EC" },
             // headerLeft: () => {
             //   <Pressable
             //     className="ml-3 flex-row items-center"

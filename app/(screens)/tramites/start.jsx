@@ -1,13 +1,8 @@
-import { Stack, useRouter } from "expo-router";
 import { View, Text, Pressable } from "react-native";
 export default function Start() {
-  const router = useRouter();
-
   return (
-    <>
-      <View className="flex-1 bg-blue-200">
-        <Text>IN start.jsx</Text>
-      </View>
-    </>
+    <View className="flex-1 bg-[#E6F2EC]">
+      <Text>IN start.jsx</Text>
+    </View>
   );
 }
