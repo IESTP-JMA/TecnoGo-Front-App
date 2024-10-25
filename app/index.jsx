@@ -9,7 +9,7 @@ export default function IndexRoot() {
 
   useEffect(() => {
     if (!isLoading) {
-      if (false) {
+      if (true) {
         router.replace("(tabs)/home");
       } else {
         router.replace("(auth)/login");
