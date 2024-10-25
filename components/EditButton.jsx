@@ -1,19 +1,19 @@
 import { Pressable, Text } from "react-native";
-import { CheckIcon, EditIcon } from "./Icons";
+import { Check, UserRoundPen } from "lucide-react-native";
 
-export default function EditButton({ isEditing, onPress, tintColor }) {
+export default function EditButton({ isEditing, onPress }) {
   return (
     <Pressable
-      className="flex-row space-x-1 items-center px-2 py-1.5 mr-1 active:bg-emerald-200 rounded-xl"
+      className={`flex-row space-x-1 items-center py-1.5 mr-1 active:bg-emerald-200 rounded-xl ${isEditing ? "pl-1.5 pr-2" : "pl-2.5 pr-1"}`}
       onPress={onPress}
     >
       {isEditing ? (
-        <CheckIcon color={tintColor} />
+        <Check color="#065f46" size={28} strokeWidth={2} />
       ) : (
-        <EditIcon color={tintColor} />
+        <UserRoundPen color="#065f46" size={28} strokeWidth={1.75} />
       )}
       <Text className={`font-SenMedium text-emerald-800`}>
-        {isEditing ? "Guardar" : "Editar"}
+        {isEditing && "Guardar"}
       </Text>
     </Pressable>
   );
