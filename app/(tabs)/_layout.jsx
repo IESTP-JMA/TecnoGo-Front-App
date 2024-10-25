@@ -1,4 +1,3 @@
-// app/(tabs)/_layout.jsx
 import { Text, Image, StatusBar, Pressable } from "react-native";
 import { Tabs, useRouter } from "expo-router";
 import { HomeIcon, HomeIconOutline } from "../../components/Icons";
@@ -61,7 +60,6 @@ export default function TabsLayout() {
                 </Text>
               </>
             ),
-
             headerRight: () => (
               <Pressable className="p-2.5  mr-1">
                 <Bell color="white" />
@@ -87,10 +85,8 @@ export default function TabsLayout() {
               <User size={30} color={color} fill={focused ? color : "none"} />
             ),
             tabBarLabel: "Mi Perfil",
+            tabBarHideOnKeyboard: true,
           }}
-          //   listeners={{
-          //     tabPress: () => setIsEditing(false),
-          //   }}
         />
       </Tabs>
     </>
