@@ -1,13 +1,9 @@
 // app/(tabs)/_layout.jsx
 import { Text, Image, StatusBar, Pressable } from "react-native";
 import { Tabs, useRouter } from "expo-router";
-import {
-  PersonIcon,
-  BellIcon,
-  HomeIcon,
-  HomeIconOutline,
-} from "../../components/Icons";
+import { HomeIcon, HomeIconOutline } from "../../components/Icons";
 import { useAuth } from "../contexts/AuthContext";
+import { Bell, User } from "lucide-react-native";
 
 export default function TabsLayout() {
   const router = useRouter();
@@ -46,7 +42,11 @@ export default function TabsLayout() {
               >
                 <Image
                   className="rounded-full w-14 h-14"
-                  source={require("../../assets/avatar.png")}
+                  source={
+                    userData.uriImage
+                      ? { uri: userData.uriImage }
+                      : require("../../assets/avatar.png")
+                  }
                 />
               </Pressable>
             ),
@@ -64,14 +64,14 @@ export default function TabsLayout() {
 
             headerRight: () => (
               <Pressable className="p-2.5  mr-1">
-                <BellIcon />
+                <Bell color="white" />
               </Pressable>
             ),
-            tabBarIcon: ({ size, color, focused }) => {
+            tabBarIcon: ({ color, focused }) => {
               if (focused) {
-                return <HomeIcon size={size} color={color} />;
+                return <HomeIcon size={30} color={color} />;
               } else {
-                return <HomeIconOutline size={size} color={color} />;
+                return <HomeIconOutline size={30} color={color} />;
               }
             },
             tabBarLabel: "Inicio",
@@ -83,8 +83,8 @@ export default function TabsLayout() {
             title: "Mi Perfil",
             headerTitle: "Mi Perfil",
             headerStyle: { backgroundColor: "#E6F2EC" },
-            tabBarIcon: ({ color, focused, size }) => (
-              <PersonIcon size={size} color={color} filled={focused} />
+            tabBarIcon: ({ color, focused }) => (
+              <User size={30} color={color} fill={focused ? color : "none"} />
             ),
             tabBarLabel: "Mi Perfil",
           }}

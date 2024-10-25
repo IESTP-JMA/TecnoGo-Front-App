@@ -17,6 +17,7 @@ export function AuthProvider({ children }) {
     // },
     birthDate: "22/05/2006",
     dni: "00000001",
+    uriImage: null,
   });
   const [isLoading, setIsLoading] = useState(true);
 

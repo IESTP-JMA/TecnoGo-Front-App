@@ -15,6 +15,7 @@ import {
   IdCard,
 } from "lucide-react-native";
 import { Image } from "expo-image";
+import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
 
 const IconWithLabel = ({ icon: Icon, label }) => {
   return (
@@ -61,6 +62,19 @@ export default function Profile() {
     });
   }, [navigation, isEditing, setUserData, tempData]);
 
+  const pickImage = async () => {
+    let result = await launchImageLibraryAsync({
+      mediaTypes: MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+      legacy: true,
+    });
+
+    if (!result.canceled) {
+      setUserData({ ...userData, uriImage: result.assets[0].uri });
+    }
+  };
   const updateField = useCallback(
     (field) => (value) => {
       setTempData((prev) => ({ ...prev, [field]: value }));
@@ -73,10 +87,17 @@ export default function Profile() {
     <ScrollView className="bg-[#E6F2EC] px-4">
       <View className="relative items-center mb-6">
         <Image
-          className="rounded-full w-28 h-28 border border-rose-600"
-          source={require("../../assets/avatar.png")}
+          className="rounded-full w-32 h-32 border border-emerald-600"
+          source={
+            userData.uriImage
+              ? { uri: userData.uriImage }
+              : require("../../assets/avatar.png")
+          }
         />
-        <Pressable className="absolute right-[34%] -bottom-2 bg-rose-800 px-2.5 py-2 rounded-full">
+        <Pressable
+          className="absolute right-[34%] -bottom-2 bg-emerald-800 px-2.5 py-2 rounded-full"
+          onPress={pickImage}
+        >
           <Camera color="white" size={20} />
         </Pressable>
       </View>
