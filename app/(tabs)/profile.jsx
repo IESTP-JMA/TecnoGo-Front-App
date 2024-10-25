@@ -1,7 +1,7 @@
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { useAuth } from "../contexts/AuthContext";
 import { useState, useLayoutEffect, useCallback } from "react";
-import { useNavigation } from "expo-router";
+import { useFocusEffect, useNavigation } from "expo-router";
 import EditButton from "../../components/EditButton";
 import StyledTextInput from "../../components/form/StyledTextInput";
 import {
@@ -43,6 +43,13 @@ export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [tempData, setTempData] = useState(userData);
   const navigation = useNavigation();
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => setIsEditing(false);
+      // eslint-disable-next-line prettier/prettier
+    }, [])
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
