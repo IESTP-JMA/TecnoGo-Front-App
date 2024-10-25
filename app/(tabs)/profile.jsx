@@ -37,28 +37,6 @@ const ValueDisplay = ({ value }) => {
   );
 };
 
-const ProfileField = ({
-  icon: Icon,
-  label,
-  value,
-  isEditing,
-  onChange,
-  keyboardType = "default",
-}) => (
-  <View>
-    <IconWithLabel icon={User} label={label} />
-    {isEditing ? (
-      <StyledTextInput
-        value={value}
-        onChangeText={onChange}
-        keyboardType={keyboardType}
-      />
-    ) : (
-      <ValueDisplay value={value} />
-    )}
-  </View>
-);
-
 export default function Profile() {
   const { userData, setUserData } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
