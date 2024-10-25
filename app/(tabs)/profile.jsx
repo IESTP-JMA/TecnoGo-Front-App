@@ -39,7 +39,7 @@ const ValueDisplay = ({ value }) => {
 };
 
 export default function Profile() {
-  const { userData, setUserData } = useAuth();
+  const { userData, setUserData, uriImage, setUriImage } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [tempData, setTempData] = useState(userData);
   const navigation = useNavigation();
@@ -72,7 +72,7 @@ export default function Profile() {
     });
 
     if (!result.canceled) {
-      setUserData({ ...userData, uriImage: result.assets[0].uri });
+      setUriImage(result.assets[0].uri);
     }
   };
   const updateField = useCallback(
@@ -89,9 +89,7 @@ export default function Profile() {
         <Image
           className="rounded-full w-32 h-32 border border-emerald-600"
           source={
-            userData.uriImage
-              ? { uri: userData.uriImage }
-              : require("../../assets/avatar.png")
+            uriImage ? { uri: uriImage } : require("../../assets/avatar.png")
           }
         />
         <Pressable

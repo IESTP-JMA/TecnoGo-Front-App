@@ -17,8 +17,8 @@ export function AuthProvider({ children }) {
     // },
     birthDate: "22/05/2006",
     dni: "00000001",
-    uriImage: null,
   });
+  const [uriImage, setUriImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -63,7 +63,15 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ userData, setUserData, login, logout, isLoading }}
+      value={{
+        userData,
+        setUserData,
+        login,
+        logout,
+        isLoading,
+        uriImage,
+        setUriImage,
+      }}
     >
       {children}
     </AuthContext.Provider>

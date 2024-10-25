@@ -7,7 +7,7 @@ import { Bell, User } from "lucide-react-native";
 
 export default function TabsLayout() {
   const router = useRouter();
-  const { userData } = useAuth();
+  const { userData, uriImage } = useAuth();
 
   return (
     <>
@@ -43,8 +43,8 @@ export default function TabsLayout() {
                 <Image
                   className="rounded-full w-14 h-14"
                   source={
-                    userData.uriImage
-                      ? { uri: userData.uriImage }
+                    uriImage
+                      ? { uri: uriImage }
                       : require("../../assets/avatar.png")
                   }
                 />
