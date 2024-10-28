@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View, Image } from "react-native";
 import { useAuth } from "../contexts/AuthContext";
 import { useState, useLayoutEffect, useCallback } from "react";
 import { useFocusEffect, useNavigation } from "expo-router";
@@ -14,8 +14,8 @@ import {
   Cake,
   IdCard,
 } from "lucide-react-native";
-import { Image } from "expo-image";
 import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
+import AvatarPlaceHolder from "../../components/AvatarPlaceHolder";
 
 const IconWithLabel = ({ icon: Icon, label }) => {
   return (
@@ -72,10 +72,9 @@ export default function Profile() {
   const pickImage = async () => {
     let result = await launchImageLibraryAsync({
       mediaTypes: MediaTypeOptions.Images,
+      quality: 1,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
-      legacy: true,
     });
 
     if (!result.canceled) {
@@ -91,19 +90,29 @@ export default function Profile() {
   );
 
   return (
-    <ScrollView className="bg-[#E6F2EC] px-4">
-      <View className="relative items-center mb-6">
-        <Image
-          className="rounded-full w-32 h-32 border border-emerald-600"
-          source={
-            uriImage ? { uri: uriImage } : require("../../assets/avatar.png")
-          }
-        />
+    <ScrollView className="relative bg-[#E6F2EC] p-4">
+      <View className="items-center mb-6">
+        {uriImage ? (
+          <View className="flex-1 rounded-full border-4 border-slate-200">
+            <Image
+              style={{ width: 142, height: 142 }}
+              className="rounded-full"
+              source={{ uri: uriImage }}
+            />
+          </View>
+        ) : (
+          <AvatarPlaceHolder
+            customStyle={{ width: 150, height: 150 }}
+            customClass="border-4 border-slate-200"
+            customTextClass="text-7xl -mb-3"
+          />
+        )}
+
         <Pressable
-          className="absolute right-[34%] -bottom-2 bg-emerald-800 px-2.5 py-2 rounded-full"
+          className="absolute  right-[30%] bottom-2 bg-slate-200 rounded-full px-2 py-2"
           onPress={pickImage}
         >
-          <Camera color="white" size={20} />
+          <Camera color="#4c0519" size={24} strokeWidth={2.5} />
         </Pressable>
       </View>
 
@@ -114,6 +123,7 @@ export default function Profile() {
             <StyledTextInput
               value={isEditing ? tempData.firstNames : userData.firstNames}
               onChangeText={updateField("firstNames")}
+              isInProfile
             />
           </View>
           <View className="w-1/2">
@@ -121,6 +131,7 @@ export default function Profile() {
             <StyledTextInput
               value={isEditing ? tempData.lastNames : userData.lastNames}
               onChangeText={updateField("lastNames")}
+              isInProfile
             />
           </View>
         </View>
@@ -139,6 +150,7 @@ export default function Profile() {
           value={isEditing ? tempData.email : userData.email}
           onChangeText={updateField("email")}
           keyboardType="email-address"
+          isInProfile
         />
       ) : (
         <ValueDisplay value={userData.email} />
@@ -150,12 +162,13 @@ export default function Profile() {
           value={isEditing ? tempData.phoneNumber : userData.phoneNumber}
           onChangeText={updateField("phoneNumber")}
           keyboardType="numeric"
+          isInProfile
         />
       ) : (
         <ValueDisplay value={userData.phoneNumber} />
       )}
 
-      <View className="flex-row space-x-6">
+      <View className="flex-row gap-x-6">
         <View>
           <IconWithLabel icon={GraduationCap} label={"Carrera Profesional"} />
           {isEditing ? (
@@ -166,6 +179,7 @@ export default function Profile() {
                   : userData.professionalCareer
               }
               onChangeText={updateField("professionalCareer")}
+              isInProfile
             />
           ) : (
             <ValueDisplay value={userData.professionalCareer} />
@@ -178,6 +192,7 @@ export default function Profile() {
             <StyledTextInput
               value={isEditing ? tempData.semester : userData.semester}
               onChangeText={updateField("semester")}
+              isInProfile
             />
           ) : (
             <ValueDisplay value={userData.semester} />
@@ -190,6 +205,7 @@ export default function Profile() {
         <StyledTextInput
           value={isEditing ? tempData.birthDate : userData.birthDate}
           onChangeText={updateField("birthDate")}
+          isInProfile
         />
       ) : (
         <ValueDisplay value={userData.birthDate} />
@@ -201,6 +217,7 @@ export default function Profile() {
           value={isEditing ? tempData.dni : userData.dni}
           onChangeText={updateField("dni")}
           keyboardType="numeric"
+          isInProfile
         />
       ) : (
         <ValueDisplay value={userData.phoneNumber} />

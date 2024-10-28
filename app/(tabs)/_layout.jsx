@@ -1,8 +1,9 @@
-import { Text, Image, StatusBar, Pressable } from "react-native";
+import { Text, Image, StatusBar, Pressable, View } from "react-native";
 import { Tabs, useRouter } from "expo-router";
 import { HomeIcon, HomeIconOutline } from "../../components/Icons";
 import { useAuth } from "../contexts/AuthContext";
 import { Bell, User } from "lucide-react-native";
+import AvatarPlaceHolder from "../../components/AvatarPlaceHolder";
 
 export default function TabsLayout() {
   const router = useRouter();
@@ -13,7 +14,7 @@ export default function TabsLayout() {
       <StatusBar backgroundColor="#064E3B" barStyle="light-content" />
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: "#065F46",
+          tabBarActiveTintColor: "#881337",
           headerTintColor: "#065F46",
           headerTitleAlign: "center",
           headerTitleStyle: {
@@ -39,14 +40,18 @@ export default function TabsLayout() {
                 className="pl-2"
                 onPress={() => router.push("profile")}
               >
-                <Image
-                  className="rounded-full w-14 h-14"
-                  source={
-                    uriImage
-                      ? { uri: uriImage }
-                      : require("../../assets/avatar.png")
-                  }
-                />
+                {uriImage ? (
+                  <Image
+                    className="rounded-full w-14 h-14"
+                    source={{ uri: uriImage }}
+                  />
+                ) : (
+                  <AvatarPlaceHolder
+                    customTextStyle={{ fontSize: 24 }}
+                    customClass="h-14 w-14"
+                    customTextClass="mt-0.5"
+                  />
+                )}
               </Pressable>
             ),
             headerTitleAlign: "left",

@@ -6,14 +6,13 @@ export default function AvatarPlaceHolder({
   customClass,
   customTextStyle,
   customTextClass,
-  size,
 }) {
   const { userData } = useAuth();
 
   return (
     <View
       style={customStyle}
-      className={`bg-gray-300 rounded-full w-${size} h-${size} items-center justify-center ${customClass}`}
+      className={`bg-gray-300 rounded-full items-center justify-center ${customClass}`}
     >
       <Text
         style={customTextStyle}

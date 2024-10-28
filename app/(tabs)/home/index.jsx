@@ -39,7 +39,6 @@ export default function IndexHome() {
                 pathname: item.path,
                 params: { headerTitle: item.headerTitle },
               });
-              console.log(item.path);
             }}
             key={index}
             disabled={item.isDisabled}
