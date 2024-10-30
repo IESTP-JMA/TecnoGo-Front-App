@@ -2,13 +2,12 @@ import { Link, Stack } from "expo-router";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
-export default function TramitesLayout() {
+export default function ModulesLayout() {
   const [activeTab, setActiveTab] = useState("Iniciar");
 
   const tabs = [
-    { title: "Iniciar", href: "tramites/start" },
-    { title: "Progreso", href: "tramites/progress" },
-    { title: "Respuesta", href: "tramites/response" },
+    { title: "Informacion", href: "efsrt/modules/informacion" },
+    { title: "Itinerario", href: "efsrt/modules/itinerario" },
   ];
   return (
     <>

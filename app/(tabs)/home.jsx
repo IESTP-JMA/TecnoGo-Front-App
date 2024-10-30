@@ -12,14 +12,14 @@ export default function IndexHome() {
             isDisabled: false,
             icon: "document-text-outline",
             text: "Iniciar un nuevo tramite",
-            path: "../../(screens)/tramites",
+            path: "tramites/start",
             headerTitle: "Mis Tramites",
           },
           {
             isDisabled: false,
             icon: "folder-outline",
             text: "Mis EFSRT",
-            path: "../../(screens)/efsrt",
+            path: "efsrt",
             headerTitle: "Mis EFSRT",
           },
           {

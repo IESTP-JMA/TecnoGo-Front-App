@@ -16,7 +16,6 @@ export default function TabsLayout() {
         screenOptions={{
           tabBarActiveTintColor: "#881337",
           headerTintColor: "#065F46",
-          headerTitleAlign: "center",
           headerTitleStyle: {
             fontFamily: "SenBold",
             color: "#064E3B",
@@ -24,16 +23,16 @@ export default function TabsLayout() {
           },
           tabBarLabelStyle: {
             fontFamily: "SenMedium",
-            fontSize: 13,
+            fontSize: 12,
           },
         }}
       >
         <Tabs.Screen
-          name="home/index"
+          name="home"
           options={{
             headerStyle: {
               backgroundColor: "#064E3B",
-              height: 95,
+              height: 90,
             },
             headerLeft: () => (
               <Pressable
@@ -54,7 +53,6 @@ export default function TabsLayout() {
                 )}
               </Pressable>
             ),
-            headerTitleAlign: "left",
             headerTitle: () => (
               <>
                 <Text className="text-white text-xl font-SenMedium -ml-1">
@@ -72,9 +70,9 @@ export default function TabsLayout() {
             ),
             tabBarIcon: ({ color, focused }) => {
               if (focused) {
-                return <HomeIcon size={30} color={color} />;
+                return <HomeIcon size={28} color={color} />;
               } else {
-                return <HomeIconOutline size={30} color={color} />;
+                return <HomeIconOutline size={28} color={color} />;
               }
             },
             tabBarLabel: "Inicio",
@@ -87,10 +85,11 @@ export default function TabsLayout() {
             headerTitle: "Mi Perfil",
             headerStyle: { backgroundColor: "#E6F2EC" },
             tabBarIcon: ({ color, focused }) => (
-              <User size={30} color={color} fill={focused ? color : "none"} />
+              <User size={28} color={color} fill={focused ? color : "none"} />
             ),
             tabBarLabel: "Mi Perfil",
             tabBarHideOnKeyboard: true,
+            headerTitleAlign: "center",
           }}
         />
       </Tabs>

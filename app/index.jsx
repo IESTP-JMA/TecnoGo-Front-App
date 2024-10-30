@@ -12,7 +12,7 @@ export default function IndexRoot() {
       if (true) {
         router.replace("(tabs)/home");
       } else {
-        router.replace("(auth)/login");
+        router.replace("/login");
       }
     }
   }, [userData, isLoading, router]);

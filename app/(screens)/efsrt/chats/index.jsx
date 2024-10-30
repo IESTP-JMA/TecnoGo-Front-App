@@ -42,7 +42,7 @@ const ChatItem = ({ name, module, message, time, image, router }) => (
     className="flex-row items-center py-4 px-4 border-b border-green-100"
     onPress={() => {
       router.push({
-        pathname: `./${name}`,
+        pathname: `efsrt/chats/${name}`,
         params: { headerTitle: name },
       });
     }}

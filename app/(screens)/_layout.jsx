@@ -31,7 +31,7 @@ export default function ScreensLayout() {
           className="-mr-3 py-1 pl-3 pr-2"
           onPress={() => {
             router.push({
-              pathname: "/(screens)/efsrt/chats",
+              pathname: "efsrt/chats",
               params: { headerTitle: "Chats" },
             });
           }}

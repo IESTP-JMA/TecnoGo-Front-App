@@ -1,12 +1,19 @@
 import { View, Text, Pressable } from "react-native";
 import { BriefcaseIcon, ChevronRigthIcon } from "../../../components/Icons";
+import { useRouter } from "expo-router";
 export default function IndexEfsrt() {
+  const router = useRouter();
   return (
     <View className="flex-1 bg-[#E6F2EC] p-4 gap-5">
       {/* Module I */}
-      <Pressable className="bg-white rounded-lg p-4">
+      <Pressable
+        className="bg-white rounded-lg p-4"
+        onPress={() => {
+          router.push("efsrt/modules/informacion");
+        }}
+      >
         <View className="flex-row items-center justify-between">
-          <View className="flex-row items-center space-x-3">
+          <View className="flex-row items-center gap-3">
             <BriefcaseIcon size={30} color="#4ade80" />
             <Text className="text-lg font-SenSemiBold">I Modulo</Text>
           </View>
@@ -24,7 +31,7 @@ export default function IndexEfsrt() {
 
       {/* Module II */}
       <Pressable className="bg-white rounded-lg p-4 opacity-60">
-        <View className="flex-row items-center space-x-3">
+        <View className="flex-row items-center gap-3">
           <BriefcaseIcon size={32} color="#4ade80" />
 
           <Text className="text-lg font-SenSemiBold">II Modulo</Text>
@@ -33,7 +40,7 @@ export default function IndexEfsrt() {
 
       {/* Module III */}
       <Pressable className="bg-white rounded-lg p-4 opacity-60">
-        <View className="flex-row items-center space-x-3">
+        <View className="flex-row items-center gap-3">
           <BriefcaseIcon size={32} color="#4ade80" />
           <Text className="text-lg font-SenSemiBold">III Modulo</Text>
         </View>
