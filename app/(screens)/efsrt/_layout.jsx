@@ -1,6 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
-import { Pressable, Text, View } from "react-native";
 
 export default function EfsrtLaoyout() {
   return (
@@ -8,15 +7,16 @@ export default function EfsrtLaoyout() {
       <StatusBar backgroundColor="#064E3B" barStyle="light-content" />
       <Stack
         screenOptions={{
-          headerStyle: { backgroundColor: "#E6F2EC" },
+          headerTitle: "Mis EFSRT",
           headerTitleAlign: "center",
           headerTitleStyle: {
             fontFamily: "SenSemiBold",
             color: "#064E3B",
             fontSize: 20,
           },
+          headerStyle: { backgroundColor: "#E6F2EC" },
+          headerShadowVisible: false,
           animation: "fade",
-          headerTitle: "Mis Efsrt",
         }}
       >
         <Stack.Screen name="[module_id]" />

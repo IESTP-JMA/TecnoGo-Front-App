@@ -137,7 +137,7 @@ export default function Profile() {
         </View>
       ) : (
         <View className="flex-col">
-          <IconWithLabel icon={User} label={"Nombres Completos"} />
+          <IconWithLabel icon={User} label={"Nombre Completo"} />
           <ValueDisplay
             value={`${userData.firstNames} ${userData.lastNames}`}
           />

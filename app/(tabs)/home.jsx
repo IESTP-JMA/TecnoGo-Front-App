@@ -1,6 +1,11 @@
 import { View, Text, Pressable, ScrollView } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
+import {
+  CalendarIcon,
+  DocumentCheckIcon,
+  DocumentPlusIcon,
+  UserFolderIcon,
+} from "../../components/Icons";
 
 export default function IndexHome() {
   const router = useRouter();
@@ -13,42 +18,49 @@ export default function IndexHome() {
             icon: "document-text-outline",
             text: "Iniciar un nuevo tramite",
             path: "tramites/start",
-            headerTitle: "Mis Tramites",
+            IconComponent: DocumentPlusIcon,
           },
           {
             isDisabled: false,
             icon: "folder-outline",
             text: "Mis EFSRT",
             path: "efsrt",
-            headerTitle: "Mis EFSRT",
+            IconComponent: UserFolderIcon,
           },
           {
             isDisabled: true,
             icon: "calendar-outline",
             text: "Mis Horarios",
+            path: "tramites/start",
+
+            IconComponent: CalendarIcon,
           },
           {
             isDisabled: true,
             icon: "folder-outline",
             text: "Mis calificaciones",
+            path: "tramites/start",
+
+            IconComponent: DocumentCheckIcon,
           },
         ].map((item, index) => (
-          <Pressable
-            onPress={() => {
-              router.push({
-                pathname: item.path,
-                params: { headerTitle: item.headerTitle },
-              });
-            }}
+          <Link
             key={index}
-            disabled={item.isDisabled}
-            className={`${item.isDisabled ? "opacity-50" : "opacity-100"} w-[45%] min-h-500 bg-white rounded-lg p-4 items-center justify-center mb-4 shadow active:opacity-50`}
+            href={item.path}
+            className=" bg-white w-[45%]"
+            asChild
           >
-            <Ionicons name={item.icon} size={42} color="#005e54" />
-            <Text className="mt-2 text-sm text-center text-[#005e54]">
-              {item.text}
-            </Text>
-          </Pressable>
+            <Pressable
+              disabled={item.isDisabled}
+              className={`${item.isDisabled ? "opacity-50" : "opacity-100 shadow"}  rounded-lg p-4 items-center justify-between mb-4   active:scale-110`}
+            >
+              <item.IconComponent size={72} accentColor="#9f1239" />
+
+              <Text className="flex-1 text-md text-center text-[#005e54] justify-center">
+                {item.text}
+              </Text>
+            </Pressable>
+          </Link>
         ))}
       </View>
     </ScrollView>

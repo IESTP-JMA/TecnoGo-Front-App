@@ -1,6 +1,6 @@
-import { Link, Stack, usePathname } from "expo-router";
+import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Pressable, Text, View } from "react-native";
+
 export default function TramitesLayout() {
   return (
     <>
@@ -9,7 +9,10 @@ export default function TramitesLayout() {
       <Stack
         screenOptions={{
           headerTitle: "Tramites",
-          headerStyle: { backgroundColor: "#E6F2EC" },
+          headerStyle: {
+            backgroundColor: "#E6F2EC",
+          },
+          headerShadowVisible: false,
           headerTitleAlign: "center",
           headerTitleStyle: {
             fontFamily: "SenSemiBold",

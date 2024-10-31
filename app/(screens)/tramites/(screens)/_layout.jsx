@@ -9,21 +9,18 @@ export default function IndexTramites() {
     { id: "progress", title: "Progreso", href: "./progress" },
     { id: "response", title: "Respuesta", href: "./response" },
   ];
-  const isActive = (route) => {
-    console.log(pathname);
-    return pathname.includes(route);
-  };
+  const isActive = (route) => pathname.includes(route);
 
   const Navbar = () => {
     return (
-      <View className="flex-row justify-evenly bg-[#e6f2ec] px-3">
+      <View className="flex-row justify-evenly bg-[#E6F2EC] px-3">
         {tabs.map(({ id, title, href }) => (
-          <Link key={id} href={href} className="py-2.5 flex-1" asChild>
+          <Link key={id} href={href} className="flex-1" asChild>
             <Pressable
               className={isActive(id) ? "border-b border-emerald-800" : ""}
             >
               <Text
-                className={`font-SenRegular text-base text-center ${
+                className={`font-SenRegular pb-2 text-base text-center ${
                   isActive(id) ? "text-emerald-800" : "text-neutral-500"
                 }`}
               >

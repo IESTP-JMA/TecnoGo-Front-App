@@ -1,36 +1,4 @@
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import Svg, { Path, Rect } from "react-native-svg";
-
-export const BellIcon = () => (
-  <FontAwesome6 name="bell" size={24} color="white" />
-);
-
-export const NotificationIcon = (props) => (
-  <FontAwesome6 name="home" size={24} color="black" {...props} />
-);
-
-export const ArrowLeftIcon = () => (
-  <FontAwesome6 name="arrow-left" size={24} color="#065F46" />
-);
-
-export const UserIcon = ({ color }) => (
-  <FontAwesome6 name="user" size={24} color={color} />
-);
-
-export const EditIcon = ({ color }) => (
-  <FontAwesome6 name="edit" size={24} color={color} />
-);
-
-export const ChevronLeftIcon = ({ color, size = 24 }) => (
-  <FontAwesome6 name="chevron-left" size={size} color={color} />
-);
-
-export const CheckIcon = ({ color }) => (
-  <FontAwesome6 name="check" size={24} color={color} />
-);
-export const CameraIcon = ({ color, size = 24 }) => (
-  <FontAwesome6 name="camera" size={size} color={color} />
-);
+import Svg, { Circle, Path, Rect } from "react-native-svg";
 
 export function PersonIcon({
   size = 24,
@@ -272,6 +240,241 @@ export function BriefcaseIcon({
         strokeLinejoin="round"
         strokeWidth="32px"
       />
+    </Svg>
+  );
+}
+
+export function UserFolderIcon({ size = 64, accentColor = "#56aaff" }) {
+  return (
+    <Svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      style={{ enableBackground: "new 0 0 64 64" }}
+    >
+      {/* Blue triangle corner */}
+      <Path
+        d="M39.5 8.6l10 10-8.5 2.3s-3.1-5.4-3.1-5.6 1.6-6.7 1.6-6.7z"
+        fill="#be123c"
+        // fill="#0478ed"
+      />
+
+      {/* Gray background document */}
+      <Path
+        d="M48 18h-6c-1.1 0-2-.9-2-2v-6c-0-1.1-.9-2-2-2H16c-1.1 0-2 .9-2 2v39c0 1.1.9 2 2 2h32c1.1 0 2-.9 2-2V20c0-1.1-.9-2-2-2z"
+        fill="#d9dce1"
+      />
+
+      {/* Blue document */}
+      <Path
+        d="M53 27H27v-2c0-1.1-.9-2-2-2H11c-1.1 0-2 .9-2 2v29c0 1.1.9 2 2 2h42c1.1 0 2-.9 2-2V29c0-1.1-.9-2-2-2z"
+        fill={accentColor}
+      />
+
+      {/* White circle (head) */}
+      <Circle cx={32} cy={38.8} r={3.6} fill="#ffffff" />
+
+      {/* White shape (body) */}
+      <Path
+        d="M38 49v-1c0-.5-.1-1.1-.4-1.6-.9-1.7-3.1-2.4-5.6-2.4s-4.7.7-5.6 2.5c-.3.5-.3 1-.4 1.6v1h12z"
+        fill="#ffffff"
+      />
+    </Svg>
+  );
+}
+
+export function TramiteIcon({ size = 64, style }) {
+  return (
+    <Svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      style={{ enableBackground: "new 0 0 64 64" }}
+    >
+      {/* Blue triangle corner */}
+      <Path
+        d="m39.5 9.6 10 10-8.5 2.3s-3.1-5.4-3.1-5.6 1.6-6.7 1.6-6.7z"
+        fill="#be123c"
+        // fill="#56aaff"
+      />
+
+      {/* Gray document background */}
+      <Path
+        d="M48 19h-6c-1.1 0-2-.9-2-2v-6c0-1.1-.9-2-2-2H16c-1.1 0-2 .9-2 2v42c0 1.1.9 2 2 2h32c1.1 0 2-.9 2-2V21c0-1.1-.9-2-2-2z"
+        fill="#d9dce1"
+      />
+
+      {/* White horizontal lines */}
+      <Path
+        d="M25 36h14M25 24h14M25 30h14"
+        stroke="#ffffff"
+        strokeWidth={2}
+        strokeLinecap="square"
+        strokeMiterlimit={10}
+        fill="none"
+      />
+
+      {/* Blue signature line */}
+      <Path
+        d="M24 42s3 1 4 3-3 3-3 1c0-1.4 2.1-3.4 3.3-4.4.4-.3 1-.2 1.3.2l.5.7c.4.6 1.3.5 1.5-.2v0c.2-.6 1-.8 1.4-.3l1 1"
+        stroke="black"
+        // stroke="#0478ed"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeMiterlimit={10}
+        fill="none"
+      />
+
+      {/* Blue edit pencil */}
+      <Path
+        d="m44.1 46.7-4.6 1.1c-.4.1-.7-.2-.6-.6l1.1-4.6c0-.2.1-.3.3-.5l9.8-9.8c1.2-1.2 3.1-1.2 4.2 0 1.2 1.2 1.2 3.1 0 4.2l-9.8 9.8c0 .2-.2.3-.4.4z"
+        fill="#9f1239"
+        // fill="#0478ed"
+      />
+    </Svg>
+  );
+}
+
+export function DocumentCheckIcon({ size = 64, accentColor = "#0478ed" }) {
+  return (
+    <Svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      style={{ enableBackground: "new 0 0 64 64" }}
+    >
+      {/* Blue triangle corner */}
+      <Path
+        d="m39.5 9.6 10 10-8.5 2.3s-3.1-5.4-3.1-5.6 1.6-6.7 1.6-6.7z"
+        fill="#be123c"
+        // fill="#56aaff"
+      />
+
+      {/* Gray document background */}
+      <Path
+        d="M48 19h-6c-1.1 0-2-.9-2-2v-6c0-1.1-.9-2-2-2H16c-1.1 0-2 .9-2 2v42c0 1.1.9 2 2 2h32c1.1 0 2-.9 2-2V21c0-1.1-.9-2-2-2z"
+        fill="#d9dce1"
+      />
+
+      {/* White horizontal lines */}
+      <Path
+        d="M24 38h7M24 32h16"
+        stroke="#ffffff"
+        strokeWidth={2}
+        strokeLinecap="square"
+        strokeMiterlimit={10}
+        fill="none"
+      />
+
+      {/* Blue circle with check */}
+      <Circle cx={44} cy={47} r={10} fill={accentColor} />
+
+      {/* White check mark */}
+      <Path
+        d="m40.1 47.1 2.8 2.9 5-5"
+        stroke="#ffffff"
+        strokeWidth={2}
+        strokeLinecap="square"
+        strokeMiterlimit={10}
+        fill="none"
+      />
+
+      {/* White circles */}
+      <Circle cx={24.9} cy={19.9} r={1.8} fill="#ffffff" />
+      <Circle cx={31.1} cy={26.1} r={1.8} fill="#ffffff" />
+
+      {/* White connecting line */}
+      <Path
+        d="m31.7 19.3-7.4 7.4"
+        stroke="#ffffff"
+        strokeWidth={2}
+        strokeMiterlimit={10}
+        fill="none"
+      />
+    </Svg>
+  );
+}
+
+export function DocumentPlusIcon({ size = 64 }) {
+  return (
+    <Svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      style={{ enableBackground: "new 0 0 64 64" }}
+    >
+      {/* Blue triangle corner */}
+      <Path
+        d="m39.5 9.6 10 10-8.5 2.3s-3.1-5.4-3.1-5.6 1.6-6.7 1.6-6.7z"
+        fill="#be123c"
+        // fill="#56aaff"
+      />
+
+      {/* Gray document background */}
+      <Path
+        d="M48 19h-6c-1.1 0-2-.9-2-2v-6c0-1.1-.9-2-2-2H16c-1.1 0-2 .9-2 2v42c0 1.1.9 2 2 2h32c1.1 0 2-.9 2-2V21c0-1.1-.9-2-2-2z"
+        fill="#d9dce1"
+      />
+
+      {/* White plus symbol */}
+      <Path
+        d="M26 38h12M32 44V32"
+        stroke="#ffffff"
+        strokeWidth={4}
+        strokeLinecap="square"
+        strokeLinejoin="round"
+        strokeMiterlimit={10}
+        fill="none"
+      />
+    </Svg>
+  );
+}
+
+export function CalendarIcon({ size = 64, accentColor = "#56aaff" }) {
+  return (
+    <Svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      style={{ enableBackground: "new 0 0 64 64" }}
+    >
+      {/* Gray calendar background */}
+      <Path
+        d="M54 13H10c-1.1 0-2 .9-2 2v37c0 1.1.9 2 2 2h44c1.1 0 2-.9 2-2V15c0-1.1-.9-2-2-2z"
+        fill="#d9dce1"
+      />
+
+      {/* Blue header */}
+      <Path
+        d="M54 13H10c-1.1 0-2 .9-2 2v7h48v-7c0-1.1-.9-2-2-2z"
+        fill={accentColor}
+      />
+
+      {/* Calendar hangers */}
+      <Path
+        d="M21 18h-3v-6.5c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5V18zM46 18h-3v-6.5c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5V18z"
+        fill="#4c0519"
+        // fill="#0478ed"
+      />
+
+      {/* Calendar dots - Row 1 */}
+      <Circle cx={32} cy={30} r={2} fill="#ffffff" />
+      <Circle cx={40} cy={30} r={2} fill="#ffffff" />
+      <Circle cx={48} cy={30} r={2} fill="#ffffff" />
+
+      {/* Calendar dots - Row 2 */}
+      <Circle cx={32} cy={38} r={2} fill="#ffffff" />
+      <Circle cx={40} cy={38} r={2} fill="#ffffff" />
+      <Circle cx={48} cy={38} r={2} fill="#ffffff" />
+      <Circle cx={16} cy={38} r={2} fill="#ffffff" />
+      <Circle cx={24} cy={38} r={2} fill="#ffffff" />
+
+      {/* Calendar dots - Row 3 */}
+      <Circle cx={32} cy={46} r={2} fill="#ffffff" />
+      <Circle cx={40} cy={46} r={2} fill="#ffffff" />
+      <Circle cx={16} cy={46} r={2} fill="#ffffff" />
+      <Circle cx={24} cy={46} r={2} fill="#ffffff" />
     </Svg>
   );
 }

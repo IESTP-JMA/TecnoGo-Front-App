@@ -1,5 +1,5 @@
-import { Text, Image, StatusBar, Pressable, View } from "react-native";
-import { Stack, Tabs, useRouter } from "expo-router";
+import { Text, Image, StatusBar, Pressable } from "react-native";
+import { Tabs, useRouter } from "expo-router";
 import { HomeIcon, HomeIconOutline } from "../../components/Icons";
 import { useAuth } from "../contexts/AuthContext";
 import { Bell, User } from "lucide-react-native";
@@ -14,12 +14,21 @@ export default function TabsLayout() {
       <StatusBar backgroundColor="#064E3B" barStyle="light-content" />
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: "#881337",
           headerTintColor: "#065F46",
           headerTitleStyle: {
             fontFamily: "SenBold",
             color: "#064E3B",
             fontSize: 23,
+          },
+          tabBarActiveTintColor: "#881337",
+          tabBarStyle: {
+            position: "absolute",
+            paddingBottom: 5,
+            paddingTop: 5,
+            height: 55,
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15,
+            // marginHorizontal: 45,
           },
           tabBarLabelStyle: {
             fontFamily: "SenMedium",
@@ -31,8 +40,8 @@ export default function TabsLayout() {
           name="home"
           options={{
             headerStyle: {
-              backgroundColor: "#064E3B",
               height: 90,
+              backgroundColor: "#064E3B",
             },
             headerLeft: () => (
               <Pressable
