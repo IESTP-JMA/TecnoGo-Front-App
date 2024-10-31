@@ -1,16 +1,7 @@
-import {
-  Link,
-  Stack,
-  useNavigation,
-  usePathname,
-  useRouter,
-} from "expo-router";
+import { Link, Stack, usePathname } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
 export default function IndexTramites() {
-  const isActive = (route) => pathname.includes(route);
-  const router = useRouter();
-  const navigation = useNavigation();
   const pathname = usePathname();
 
   const tabs = [
@@ -18,28 +9,35 @@ export default function IndexTramites() {
     { id: "progress", title: "Progreso", href: "./progress" },
     { id: "response", title: "Respuesta", href: "./response" },
   ];
-  return (
-    <>
+  const isActive = (route) => {
+    console.log(pathname);
+    return pathname.includes(route);
+  };
+
+  const Navbar = () => {
+    return (
       <View className="flex-row justify-evenly bg-[#e6f2ec] px-3">
         {tabs.map(({ id, title, href }) => (
-          //   <Link key={id} href={href} className="py-2.5 flex-1" asChild>
-          <Pressable
-            key={id}
-            onPress={() => router.push(href)}
-            className={isActive(id) ? "border-b border-emerald-800" : ""}
-          >
-            <Text
-              className={`font-SenRegular text-base text-center ${
-                isActive(id) ? "text-emerald-800" : "text-neutral-500"
-              }`}
+          <Link key={id} href={href} className="py-2.5 flex-1" asChild>
+            <Pressable
+              className={isActive(id) ? "border-b border-emerald-800" : ""}
             >
-              {title}
-            </Text>
-          </Pressable>
-          //   </Link>
+              <Text
+                className={`font-SenRegular text-base text-center ${
+                  isActive(id) ? "text-emerald-800" : "text-neutral-500"
+                }`}
+              >
+                {title}
+              </Text>
+            </Pressable>
+          </Link>
         ))}
       </View>
-
+    );
+  };
+  return (
+    <>
+      <Navbar />
       <Stack
         screenOptions={{
           headerShown: false,

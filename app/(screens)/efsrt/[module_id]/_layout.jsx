@@ -1,20 +1,11 @@
 import { Link, Stack, usePathname, useRouter } from "expo-router";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import Apunte from "../apuntes/index";
 
 export default function EfsrtLaoyout() {
   const pathname = usePathname();
   const tabs = [
-    {
-      id: "informacion",
-      title: "Informacion",
-      href: "./informacion",
-    },
-    {
-      id: "itinerario",
-      title: "Itinerario",
-      href: "./itinerario",
-    },
+    { id: "informacion", title: "Informacion", href: "./informacion" },
+    { id: "itinerario", title: "Itinerario", href: "./itinerario" },
   ];
 
   const isActive = (route) => pathname.includes(route);
@@ -52,10 +43,6 @@ export default function EfsrtLaoyout() {
       >
         <Stack.Screen name="informacion" />
         <Stack.Screen name="itinerario" />
-        <Stack.Screen
-          name="apuntes/index"
-          options={{ presentation: "modal", animation: "fade" }}
-        />
       </Stack>
     </>
   );
