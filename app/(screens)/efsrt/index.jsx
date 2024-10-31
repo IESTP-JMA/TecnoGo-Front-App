@@ -1,11 +1,35 @@
 import { View, Text, Pressable } from "react-native";
-import { BriefcaseIcon, ChevronRigthIcon } from "../../../components/Icons";
-import { useRouter } from "expo-router";
+import {
+  BriefcaseIcon,
+  ChatsIcon,
+  ChevronRigthIcon,
+} from "../../../components/Icons";
+import { Stack, useRouter } from "expo-router";
 
 export default function InicioEfsrt() {
   const router = useRouter();
+
+  function headerHandler() {
+    return (
+      <Pressable
+        className="-mr-3 py-1 pl-3 pr-2"
+        onPress={() => {
+          router.push({
+            pathname: "efsrt/chats",
+            params: { headerTitle: "Chats" },
+          });
+        }}
+      >
+        <View className="flex-row items-center border border-rose-500 py-0.5 px-2.5 rounded-full gap-x-1.5">
+          <ChatsIcon size={25} strokeWidth={1} color="#F43F5E" />
+          <Text className="font-SenMedium text-rose-500">Chats</Text>
+        </View>
+      </Pressable>
+    );
+  }
   return (
     <View className="flex-1 bg-[#E6F2EC] p-4 gap-5">
+      <Stack.Screen options={{ headerRight: headerHandler }} />
       {/* Module I */}
       <Pressable
         className="bg-white rounded-lg p-4"

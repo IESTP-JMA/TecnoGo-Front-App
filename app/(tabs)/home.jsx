@@ -12,7 +12,7 @@ export default function IndexHome() {
             isDisabled: false,
             icon: "document-text-outline",
             text: "Iniciar un nuevo tramite",
-            path: "tramites/start",
+            path: "tramites",
             headerTitle: "Mis Tramites",
           },
           {

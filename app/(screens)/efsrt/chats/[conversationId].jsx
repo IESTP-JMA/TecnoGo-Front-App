@@ -9,7 +9,7 @@ import {
   Platform,
 } from "react-native";
 import { Send } from "lucide-react-native";
-import { useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 const MessageBubble = ({ message, isSent }) => (
   <View
@@ -28,6 +28,7 @@ const MessageBubble = ({ message, isSent }) => (
 
 export default function ConversationScreen() {
   const { conversationId } = useLocalSearchParams();
+  const { conversationName } = useLocalSearchParams();
   const [inputMessage, setInputMessage] = useState("");
 
   const [messages, setMessages] = useState([
@@ -68,6 +69,7 @@ export default function ConversationScreen() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       className="flex-1"
     >
+      <Stack.Screen options={{ headerTitle: conversationName }} />
       <FlatList
         className="p-4 bg-[#E6F2EC]"
         data={messages}

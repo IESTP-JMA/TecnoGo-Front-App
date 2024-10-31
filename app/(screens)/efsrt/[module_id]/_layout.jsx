@@ -1,6 +1,6 @@
 import { Link, Stack, usePathname, useRouter } from "expo-router";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import Apunte from "./apuntes/index";
+import Apunte from "../apuntes/index";
 
 export default function EfsrtLaoyout() {
   const pathname = usePathname();
@@ -46,31 +46,17 @@ export default function EfsrtLaoyout() {
       <Navbar />
       <Stack
         screenOptions={{
-          headerShown: false,
+          headerShown: true,
           animation: "slide_from_right",
         }}
       >
         <Stack.Screen name="informacion" />
         <Stack.Screen name="itinerario" />
-        {/* <Stack.Screen
+        <Stack.Screen
           name="apuntes/index"
           options={{ presentation: "modal", animation: "fade" }}
-        /> */}
+        />
       </Stack>
     </>
   );
 }
-
-// import { Link, Stack, usePathname, useRouter } from "expo-router";
-// import { Pressable, Text, View } from "react-native";
-
-// export default function EfsrtLaoyout() {
-//   return (
-//     <Stack
-//       screenOptions={{
-//         headerShown: true,
-//         animation: "slide_from_right",
-//       }}
-//     />
-//   );
-// }

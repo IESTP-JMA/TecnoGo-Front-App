@@ -1,4 +1,4 @@
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import { Clock, MapPin } from "lucide-react-native";
 import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
@@ -6,6 +6,7 @@ import { Calendar, LocaleConfig } from "react-native-calendars";
 
 export default function AsistenciaCalendario() {
   const [selectedDay, setSelectedDay] = useState(null);
+  const navigation = useNavigation();
 
   LocaleConfig.locales["es"] = {
     monthNames: [
@@ -148,7 +149,10 @@ export default function AsistenciaCalendario() {
         <Pressable
           className="bg-emerald-600 items-center py-2 rounded-lg"
           onPress={() => {
-            router.replace("./apuntes");
+            router.push({
+              pathname: "../apuntes",
+              params: { headerTitle: selectedDay },
+            });
           }}
         >
           <Text className="font-SenMedium text-white">

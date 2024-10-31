@@ -29,7 +29,7 @@ export default function Chat() {
 
   return (
     <ScrollView className="flex-1 bg-[#E6F2EC]">
-      <Stack.Screen />
+      <Stack.Screen options={{ headerTitle: "Chats" }} />
       {chats.map((chat) => (
         <ChatItem key={chat.module} {...chat} router={router} />
       ))}
@@ -43,7 +43,7 @@ const ChatItem = ({ name, module, message, time, image, router }) => (
     onPress={() => {
       router.push({
         pathname: `efsrt/chats/${name}`,
-        params: { headerTitle: name },
+        params: { conversationName: name },
       });
     }}
   >
