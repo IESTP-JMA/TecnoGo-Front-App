@@ -1,5 +1,5 @@
 import { Link, Stack, usePathname } from "expo-router";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 export default function EfsrtLaoyout() {
   const pathname = usePathname();

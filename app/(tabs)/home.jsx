@@ -1,5 +1,5 @@
 import { View, Text, Pressable, ScrollView } from "react-native";
-import { Link, useRouter } from "expo-router";
+import { Link } from "expo-router";
 import {
   CalendarIcon,
   DocumentCheckIcon,
@@ -8,9 +8,8 @@ import {
 } from "../../components/Icons";
 
 export default function IndexHome() {
-  const router = useRouter();
   return (
-    <ScrollView className="flex-1 bg-[#e5f5f3] p-4">
+    <ScrollView className="flex-1 bg-[#e5f5f3] px-4 py-6">
       <View className="flex-row flex-wrap justify-evenly">
         {[
           {
@@ -47,7 +46,7 @@ export default function IndexHome() {
           <Link
             key={index}
             href={item.path}
-            className=" bg-white w-[45%]"
+            className=" bg-white w-[40%]"
             asChild
           >
             <Pressable
