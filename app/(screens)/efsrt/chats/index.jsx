@@ -1,7 +1,7 @@
 import { Stack, useRouter } from "expo-router";
 import { View, Text, Image, ScrollView, Pressable } from "react-native";
 
-export default function EnhancedChatList() {
+export default function Chat() {
   const chats = [
     {
       name: "Juan Perez",

@@ -1,5 +1,5 @@
 import { Text, Image, StatusBar, Pressable, View } from "react-native";
-import { Tabs, useRouter } from "expo-router";
+import { Stack, Tabs, useRouter } from "expo-router";
 import { HomeIcon, HomeIconOutline } from "../../components/Icons";
 import { useAuth } from "../contexts/AuthContext";
 import { Bell, User } from "lucide-react-native";

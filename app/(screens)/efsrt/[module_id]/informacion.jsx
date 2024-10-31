@@ -1,4 +1,3 @@
-import React from "react";
 import { View, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
@@ -10,14 +9,14 @@ const ProgramInfo = ({
   supervisor,
   progress,
 }) => {
-  const { module_ID } = useLocalSearchParams();
+  const { module_id } = useLocalSearchParams(); // Obtén el valor del ID desde la URL
 
   return (
-    <View className="flex-1 bg-[#e6f7f1] p-4 items-center justify-center">
+    <View className="flex-1 bg-[#e6f7f1] p-4 items-center">
       <View className="bg-white rounded-lg p-6 w-full max-w-sm shadow-md">
         <View className="mb-4">
           <Text className="text-lg font-bold text-[#2c3e50] mb-2">
-            Lugar de Ejecución
+            Lugar de Ejecución - {module_id}
           </Text>
           <View className="flex-row items-center">
             <Ionicons name="location-outline" size={20} color="#34495e" />

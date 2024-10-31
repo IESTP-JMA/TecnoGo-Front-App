@@ -1,7 +1,8 @@
 import { View, Text, Pressable } from "react-native";
 import { BriefcaseIcon, ChevronRigthIcon } from "../../../components/Icons";
 import { useRouter } from "expo-router";
-export default function IndexEfsrt() {
+
+export default function InicioEfsrt() {
   const router = useRouter();
   return (
     <View className="flex-1 bg-[#E6F2EC] p-4 gap-5">
@@ -9,7 +10,10 @@ export default function IndexEfsrt() {
       <Pressable
         className="bg-white rounded-lg p-4"
         onPress={() => {
-          router.push("efsrt/modules/informacion");
+          router.push({
+            pathname: "efsrt/module_id98/informacion",
+            params: { headerTitle: "I Modulo" },
+          });
         }}
       >
         <View className="flex-row items-center justify-between">
