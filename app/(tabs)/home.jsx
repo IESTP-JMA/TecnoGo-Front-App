@@ -46,7 +46,7 @@ export default function IndexHome() {
           <Link
             key={index}
             href={item.path}
-            className=" bg-white w-[40%]"
+            className="bg-white w-[40%]"
             asChild
           >
             <Pressable
