@@ -1,3 +1,4 @@
+import { enableScreens } from "react-native-screens";
 import { Slot } from "expo-router";
 import { useEffect } from "react";
 import { useFonts } from "expo-font";
@@ -6,6 +7,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import "./global.css";
 
 // Keep the splash screen visible while we fetch resources
+enableScreens();
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
