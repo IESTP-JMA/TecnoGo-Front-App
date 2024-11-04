@@ -68,9 +68,27 @@ export default function IndexHome() {
           </Link>
         ))}
       </View>
-      {/* <View>
+      <Pressable
+        className="self-center mt-10 px-1 py-2 rounded bg-fuchsia-400"
+        onPress={async () => {
+          await removeJWT();
+          console.log("JWT deleted");
+        }}
+      >
+        <Text>Delete JWT</Text>
+      </Pressable>
+      <Pressable
+        className="self-center mt-1 px-1 py-2 rounded bg-fuchsia-400"
+        onPress={async () => {
+          await removeJWT();
+          console.log(user);
+        }}
+      >
+        <Text>LOG user</Text>
+      </Pressable>
+      <View>
         <Text>{isLoading ? "Cagando..." : "Cagado"}</Text>
-      </View> */}
+      </View>
     </ScrollView>
   );
 }

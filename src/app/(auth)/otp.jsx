@@ -17,7 +17,7 @@ import { ArrowLeft } from "lucide-react-native";
 /* global clearTimeout setTimeout*/
 export default function OTP() {
   const { login } = useAuth();
-  const { email } = useLocalSearchParams();
+  const { email, otpId } = useLocalSearchParams();
   const { setLoginVisible } = useLoginContext();
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);

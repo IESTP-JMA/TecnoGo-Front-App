@@ -1,8 +1,7 @@
 import { client } from "@/api/client";
 import { BASE_URL } from "@/api/config";
-import { useAuth } from "@/contexts/AuthContext";
 import { saveJWT } from "@/utils/jwtStorage";
-import { Mutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 export async function customClient(endpoint, { body } = {}) {
   const config = {
@@ -28,20 +27,15 @@ export async function customClient(endpoint, { body } = {}) {
   return response;
 }
 
-export function useSendOTP(email) {
-  const { setOtpId } = useAuth();
-  return Mutation({
-    mutationFn: client("/send-otp", {
-      method: "POST",
-      body: JSON.stringify({ email }),
-    }),
-    onSuccess: (data) => {
-      if (data.success) {
-        setOtpId(data.otpId);
-      } else {
-        console.error(`bad response: ${data.success}`);
-      }
+export function useSendOTP({ onSuccess } = {}) {
+  return useMutation({
+    mutationFn: (email) => {
+      client("/send-otp", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+      });
     },
+    onSuccess,
     onError: (error) => {
       console.error("Error al subir la imagen:", error);
     },
@@ -49,7 +43,7 @@ export function useSendOTP(email) {
 }
 
 export function useVerifyOTP({ otpId, otp }) {
-  return Mutation({
+  return useMutation({
     mutationFn: customClient("/verify-otp", {
       method: "POST",
       body: JSON.stringify({ otpId, otp }),

@@ -30,7 +30,7 @@ export function CircleLoader() {
 
   return (
     <Animated.View style={animatedStyle}>
-      <Loader color="black" />
+      <Loader color="white" />
     </Animated.View>
   );
 }

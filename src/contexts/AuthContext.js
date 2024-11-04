@@ -39,18 +39,6 @@ export function AuthProvider({ children }) {
     }
   }
 
-  const login = async (email) => {
-    try {
-      await AsyncStorage.setItem("email", email);
-      setUserData({
-        ...userData,
-        email,
-      });
-    } catch (error) {
-      console.error("Failed to save user token", error);
-    }
-  };
-
   const logout = async () => {
     try {
       await AsyncStorage.removeItem("userToken");
@@ -65,7 +53,6 @@ export function AuthProvider({ children }) {
       value={{
         userData,
         setUserData,
-        login,
         logout,
         isLoading,
         uriImage,
