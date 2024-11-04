@@ -1,4 +1,4 @@
-import { getJWT } from "@/utils/jwtStorage";
+import { getJWT, saveJWT } from "@/utils/jwtStorage";
 import { BASE_URL, IMGBB_API_URL } from "@/api/config";
 
 export async function client(endpoint, { method = "GET", body } = {}) {
@@ -20,6 +20,7 @@ export async function client(endpoint, { method = "GET", body } = {}) {
 
   if (!response.ok) {
     // Opcional: manejar errores específicos
+
     const errorData = await response.json();
     throw new Error(errorData.message || "Error en la solicitud");
   }

@@ -1,14 +1,12 @@
 import { Text, Image, StatusBar, Pressable } from "react-native";
 import { Tabs, useRouter } from "expo-router";
 import { HomeIcon, HomeIconOutline } from "../../components/Icons";
-import { useAuth } from "../../contexts/AuthContext";
 import { Bell, User } from "lucide-react-native";
 import AvatarPlaceHolder from "../../components/AvatarPlaceHolder";
 import { useUser } from "@/contexts/UserContext";
 
 export default function TabsLayout() {
   const router = useRouter();
-  const { userData, uriImage } = useAuth();
   const { user } = useUser();
 
   return (
@@ -67,7 +65,7 @@ export default function TabsLayout() {
             headerTitle: () => (
               <>
                 <Text className="text-white text-xl font-SenMedium -ml-1">
-                  Hola, {userData.firstNames} 👋
+                  Hola, {user.firstNames} 👋
                 </Text>
                 <Text className="text-zinc-200 font-SenRegular -ml-1">
                   Bienvenida

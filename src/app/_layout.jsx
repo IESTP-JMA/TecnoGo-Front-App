@@ -8,7 +8,6 @@ import { UserProvider } from "@/contexts/UserContext";
 import "./global.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// Keep the splash screen visible while we fetch resources
 enableScreens();
 SplashScreen.preventAutoHideAsync();
 const queryClient = new QueryClient();
@@ -25,11 +24,6 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
-      // if (true) {
-      //   router.replace("/(screens)/Home");
-      // } else {
-      //   router.replace("/(auth)/Login");
-      // }
     }
   }, [loaded]);
 

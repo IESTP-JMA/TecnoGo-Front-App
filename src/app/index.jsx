@@ -1,33 +1,40 @@
-import { Redirect, useRouter } from "expo-router";
+import { Redirect } from "expo-router";
 import { useAuth } from "@/contexts/AuthContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
-import { getJWT, saveJWT, removeJWT } from "@/utils/jwtStorage";
+import { hasJWT, removeJWT } from "@/utils/jwtStorage";
 
 export default function IndexRoot() {
-  const userJWT = getJWT();
-  const router = useRouter();
-  const { userData, isLoading } = useAuth();
+  const { isLoading } = useAuth();
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
 
   useEffect(() => {
-    if (!isLoading) {
-      if (true) {
-        router.replace("(tabs)/home");
-      } else {
-        router.replace("/login");
-      }
+    async function checkLoginStatus() {
+      const userHasJWT = await hasJWT();
+      setIsLoggedIn(userHasJWT);
     }
-  }, [userData, isLoading, router]);
 
-  if (!userJWT) {
-    return <Redirect href="/login" />;
+    checkLoginStatus();
+  }, [isLoggedIn]);
+
+  if (!isLoading) {
+    // if (false) {
+    //   router.replace("(tabs)/home");
+    // } else {
+    //   router.replace("/login");
+    // }
   }
 
-  if (isLoading) {
+  if (isLoggedIn) {
+    return <Redirect href="/home" />;
+  } else if (isLoggedIn === null) {
     return (
-      <View className=" flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="#4CAF50" />
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" color="black" />
       </View>
     );
-  } else return null; // O puedes devolver un componente alternativo
+  } else {
+    return <Redirect href="/login" />;
+  }
+  //  else return null; // O puedes devolver un componente alternativo
 }

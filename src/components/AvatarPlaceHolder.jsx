@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { useAuth } from "../contexts/AuthContext";
+import { useUser } from "@/contexts/UserContext";
 
 export default function AvatarPlaceHolder({
   customStyle,
@@ -7,7 +7,7 @@ export default function AvatarPlaceHolder({
   customTextStyle,
   customTextClass,
 }) {
-  const { userData } = useAuth();
+  const { user } = useUser();
 
   return (
     <View
@@ -18,8 +18,7 @@ export default function AvatarPlaceHolder({
         style={customTextStyle}
         className={`${customTextClass} font-SenBold text-gray-600`}
       >
-        {userData.firstNames[0].toUpperCase() +
-          userData.lastNames[0].toUpperCase()}
+        {user.firstNames[0].toUpperCase() + user.lastNames[0].toUpperCase()}
       </Text>
     </View>
   );

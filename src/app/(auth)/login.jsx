@@ -13,6 +13,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useState, useEffect } from "react";
 import { LogIn } from "lucide-react-native";
 import { CircleLoader } from "../../components/IconsAnimated";
+import { saveJWT } from "@/utils/jwtStorage";
 
 export default function LoginModal() {
   const { isLoginVisible, setLoginVisible } = useLoginContext();
@@ -23,7 +24,9 @@ export default function LoginModal() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  function handleLogin() {
+  async function handleLogin() {
+    await saveJWT("asdasd");
+    console.log("savedJWT");
     if (isValidEmail) {
       login(email);
       setLoginVisible(false);

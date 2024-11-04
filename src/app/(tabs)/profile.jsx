@@ -1,5 +1,4 @@
 import { Pressable, ScrollView, Text, View, Image } from "react-native";
-import { useAuth } from "../../contexts/AuthContext";
 import { useState, useLayoutEffect, useCallback } from "react";
 import { useFocusEffect, useNavigation } from "expo-router";
 import EditButton from "../../components/EditButton";
@@ -41,10 +40,9 @@ const ValueDisplay = ({ value }) => {
 };
 
 export default function Profile() {
-  const { userData, setUserData } = useAuth();
   const { user, setUser } = useUser();
   const [isEditing, setIsEditing] = useState(false);
-  const [tempData, setTempData] = useState(userData);
+  const [tempData, setTempData] = useState(user);
   const navigation = useNavigation();
   // eslint-disable-next-line no-unused-vars
   const { mutate, isPending, error } = useImageUpload();
@@ -63,7 +61,7 @@ export default function Profile() {
           isEditing={isEditing}
           onPress={() => {
             if (isEditing) {
-              setUserData(tempData);
+              setUser(tempData);
               setIsEditing(false);
             } else {
               setIsEditing(true);
@@ -72,7 +70,7 @@ export default function Profile() {
         />
       ),
     });
-  }, [navigation, isEditing, setUserData, tempData]);
+  }, [navigation, isEditing, setUser, tempData]);
 
   const updateField = useCallback(
     (field) => (value) => {
@@ -129,7 +127,7 @@ export default function Profile() {
           <View className="w-[45%]">
             <IconWithLabel icon={User} label={"Nombres"} />
             <StyledTextInput
-              value={isEditing ? tempData.firstNames : userData.firstNames}
+              value={isEditing ? tempData.firstNames : user.firstNames}
               onChangeText={updateField("firstNames")}
               isInProfile
             />
@@ -137,7 +135,7 @@ export default function Profile() {
           <View className="w-1/2">
             <IconWithLabel icon={User} label={"Apellidos"} />
             <StyledTextInput
-              value={isEditing ? tempData.lastNames : userData.lastNames}
+              value={isEditing ? tempData.lastNames : user.lastNames}
               onChangeText={updateField("lastNames")}
               isInProfile
             />
@@ -146,34 +144,32 @@ export default function Profile() {
       ) : (
         <View className="flex-col">
           <IconWithLabel icon={User} label={"Nombre Completo"} />
-          <ValueDisplay
-            value={`${userData.firstNames} ${userData.lastNames}`}
-          />
+          <ValueDisplay value={`${user.firstNames} ${user.lastNames}`} />
         </View>
       )}
 
       <IconWithLabel icon={Mail} label={"Correo Electronico"} />
       {isEditing ? (
         <StyledTextInput
-          value={isEditing ? tempData.email : userData.email}
+          value={isEditing ? tempData.email : user.email}
           onChangeText={updateField("email")}
           keyboardType="email-address"
           isInProfile
         />
       ) : (
-        <ValueDisplay value={userData.email} />
+        <ValueDisplay value={user.email} />
       )}
 
       <IconWithLabel icon={Phone} label={"Numero de Telefono"} />
       {isEditing ? (
         <StyledTextInput
-          value={isEditing ? tempData.phoneNumber : userData.phoneNumber}
+          value={isEditing ? tempData.phoneNumber : user.phoneNumber}
           onChangeText={updateField("phoneNumber")}
           keyboardType="numeric"
           isInProfile
         />
       ) : (
-        <ValueDisplay value={userData.phoneNumber} />
+        <ValueDisplay value={user.phoneNumber} />
       )}
 
       <View className="flex-row gap-x-6">
@@ -184,13 +180,13 @@ export default function Profile() {
               value={
                 isEditing
                   ? tempData.professionalCareer
-                  : userData.professionalCareer
+                  : user.professionalCareer
               }
               onChangeText={updateField("professionalCareer")}
               isInProfile
             />
           ) : (
-            <ValueDisplay value={userData.professionalCareer} />
+            <ValueDisplay value={user.professionalCareer} />
           )}
         </View>
 
@@ -198,12 +194,12 @@ export default function Profile() {
           <IconWithLabel icon={Calendar} label={"Semestre"} />
           {isEditing ? (
             <StyledTextInput
-              value={isEditing ? tempData.semester : userData.semester}
+              value={isEditing ? tempData.semester : user.semester}
               onChangeText={updateField("semester")}
               isInProfile
             />
           ) : (
-            <ValueDisplay value={userData.semester} />
+            <ValueDisplay value={user.semester} />
           )}
         </View>
       </View>
@@ -211,24 +207,24 @@ export default function Profile() {
       <IconWithLabel icon={Cake} label={"Fecha de Nacimiento"} />
       {isEditing ? (
         <StyledTextInput
-          value={isEditing ? tempData.birthDate : userData.birthDate}
+          value={isEditing ? tempData.birthDate : user.birthDate}
           onChangeText={updateField("birthDate")}
           isInProfile
         />
       ) : (
-        <ValueDisplay value={userData.birthDate} />
+        <ValueDisplay value={user.birthDate} />
       )}
 
       <IconWithLabel icon={IdCard} label={"DNI"} />
       {isEditing ? (
         <StyledTextInput
-          value={isEditing ? tempData.dni : userData.dni}
+          value={isEditing ? tempData.dni : user.dni}
           onChangeText={updateField("dni")}
           keyboardType="numeric"
           isInProfile
         />
       ) : (
-        <ValueDisplay value={userData.phoneNumber} />
+        <ValueDisplay value={user.phoneNumber} />
       )}
     </ScrollView>
   );

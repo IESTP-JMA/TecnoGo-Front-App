@@ -17,6 +17,8 @@ export function AuthProvider({ children }) {
   });
   const [uriImage, setUriImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [otpId, setOtpId] = useState();
+  const [isLogued, setIsLogued] = useState();
 
   useEffect(() => {
     // Check for the user token when the app loads
@@ -68,6 +70,8 @@ export function AuthProvider({ children }) {
         isLoading,
         uriImage,
         setUriImage,
+        otpId,
+        setOtpId,
       }}
     >
       {children}

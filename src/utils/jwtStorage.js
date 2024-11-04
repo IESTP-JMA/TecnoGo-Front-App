@@ -1,6 +1,6 @@
 import * as SecureStore from "expo-secure-store";
 
-const JWT_KEY = "user_jwt";
+const JWT_KEY = "userJWT";
 
 // Guardar el JWT
 export const saveJWT = async (token) => {

@@ -6,8 +6,14 @@ import {
   DocumentPlusIcon,
   UserFolderIcon,
 } from "@components/Icons";
+import { removeJWT } from "@/utils/jwtStorage";
+import { useGetUser } from "@/hooks/useUserMutation";
+import { useUser } from "@/contexts/UserContext";
 
 export default function IndexHome() {
+  const { user } = useUser();
+  const { isLoading } = useGetUser();
+
   return (
     <ScrollView className="flex-1 bg-[#e5f5f3] px-4 py-6">
       <View className="flex-row flex-wrap justify-evenly">
@@ -62,6 +68,9 @@ export default function IndexHome() {
           </Link>
         ))}
       </View>
+      {/* <View>
+        <Text>{isLoading ? "Cagando..." : "Cagado"}</Text>
+      </View> */}
     </ScrollView>
   );
 }
