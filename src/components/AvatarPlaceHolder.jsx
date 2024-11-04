@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { useAuth } from "../app/contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function AvatarPlaceHolder({
   customStyle,
@@ -12,7 +12,7 @@ export default function AvatarPlaceHolder({
   return (
     <View
       style={customStyle}
-      className={`bg-gray-300 rounded-full items-center justify-center ${customClass}`}
+      className={`relative bg-gray-300 rounded-full items-center justify-center ${customClass}`}
     >
       <Text
         style={customTextStyle}

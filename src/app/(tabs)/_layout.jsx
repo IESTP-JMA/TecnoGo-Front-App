@@ -1,13 +1,15 @@
 import { Text, Image, StatusBar, Pressable } from "react-native";
 import { Tabs, useRouter } from "expo-router";
 import { HomeIcon, HomeIconOutline } from "../../components/Icons";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { Bell, User } from "lucide-react-native";
 import AvatarPlaceHolder from "../../components/AvatarPlaceHolder";
+import { useUser } from "@/contexts/UserContext";
 
 export default function TabsLayout() {
   const router = useRouter();
   const { userData, uriImage } = useAuth();
+  const { user } = useUser();
 
   return (
     <>
@@ -48,10 +50,10 @@ export default function TabsLayout() {
                 className="pl-2"
                 onPress={() => router.push("profile")}
               >
-                {uriImage ? (
+                {user.urlImage ? (
                   <Image
                     className="rounded-full w-14 h-14"
-                    source={{ uri: uriImage }}
+                    source={{ uri: user.urlImage }}
                   />
                 ) : (
                   <AvatarPlaceHolder

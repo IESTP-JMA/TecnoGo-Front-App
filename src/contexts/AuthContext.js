@@ -11,12 +11,9 @@ export function AuthProvider({ children }) {
     phoneNumber: "932002001",
     professionalCareer: "APSTI",
     semester: "IV",
-    // education: {
-    //   career: "APSTI",
-    //   semester: "IV",
-    // },
     birthDate: "22/05/2006",
     dni: "00000001",
+    uriImage: null,
   });
   const [uriImage, setUriImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

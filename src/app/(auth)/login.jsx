@@ -8,9 +8,11 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Image } from "expo-image";
-import { useLoginContext } from "../contexts/LoginContext";
-import { useAuth } from "../contexts/AuthContext";
+import { useLoginContext } from "../../contexts/LoginContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { useState, useEffect } from "react";
+import { LogIn } from "lucide-react-native";
+import { CircleLoader } from "../../components/IconsAnimated";
 
 export default function LoginModal() {
   const { isLoginVisible, setLoginVisible } = useLoginContext();
@@ -18,6 +20,7 @@ export default function LoginModal() {
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   function handleLogin() {
@@ -53,19 +56,19 @@ export default function LoginModal() {
           <View className="bg-[#E6F2EC] p-4 rounded-lg w-80 max-w-lg ">
             <View className="items-center gap-3">
               <Image
-                source={require("../../assets/Logo.png")}
+                source={require("../../../assets/Logo.png")}
                 style={{ width: 127, height: 126 }}
               />
               <Text className="text-3xl font-SenSemiBold text-green-800">
                 TecnoGO
               </Text>
             </View>
-            <Text className="font-SenRegular text-gray-600 text-center my-2">
+            <Text className="font-SenRegular text-gray-600 text-center my-3">
               Una app diseñada para facilitar todos tus procesos académicos
             </Text>
             <View>
-              <Text className="text-sm font-SenRegular text-gray-500 mb-2">
-                DNI / Correo
+              <Text className="text-sm font-SenRegular text-gray-500 mb-1">
+                Correo Electronico
               </Text>
               <TextInput
                 className={`bg-white border border-zinc-300 rounded-md p-2 font-SenRegular text-base ${!isValidEmail && email !== "" ? "border-red-500" : ""}`}
@@ -81,12 +84,18 @@ export default function LoginModal() {
                 </Text>
               )}
               <Pressable
-                className="bg-emerald-600 py-1 mt-3 rounded-md items-center "
+                className="relative flex-row bg-emerald-600 py-1 px-4 mt-3 gap-3 rounded-md items-center justify-center active:opacity-80"
                 onPress={handleLogin}
               >
-                <Text className="text-white font-SenMedium text-lg">
-                  Ingresar
+                <Text className="text-white text-center font-SenMedium text-lg">
+                  {isLoading ? <CircleLoader /> : "Ingresar"}
                 </Text>
+
+                {!isLoading && (
+                  <View className="absolute right-3">
+                    <LogIn color="white" size={22} />
+                  </View>
+                )}
               </Pressable>
             </View>
           </View>

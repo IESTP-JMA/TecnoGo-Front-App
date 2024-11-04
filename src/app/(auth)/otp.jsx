@@ -10,9 +10,9 @@ import {
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Image } from "expo-image";
-import { ArrowLeftIcon } from "../../components/Icons";
-import { useLoginContext } from "../contexts/LoginContext";
-import { useAuth } from "../contexts/AuthContext";
+import { useLoginContext } from "../../contexts/LoginContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { ArrowLeft } from "lucide-react-native";
 
 /* global clearTimeout setTimeout*/
 export default function OTP() {
@@ -105,10 +105,10 @@ export default function OTP() {
                   router.back();
                 }}
               >
-                <ArrowLeftIcon />
+                <ArrowLeft />
               </Pressable>
               <Image
-                source={require("../../assets/Logo.png")}
+                source={require("../../../assets/Logo.png")}
                 style={{ width: 52, height: 51.9 }}
               />
             </View>

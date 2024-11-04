@@ -5,7 +5,7 @@ import {
   DocumentCheckIcon,
   DocumentPlusIcon,
   UserFolderIcon,
-} from "../../components/Icons";
+} from "@components/Icons";
 
 export default function IndexHome() {
   return (

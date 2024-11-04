@@ -8,12 +8,12 @@ import {
   SafeAreaView,
 } from "react-native";
 import { ScrollScren } from "../../../../components/Screens";
-import StyledLabel from "../../../../components/form/StyledLabel";
-import StyledTextInput from "../../../../components/form/StyledTextInput";
+import StyledLabel from "@components/form/StyledLabel";
+import StyledTextInput from "@components/form/StyledTextInput";
 import { useState } from "react";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
-import StyledDatePicker from "../../../../components/form/StyledDatePicker";
+import StyledDatePicker from "@components/form/StyledDatePicker";
 import { Picker } from "@react-native-picker/picker";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
