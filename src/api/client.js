@@ -12,20 +12,22 @@ export async function client(endpoint, { method = "GET", body } = {}) {
     },
   };
 
+  console.log(endpoint, "HeadersFound: ", config.headers);
   if (body) {
     config.body = JSON.stringify(body);
+    console.log(endpoint, "BodyFound: ", config.body);
   }
 
   const response = await fetch(`${BASE_URL}${endpoint}`, config);
-
+  console.log(response.status);
   if (!response.ok) {
     // Opcional: manejar errores específicos
-
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Error en la solicitud");
+    console.log("response.ok", response.ok, await response.text());
+    // const errorData = await response.json();
+    throw new Error("Error en la solicitud");
   }
 
-  return response.json();
+  return await response.json();
 }
 
 export async function uploadImage(imageBase64) {

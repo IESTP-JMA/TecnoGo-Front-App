@@ -1,4 +1,3 @@
-import { client } from "@/api/client";
 import { BASE_URL } from "@/api/config";
 import { saveJWT } from "@/utils/jwtStorage";
 import { useMutation } from "@tanstack/react-query";
@@ -11,33 +10,37 @@ export async function customClient(endpoint, { body } = {}) {
     },
   };
 
+  console.log(endpoint, "HeadersFound: ", config.headers);
   if (body) {
     config.body = JSON.stringify(body);
+    console.log(endpoint, "BodyFound: ", config.body);
   }
 
   const response = await fetch(`${BASE_URL}${endpoint}`, config);
 
   if (!response.ok) {
     // Opcional: manejar errores específicos
-    throw new Error(
-      // eslint-disable-next-line prettier/prettier
-      `StatusCode: ${response.status}` || "Error en la solicitud"
+    console.log(
+      `StatusCode -> ${response.status}: statusText-> ${response.statusText}`
     );
+    return;
+    // throw new Error(
+    //   `Throw new Error -> ${response.status}` || "Error en la solicitud"
+    // );
   }
-  return response;
+  return response.json();
 }
 
-export function useSendOTP({ onSuccess } = {}) {
+export function useSendOTP(email, { onSuccess } = {}) {
   return useMutation({
-    mutationFn: (email) => {
-      client("/send-otp", {
-        method: "POST",
-        body: JSON.stringify({ email }),
+    mutationFn: () => {
+      return customClient("/send-otp", {
+        body: { email },
       });
     },
     onSuccess,
     onError: (error) => {
-      console.error("Error al subir la imagen:", error);
+      console.error("Error in request OTP", error);
     },
   });
 }

@@ -15,40 +15,40 @@ import { CircleLoader } from "../../components/IconsAnimated";
 import { useSendOTP } from "@/hooks/useAuthMutations";
 
 export default function LoginModal() {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const { isLoginVisible, setLoginVisible } = useLoginContext();
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(
+    // eslint-disable-next-line prettier/prettier
+    "Por favor, ingrese un correo electrónico válido."
+  );
   const router = useRouter();
-  const { mutate, isLoading, error } = useSendOTP({
-    onSuccess: (data) => {
-      if (data.success) {
+  const { mutate, isPending } = useSendOTP(email, {
+    onSuccess: async (data) => {
+      if (!data) {
+        setErrorMessage("Not response received");
+        setShowError(true);
+        return;
+      }
+      const dataJson = await data.json();
+      console.log(dataJson);
+      if (dataJson.success) {
         setLoginVisible(false);
         router.push({
           pathname: "/otp",
-          params: { email, otpId: data.otpId },
+          params: { email, otpId: dataJson.otpId },
         });
       } else {
-        setErrorMessage(data.message);
-        throw new Error("Error en la solicitud");
+        setErrorMessage("Error al generar el OTP");
+        setShowError(true);
       }
     },
   });
   useEffect(() => {
-    validateEmail(email);
+    setIsValidEmail(emailRegex.test(email));
   }, [email]);
-
-  function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isValid = emailRegex.test(email);
-    setIsValidEmail(isValid);
-    setShowError(!isValid);
-    setErrorMessage(
-      // eslint-disable-next-line prettier/prettier
-      isValid ? "" : "Por favor, ingrese un correo electrónico válido."
-    );
-  }
 
   return (
     <Modal
@@ -84,29 +84,29 @@ export default function LoginModal() {
                 autoCorrect={false}
                 placeholder="Ingresa tu email"
               />
-              {error ||
-                showError ||
-                (!isValidEmail && (
-                  <Text className="text-red-500 text-xs my-1">
-                    {errorMessage}
-                  </Text>
-                ))}
+              {showError && (
+                <Text className="text-red-500 text-xs my-1">
+                  {errorMessage}
+                </Text>
+              )}
               <Pressable
                 className="relative flex-row bg-emerald-600 py-1 px-4 mt-3 gap-3 rounded-md items-center justify-center active:opacity-80"
                 onPress={() => {
                   if (isValidEmail) {
+                    setShowError(false);
+
                     console.log("clicked Login");
-                    // mutate(email);
+                    mutate(email);
                   } else {
                     setShowError(true);
                   }
                 }}
               >
                 <Text className="text-white text-center font-SenMedium text-lg">
-                  {isLoading ? <CircleLoader /> : "Ingresar"}
+                  {isPending ? <CircleLoader /> : "Ingresar"}
                 </Text>
 
-                {!isLoading && (
+                {!isPending && (
                   <View className="absolute right-3">
                     <LogIn color="white" size={22} />
                   </View>
