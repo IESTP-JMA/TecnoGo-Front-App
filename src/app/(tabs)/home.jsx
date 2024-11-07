@@ -6,7 +6,7 @@ import {
   DocumentPlusIcon,
   UserFolderIcon,
 } from "@components/Icons";
-import { removeJWT } from "@/utils/jwtStorage";
+import { getJWT, removeJWT } from "@/utils/jwtStorage";
 import { useGetUser } from "@/hooks/useUserMutation";
 import { useUser } from "@/contexts/UserContext";
 
@@ -76,6 +76,15 @@ export default function IndexHome() {
         }}
       >
         <Text>Delete JWT</Text>
+      </Pressable>
+      <Pressable
+        className="self-center mt-10 px-1 py-2 rounded bg-fuchsia-400"
+        onPress={async () => {
+          const token = await getJWT();
+          console.log(token);
+        }}
+      >
+        <Text>Log JWT</Text>
       </Pressable>
       <Pressable
         className="self-center mt-1 px-1 py-2 rounded bg-fuchsia-400"

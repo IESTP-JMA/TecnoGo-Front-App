@@ -25,10 +25,10 @@ export default function LoginModal() {
     "Por favor, ingrese un correo electrónico válido."
   );
   const router = useRouter();
-  const { mutate, isPending } = useSendOTP(email, {
+  const { mutate, isPending } = useSendOTP({
     onSuccess: async (data) => {
       if (!data) {
-        setErrorMessage("Not response received");
+        setErrorMessage("Internal Server Error");
         setShowError(true);
         return;
       }

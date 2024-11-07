@@ -2,20 +2,20 @@ import { Redirect } from "expo-router";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
-import { hasJWT, removeJWT } from "@/utils/jwtStorage";
+import { hasJWT } from "@/utils/jwtStorage";
 
 export default function IndexRoot() {
   const { isLoading } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = useState(null);
 
   useEffect(() => {
-    async function checkLoginStatus() {
-      const userHasJWT = await hasJWT();
-      setIsLoggedIn(userHasJWT);
-    }
-
     checkLoginStatus();
   }, [isLoggedIn]);
+
+  async function checkLoginStatus() {
+    const userHasJWT = await hasJWT();
+    setIsLoggedIn(userHasJWT);
+  }
 
   if (!isLoading) {
     // if (false) {
@@ -26,6 +26,7 @@ export default function IndexRoot() {
   }
 
   if (isLoggedIn) {
+    console.log("isLoggedIn redirect /home");
     return <Redirect href="/home" />;
   } else if (isLoggedIn === null) {
     return (
@@ -33,8 +34,14 @@ export default function IndexRoot() {
         <ActivityIndicator size="large" color="black" />
       </View>
     );
-  } else {
-    return <Redirect href="/login" />;
   }
+  return (
+    <Redirect
+      href={{
+        pathname: "/otp",
+        params: { email: "test@email.com", otpId: "test-from-index" },
+      }}
+    />
+  );
   //  else return null; // O puedes devolver un componente alternativo
 }

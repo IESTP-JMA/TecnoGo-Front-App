@@ -6,6 +6,7 @@ const JWT_KEY = "userJWT";
 export const saveJWT = async (token) => {
   try {
     await SecureStore.setItemAsync(JWT_KEY, token);
+    console.log("JWT saved successfully", token);
     return true;
   } catch (error) {
     console.error("Error saving JWT:", error);

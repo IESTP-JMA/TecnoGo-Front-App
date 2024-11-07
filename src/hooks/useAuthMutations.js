@@ -1,6 +1,7 @@
 import { BASE_URL } from "@/api/config";
 import { saveJWT } from "@/utils/jwtStorage";
 import { useMutation } from "@tanstack/react-query";
+import { router } from "expo-router";
 
 export async function customClient(endpoint, { body } = {}) {
   const config = {
@@ -28,12 +29,12 @@ export async function customClient(endpoint, { body } = {}) {
     //   `Throw new Error -> ${response.status}` || "Error en la solicitud"
     // );
   }
-  return response.json();
+  return response;
 }
 
-export function useSendOTP(email, { onSuccess } = {}) {
+export function useSendOTP({ onSuccess } = {}) {
   return useMutation({
-    mutationFn: () => {
+    mutationFn: (email) => {
       return customClient("/send-otp", {
         body: { email },
       });
@@ -45,20 +46,24 @@ export function useSendOTP(email, { onSuccess } = {}) {
   });
 }
 
-export function useVerifyOTP({ otpId, otp }) {
+export function useVerifyOTP() {
   return useMutation({
-    mutationFn: customClient("/verify-otp", {
-      method: "POST",
-      body: JSON.stringify({ otpId, otp }),
-    }),
+    mutationFn: ({ otpId, otp }) => {
+      return customClient("/verify-otp", {
+        method: "POST",
+        body: { otpId, otp },
+      });
+    },
     onSuccess: async (response) => {
+      if (!response) return;
       const dataJson = await response.json();
+      console.log("dataJson", dataJson);
       if (dataJson.isValid) {
         const token = response.headers.get("authorization");
         if (token) {
           const jwtToken = token.replace("Bearer ", "");
           await saveJWT(jwtToken);
-          console.log("JWT saved successfully");
+          router.replace("/home");
         } else {
           console.log("isValid but Token not Found");
         }

@@ -14,7 +14,7 @@ export function useGetUser() {
     if (query.data) {
       setUser(query.data);
     }
-  }, [query.data, setUser]);
+  }, [query, setUser]);
   return query;
 }
 

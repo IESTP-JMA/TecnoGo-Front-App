@@ -13,6 +13,8 @@ import { Image } from "expo-image";
 import { useLoginContext } from "../../contexts/LoginContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { ArrowLeft } from "lucide-react-native";
+import { useVerifyOTP } from "@/hooks/useAuthMutations";
+import { CircleLoader } from "@components/IconsAnimated";
 
 /* global clearTimeout setTimeout*/
 export default function OTP() {
@@ -25,6 +27,7 @@ export default function OTP() {
   const [isExpired, setIsExpired] = useState(false);
   const router = useRouter();
   const timerRef = useRef(null);
+  const { mutate, isPending } = useVerifyOTP();
 
   useEffect(() => {
     startTimer();
@@ -73,8 +76,8 @@ export default function OTP() {
     }
   };
   const handleVerify = () => {
-    login(email);
-    router.replace("/home");
+    mutate({ otpId, otp: otp.join("") });
+    // login(email);
   };
 
   const formatTime = (time) => {
@@ -135,20 +138,24 @@ export default function OTP() {
               ))}
             </View>
             <Text
-              className={`font-SenRegular text-center mb-4 mt-1 ${isExpired ? "text-red-600" : ""}`}
+              className={`font-SenRegular text-center mb-4 mt-1 ${isExpired && "text-red-600"}`}
             >
               {isExpired
                 ? "El código ha vencido. Por favor, solicita un nuevo código."
                 : `Tiempo restante: ${formatTime(timer)}`}
             </Text>
             <Pressable
-              className={`bg-emerald-600 py-1 rounded-md items-center ${isOtpComplete ? "" : "bg-emerald-800 opacity-60"}`}
+              className={`bg-emerald-600 py-1 rounded-md items-center ${!isOtpComplete || isPending || (isExpired && "bg-emerald-800 opacity-60")}`}
               onPress={handleVerify}
-              disabled={!isOtpComplete}
+              disabled={!isOtpComplete || isPending || isExpired}
             >
-              <Text className="text-white font-SenMedium text-lg">
-                Verificar
-              </Text>
+              {isPending ? (
+                <CircleLoader />
+              ) : (
+                <Text className="text-white font-SenMedium text-lg">
+                  Verificar
+                </Text>
+              )}
             </Pressable>
             <Text className="text-center font-SenRegular text-sm mt-4">
               ¿No recibiste el código?
