@@ -21,9 +21,7 @@ export async function customClient(endpoint, { body } = {}) {
 
   if (!response.ok) {
     // Opcional: manejar errores específicos
-    console.log(
-      `StatusCode -> ${response.status}: statusText-> ${response.statusText}`
-    );
+    console.log(`StatusCode -> ${response.status}`);
     return;
     // throw new Error(
     //   `Throw new Error -> ${response.status}` || "Error en la solicitud"
@@ -48,10 +46,10 @@ export function useSendOTP({ onSuccess } = {}) {
 
 export function useVerifyOTP() {
   return useMutation({
-    mutationFn: ({ otpId, otp }) => {
+    mutationFn: ({ email, otpId, otp }) => {
       return customClient("/verify-otp", {
         method: "POST",
-        body: { otpId, otp },
+        body: { email, otpId, otp },
       });
     },
     onSuccess: async (response) => {
@@ -68,11 +66,11 @@ export function useVerifyOTP() {
           console.log("isValid but Token not Found");
         }
       } else {
-        console.log("OTP is no valid", dataJson.message);
+        console.log(dataJson.message);
       }
     },
     onError: (error) => {
-      console.error("Error al subir la imagen:", error);
+      console.error("Error al verificar OTP:", error);
     },
   });
 }

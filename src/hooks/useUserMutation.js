@@ -30,5 +30,8 @@ export function useUpdateUser() {
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], data);
     },
+    onError: (error) => {
+      console.error(error);
+    },
   });
 }

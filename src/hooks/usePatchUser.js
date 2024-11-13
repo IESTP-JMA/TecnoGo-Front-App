@@ -5,7 +5,7 @@ export async function useUpdateUser() {
   return useMutation({
     mutationFn: patchUser,
     onError: (error) => {
-      console.error("Error al subir la imagen:", error);
+      console.error("Error FUNC PATCH /user:", error);
     },
   });
 }

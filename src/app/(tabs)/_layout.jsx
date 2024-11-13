@@ -12,6 +12,7 @@ export default function TabsLayout() {
   return (
     <>
       <StatusBar backgroundColor="#064E3B" barStyle="light-content" />
+
       <Tabs
         screenOptions={{
           headerTintColor: "#065F46",
@@ -87,6 +88,7 @@ export default function TabsLayout() {
             tabBarLabel: "Inicio",
           }}
         />
+
         <Tabs.Screen
           name="profile"
           options={{

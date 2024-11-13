@@ -88,10 +88,7 @@ export default function IndexHome() {
       </Pressable>
       <Pressable
         className="self-center mt-1 px-1 py-2 rounded bg-fuchsia-400"
-        onPress={async () => {
-          await removeJWT();
-          console.log(user);
-        }}
+        onPress={() => console.log(user)}
       >
         <Text>LOG user</Text>
       </Pressable>

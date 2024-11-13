@@ -12,14 +12,20 @@ export async function client(endpoint, { method = "GET", body } = {}) {
     },
   };
 
-  console.log(endpoint, "HeadersFound: ", config.headers);
+  console.log(endpoint, `[${config.method}]`, "HeadersFound: ", config.headers);
   if (body) {
     config.body = JSON.stringify(body);
     console.log(endpoint, "BodyFound: ", config.body);
   }
 
   const response = await fetch(`${BASE_URL}${endpoint}`, config);
-  console.log(response.status);
+  const newToken = response.headers.get("Authorization");
+  if (newToken) {
+    // Guarda el nuevo token en AsyncStorage
+    await saveJWT(newToken.replace("Bearer ", ""));
+    console.log("newToken received and saved");
+  }
+  console.log(endpoint, response.status);
   if (!response.ok) {
     // Opcional: manejar errores específicos
     console.log("response.ok", response.ok, await response.text());

@@ -35,13 +35,6 @@ export default function IndexRoot() {
       </View>
     );
   }
-  return (
-    <Redirect
-      href={{
-        pathname: "/otp",
-        params: { email: "test@email.com", otpId: "test-from-index" },
-      }}
-    />
-  );
+  return <Redirect href="/login" />;
   //  else return null; // O puedes devolver un componente alternativo
 }

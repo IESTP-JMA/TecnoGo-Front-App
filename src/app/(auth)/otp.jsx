@@ -76,8 +76,7 @@ export default function OTP() {
     }
   };
   const handleVerify = () => {
-    mutate({ otpId, otp: otp.join("") });
-    // login(email);
+    mutate({ email, otpId, otp: otp.join("") });
   };
 
   const formatTime = (time) => {
