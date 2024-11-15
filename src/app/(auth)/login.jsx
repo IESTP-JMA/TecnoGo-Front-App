@@ -92,10 +92,9 @@ export default function LoginModal() {
               <Pressable
                 className="relative flex-row bg-emerald-600 py-1 px-4 mt-3 gap-3 rounded-md items-center justify-center active:opacity-80"
                 onPress={() => {
+                  if (isPending) return;
                   if (isValidEmail) {
                     setShowError(false);
-
-                    console.log("clicked Login");
                     mutate(email);
                   } else {
                     setShowError(true);

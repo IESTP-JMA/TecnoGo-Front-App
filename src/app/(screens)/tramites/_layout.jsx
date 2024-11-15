@@ -1,9 +1,10 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { SnackBarProvider } from "@/contexts/SnackBarContext";
 
 export default function TramitesLayout() {
   return (
-    <>
+    <SnackBarProvider>
       <StatusBar backgroundColor="#064E3B" barStyle="light-content" />
 
       <Stack
@@ -21,9 +22,6 @@ export default function TramitesLayout() {
           },
         }}
       />
-      {/* <View>
-        <Text>HEADER PADRE</Text>
-      </View> */}
-    </>
+    </SnackBarProvider>
   );
 }

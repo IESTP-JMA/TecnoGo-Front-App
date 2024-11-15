@@ -12,7 +12,7 @@ import { useUser } from "@/contexts/UserContext";
 
 export default function IndexHome() {
   const { user } = useUser();
-  const { isLoading } = useGetUser();
+  const { isPending } = useGetUser();
 
   return (
     <ScrollView className="flex-1 bg-[#e5f5f3] px-4 py-6">
@@ -93,7 +93,7 @@ export default function IndexHome() {
         <Text>LOG user</Text>
       </Pressable>
       <View>
-        <Text>{isLoading ? "Cagando..." : "Cagado"}</Text>
+        <Text>{isPending ? "Cagando..." : "Cagado"}</Text>
       </View>
     </ScrollView>
   );

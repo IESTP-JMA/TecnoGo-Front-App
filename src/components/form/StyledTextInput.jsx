@@ -9,7 +9,7 @@ export default function StyledTextInput({
 }) {
   return (
     <TextInput
-      className={`border-zinc-300 bg-white p-2 mb-3.5 rounded-lg h-10 ${isInProfile && "ml-6"} ${disabled ? "opacity-60" : "border"}`}
+      className={`border-zinc-300 bg-white p-2 mb-3.5 rounded-lg h-10 ${isInProfile && "ml-6"} ${disabled ? "bg-opacity-50" : "border"}`}
       value={value}
       onChangeText={onChangeText}
       keyboardType={keyboardType}

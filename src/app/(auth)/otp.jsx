@@ -107,7 +107,7 @@ export default function OTP() {
                   router.back();
                 }}
               >
-                <ArrowLeft />
+                <ArrowLeft color="#166534" strokeWidth={2.5} />
               </Pressable>
               <Image
                 source={require("../../../assets/Logo.png")}

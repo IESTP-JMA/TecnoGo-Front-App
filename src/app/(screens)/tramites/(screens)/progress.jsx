@@ -1,52 +1,64 @@
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-
-const documentRequests = [
-  {
-    tramiteID: "1",
-    title: "Solicitud de Constancia",
-    date: "2024-10-18",
-    status: "En progreso",
-  },
-  {
-    tramiteID: "2",
-    title: "Solicitud de Carta de Presentación",
-    date: "2024-10-18",
-    status: "Completado",
-    hasDocument: true,
-  },
-];
+import { useSnackBar } from "@/contexts/SnackBarContext";
+import { useGetProceduresInProgress } from "@/hooks/useProceduresMutation";
+import { useEffect } from "react";
+import { FileText } from "lucide-react-native";
+import { useProcedures } from "@/contexts/ProceduresContext";
 
 export default function DocumentRequestsList() {
-  const router = useRouter();
+  const { proceduresInProgress } = useProcedures();
 
+  const router = useRouter();
+  const { setIsVisible, setIsMsgLoading } = useSnackBar();
+  const { isPending } = useGetProceduresInProgress();
+
+  useEffect(() => {
+    setIsMsgLoading(isPending);
+    setIsVisible(isPending);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPending]);
+
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+
+    return date
+      .toLocaleString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      })
+      .replace(",", "");
+  };
   const renderItem = ({ item }) => (
     <TouchableOpacity
       className="flex-row bg-white rounded-lg p-4 mb-4 shadow-md"
       onPress={() => {
-        router.push(`./${item.tramiteID}`);
+        router.push(`./${item.uuid}`);
       }}
     >
-      <View className="mr-4">
-        <Ionicons name="document-text-outline" size={24} color="#007AFF" />
+      <View className="mr-3 justify-center">
+        <FileText size={52} color="#007AFF" strokeWidth={1.5} />
       </View>
       <View className="flex-1">
-        <Text className="text-base font-bold mb-1">{item.title}</Text>
+        <Text className="text-slate-600 text-right text-xs -mt-1">
+          id: {item.uuid}
+        </Text>
+
+        <Text className="text-base font-SenSemiBold mb-1">
+          Solicitud de {item.procedureName}
+        </Text>
         <Text className="text-sm text-gray-600 mb-1">
-          Fecha de envío: {item.date}
+          Fecha de envío: {formatDate(item.submissionDate)}
         </Text>
         <View className="flex-row justify-between items-center">
-          <Text
-            className={`text-sm font-medium ${
-              item.status === "En progreso"
-                ? "text-orange-500"
-                : "text-green-500"
-            }`}
-          >
-            Estado: {item.status}
+          <Text className="text-sm font-medium text-green-600">
+            Estado: {item.isCompleted === 0 && "En Proceso"}
           </Text>
-          {item.hasDocument && (
+          {false && (
             <TouchableOpacity>
               <Text className="text-sm text-blue-500">Ver documento</Text>
             </TouchableOpacity>
@@ -59,10 +71,15 @@ export default function DocumentRequestsList() {
   return (
     <FlatList
       className="bg-[#e6f2ec]"
-      data={documentRequests}
+      data={proceduresInProgress}
       renderItem={renderItem}
-      keyExtractor={(item) => item.tramiteID}
+      keyExtractor={(item) => item.uuid}
       contentContainerStyle={{ padding: 16 }}
+      ListEmptyComponent={() => (
+        <Text className="font-SenRegular text-center text-slate-500 py-5">
+          Aún no tienes Trámites en Progreso :(
+        </Text>
+      )}
     />
   );
 }

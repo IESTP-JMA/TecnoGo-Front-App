@@ -8,7 +8,7 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 
-export function CircleLoader() {
+export function CircleLoader({ size = 24 }) {
   const rotation = useSharedValue(0);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export function CircleLoader() {
 
   return (
     <Animated.View style={animatedStyle}>
-      <Loader color="white" />
+      <Loader color="white" size={size} />
     </Animated.View>
   );
 }

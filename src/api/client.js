@@ -12,7 +12,7 @@ export async function client(endpoint, { method = "GET", body } = {}) {
     },
   };
 
-  console.log(endpoint, `[${config.method}]`, "HeadersFound: ", config.headers);
+  console.log(endpoint, `[${config.method}]`);
   if (body) {
     config.body = JSON.stringify(body);
     console.log(endpoint, "BodyFound: ", config.body);
@@ -32,8 +32,9 @@ export async function client(endpoint, { method = "GET", body } = {}) {
     // const errorData = await response.json();
     throw new Error("Error en la solicitud");
   }
-
-  return await response.json();
+  const jsoResponse = await response.json();
+  // console.log("JSON:", jsoResponse);
+  return jsoResponse;
 }
 
 export async function uploadImage(imageBase64) {
