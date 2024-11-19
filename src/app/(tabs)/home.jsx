@@ -57,7 +57,7 @@ export default function IndexHome() {
           >
             <Pressable
               disabled={item.isDisabled}
-              className={`${item.isDisabled ? "opacity-50" : "opacity-100 shadow"}  rounded-lg p-4 items-center justify-between mb-4   active:scale-110`}
+              className={`${item.isDisabled ? "opacity-50" : "opacity-100 shadow"}  rounded-lg p-4 items-center justify-between mb-4 active:scale-95`}
             >
               <item.IconComponent size={72} accentColor="#9f1239" />
 
@@ -78,7 +78,7 @@ export default function IndexHome() {
         <Text>Delete JWT</Text>
       </Pressable>
       <Pressable
-        className="self-center mt-10 px-1 py-2 rounded bg-fuchsia-400"
+        className="self-center mt-1 px-1 py-2 rounded bg-fuchsia-400"
         onPress={async () => {
           const token = await getJWT();
           console.log(token);
@@ -87,14 +87,11 @@ export default function IndexHome() {
         <Text>Log JWT</Text>
       </Pressable>
       <Pressable
-        className="self-center mt-1 px-1 py-2 rounded bg-fuchsia-400"
+        className="self-center mt-10 px-1 py-2 rounded bg-fuchsia-400"
         onPress={() => console.log(user)}
       >
         <Text>LOG user</Text>
       </Pressable>
-      <View>
-        <Text>{isPending ? "Cagando..." : "Cagado"}</Text>
-      </View>
     </ScrollView>
   );
 }

@@ -6,6 +6,7 @@ export default function StyledTextInput({
   keyboardType = "default",
   isInProfile,
   disabled,
+  placeholder,
 }) {
   return (
     <TextInput
@@ -14,6 +15,7 @@ export default function StyledTextInput({
       onChangeText={onChangeText}
       keyboardType={keyboardType}
       editable={!disabled}
+      placeholder={placeholder}
     />
   );
 }

@@ -5,6 +5,7 @@ const ProceduresContext = createContext();
 export function ProceduresProvider({ children }) {
   const [procedureTypes, setProcedureTypes] = useState([]);
   const [proceduresInProgress, setProceduresInProgress] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <ProceduresContext.Provider
@@ -13,6 +14,8 @@ export function ProceduresProvider({ children }) {
         setProcedureTypes,
         proceduresInProgress,
         setProceduresInProgress,
+        modalVisible,
+        setModalVisible,
       }}
     >
       {children}

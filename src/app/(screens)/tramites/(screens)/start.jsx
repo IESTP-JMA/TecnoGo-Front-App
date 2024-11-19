@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
+  Button,
 } from "react-native";
 import { ScrollScren } from "../../../../components/Screens";
 import StyledLabel from "@components/form/StyledLabel";
@@ -24,23 +25,21 @@ import { CircleLoader } from "@components/IconsAnimated";
 import { useSnackBar } from "@/contexts/SnackBarContext";
 import { router } from "expo-router";
 import { useUser } from "@/contexts/UserContext";
+import TramiteForm from "./test";
+import { ProcedureTypes } from "@/constants/ProcedureTypes";
 
-export default function Start() {
+export default function Initiate() {
   const { setIsVisible, setIsMsgLoading, setMessage, setType } = useSnackBar();
   const { procedureTypes } = useProcedures();
   const { isPending } = useGetProceduresTypes();
   const { user } = useUser();
   const [additionalDataHeight, setadditionalDataHeight] = useState(40); // Altura mínima inicial
-  const [date, setDate] = useState(new Date());
-  const [procedureType, setProcedureType] = useState("PROCEDURE-CDP");
-  const today = new Date();
-  const [additionalData, setAdditionalData] = useState({
-    startDate: today.getTime(),
-  });
+  const [formData, setFormData] = useState({});
+  const [inputs, setInputs] = useState([]);
+
   const { mutate, isPending: isPendingInitiate } = useProceduresInitiate(
     (data) => {
       router.navigate("./progress");
-
       if (data.success) {
         setType("Info");
       } else {
@@ -52,63 +51,12 @@ export default function Start() {
     }
   );
   const [isDisabledInitiate, setIsDisabledInitiate] = useState(true);
-  useEffect(() => {
-    switch (procedureType) {
-      case "PROCEDURE-CDP":
-        if (
-          additionalData.placeOfExecution &&
-          additionalData.placeOfExecution !== "" &&
-          additionalData.startDate
-        ) {
-          setIsDisabledInitiate(false);
-        } else {
-          setIsDisabledInitiate(true);
-        }
-        break;
-      case "PROCEDURE-CDE":
-        setIsDisabledInitiate(false);
-        break;
-    }
-  }, [additionalData, procedureType]);
 
   useEffect(() => {
     setIsMsgLoading(true);
     setIsVisible(isPending);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPending]);
-
-  const showDatepicker = () => {
-    DateTimePickerAndroid.open({
-      value: date,
-      onChange: (e, selectedDate) => {
-        if (selectedDate) {
-          setAdditionalData({
-            ...additionalData,
-            startDate: selectedDate.getTime(),
-          });
-          setDate(selectedDate);
-        }
-      },
-      mode: "date",
-      minimumDate: today,
-      maximumDate: new Date(
-        today.getFullYear(),
-        today.getMonth() + 6,
-        // eslint-disable-next-line prettier/prettier
-        today.getDate()
-      ),
-    });
-  };
-
-  const opciones = {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  };
-
-  const capitalizeFirstLetter = (texto) =>
-    texto.replace(/^\w/, (c) => c.toUpperCase());
 
   return (
     <KeyboardAwareScrollView
@@ -119,37 +67,27 @@ export default function Start() {
       <StyledLabel label={"Tipo de Trámite"} />
       <View className="flex-1 justify-center bg-white border  border-zinc-300 p-1 mb-3.5 rounded-lg h-10">
         <Picker
-          selectedValue={procedureType}
+          selectedValue="PROCEDURE-CDP"
           onValueChange={(itemValue, itemIndex) => {
             console.log("ProcedureType: ", itemValue);
-            setProcedureType(itemValue);
+            setFormData({});
+            setInputs(ProcedureTypes[itemValue].inputs);
           }}
           mode="dropdown"
         >
+          <Picker.Item label="" value="" enabled={false} />
+
           {procedureTypes.map((obj) => (
             <Picker.Item key={obj.id} label={obj.name} value={obj.id} />
           ))}
         </Picker>
       </View>
-      {procedureType === "PROCEDURE-CDP" && (
-        <>
-          <StyledLabel label={"Lugar de Ejecución"} isRequired />
-          <StyledTextInput
-            value={additionalData.placeOfExecution}
-            onChangeText={(value) => {
-              setAdditionalData({ ...additionalData, placeOfExecution: value });
-            }}
-          />
-          <StyledLabel label={"Fecha de Inicio"} isRequired />
-          <StyledDatePicker
-            value={capitalizeFirstLetter(
-              // eslint-disable-next-line prettier/prettier
-              date.toLocaleString("es-PE", opciones)
-            )}
-            onPress={showDatepicker}
-          />
-        </>
-      )}
+      <TramiteForm
+        formData={formData}
+        setFormData={setFormData}
+        inputs={inputs}
+      />
+      <Button title="Enviar" onPress={() => console.log(formData)} />
 
       <StyledLabel label={"APELLIDOS Y NOMBRES"} />
       <StyledTextInput
@@ -180,10 +118,9 @@ export default function Start() {
         className="border border-zinc-300  bg-white p-2 mb-3.5 rounded-lg text-start"
         placeholder="Escribe aquí"
         multiline
-        value={additionalData.detail}
         onChangeText={(value) => {
-          setAdditionalData({
-            ...additionalData,
+          setFormData({
+            ...formData,
             additionalInformation: value,
           });
         }}
@@ -196,14 +133,14 @@ export default function Start() {
           className={`bg-emerald-600 items-center justify-center h-10 rounded-lg ${isDisabledInitiate && "opacity-50"}`}
           disabled={isDisabledInitiate}
           onPress={() => {
-            switch (procedureType) {
-              case "PROCEDURE-CDP":
-                mutate({ procedureType, additionalData: additionalData });
-                break;
-              case "PROCEDURE-CDE":
-                mutate({ procedureType });
-                break;
-            }
+            mutate({ procedureType });
+            //   switch (procedureType) {
+            //     case "PROCEDURE-CDP":
+            //       break;
+            //     case "PROCEDURE-CDE":
+            //       mutate({ procedureType });
+            //       break;
+            //   }
           }}
         >
           {isPendingInitiate ? (

@@ -12,7 +12,6 @@ export async function client(endpoint, { method = "GET", body } = {}) {
     },
   };
 
-  console.log(endpoint, `[${config.method}]`);
   if (body) {
     config.body = JSON.stringify(body);
     console.log(endpoint, "BodyFound: ", config.body);
@@ -25,7 +24,8 @@ export async function client(endpoint, { method = "GET", body } = {}) {
     await saveJWT(newToken.replace("Bearer ", ""));
     console.log("newToken received and saved");
   }
-  console.log(endpoint, response.status);
+
+  console.log(`[${config.method}]`, endpoint, response.status);
   if (!response.ok) {
     // Opcional: manejar errores específicos
     console.log("response.ok", response.ok, await response.text());

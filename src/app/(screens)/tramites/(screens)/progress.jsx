@@ -1,15 +1,15 @@
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
-import { useRouter } from "expo-router";
 import { useSnackBar } from "@/contexts/SnackBarContext";
 import { useGetProceduresInProgress } from "@/hooks/useProceduresMutation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FileText } from "lucide-react-native";
 import { useProcedures } from "@/contexts/ProceduresContext";
+import { ProcedureModal } from "@components/ProcedureModal";
 
 export default function DocumentRequestsList() {
   const { proceduresInProgress } = useProcedures();
-
-  const router = useRouter();
+  const { setModalVisible } = useProcedures();
+  const [dataDisplay, setDataDisplay] = useState({});
   const { setIsVisible, setIsMsgLoading } = useSnackBar();
   const { isPending } = useGetProceduresInProgress();
 
@@ -37,7 +37,8 @@ export default function DocumentRequestsList() {
     <TouchableOpacity
       className="flex-row bg-white rounded-lg p-4 mb-4 shadow-md"
       onPress={() => {
-        router.push(`./${item.uuid}`);
+        setDataDisplay(item);
+        setModalVisible(true);
       }}
     >
       <View className="mr-3 justify-center">
@@ -69,17 +70,20 @@ export default function DocumentRequestsList() {
   );
 
   return (
-    <FlatList
-      className="bg-[#e6f2ec]"
-      data={proceduresInProgress}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.uuid}
-      contentContainerStyle={{ padding: 16 }}
-      ListEmptyComponent={() => (
-        <Text className="font-SenRegular text-center text-slate-500 py-5">
-          Aún no tienes Trámites en Progreso :(
-        </Text>
-      )}
-    />
+    <>
+      <FlatList
+        className="bg-[#e6f2ec]"
+        data={proceduresInProgress}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.uuid}
+        contentContainerStyle={{ padding: 16 }}
+        ListEmptyComponent={() => (
+          <Text className="font-SenRegular text-center text-slate-500 py-5">
+            Aún no tienes Trámites en Progreso :(
+          </Text>
+        )}
+      />
+      <ProcedureModal dataDisplay={dataDisplay} />
+    </>
   );
 }
