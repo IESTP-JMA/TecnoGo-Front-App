@@ -13,7 +13,6 @@ import StyledLabel from "@components/form/StyledLabel";
 import StyledTextInput from "@components/form/StyledTextInput";
 import { useEffect, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
   useGetProceduresTypes,
   useProceduresInitiate,
@@ -75,14 +74,10 @@ export default function Initiate() {
       {isFetching && <LoadingSnackBar />}
       {message && !isFetching && <SnackBar />}
 
-      <KeyboardAwareScrollView
-        className="flex-1 px-4 py-2  bg-[#E6F2EC]"
-        // extraHeight={Platform.OS === "android" ? 10 : 0}
-        enableOnAndroid={true}
-      >
+      <View className="flex-1 px-4 py-2  bg-[#E6F2EC]">
         <StyledLabel label={"Tipo de Trámite"} />
         <View
-          className={`flex-1 justify-center bg-white border  border-zinc-300 p-1 mb-3.5 rounded-lg h-10 ${isFetching && "opacity-50 border"}`}
+          className={`justify-center bg-white border  border-zinc-300 p-1 mb-3.5 rounded-lg h-10 ${isFetching && "opacity-50 border"}`}
         >
           <Picker
             enabled={!isFetching}
@@ -159,7 +154,7 @@ export default function Initiate() {
             )}
           </Pressable>
         </View>
-      </KeyboardAwareScrollView>
+      </View>
     </>
   );
 }

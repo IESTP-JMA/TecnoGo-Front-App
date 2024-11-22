@@ -41,12 +41,11 @@ export default function TabsLayout() {
           name="home"
           options={{
             headerStyle: {
-              height: 90,
               backgroundColor: "#064E3B",
             },
             headerLeft: () => (
               <Pressable
-                className="pl-2"
+                className="pl-2 pr-1"
                 onPress={() => router.push("profile")}
               >
                 {user.urlImage ? (
@@ -65,10 +64,10 @@ export default function TabsLayout() {
             ),
             headerTitle: () => (
               <>
-                <Text className="text-white text-xl font-SenMedium -ml-1">
+                <Text className="text-white text-xl font-SenMedium">
                   Hola, {user.firstNames} 👋
                 </Text>
-                <Text className="text-zinc-200 font-SenRegular -ml-1">
+                <Text className="text-zinc-200 font-SenRegular">
                   Bienvenida
                 </Text>
               </>
