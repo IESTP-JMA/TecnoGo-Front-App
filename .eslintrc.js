@@ -1,4 +1,8 @@
 module.exports = {
+  env: {
+    node: true,
+    "react-native/react-native": true,
+  },
   extends: ["expo", "prettier"],
   plugins: ["prettier"],
   settings: {
