@@ -1,76 +1,73 @@
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
-import { useSnackBar } from "@/contexts/SnackBarContext";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Pressable,
+} from "react-native";
 import { useGetProceduresInProgress } from "@/hooks/useProceduresMutation";
 import { useEffect, useState } from "react";
-import { FileText } from "lucide-react-native";
+import { Eye, FileText } from "lucide-react-native";
 import { useProcedures } from "@/contexts/ProceduresContext";
-import { ProcedureModal } from "@components/ProcedureModal";
+import ProcedureModal from "@components/ProcedureModal";
+import { formatDate } from "@/utils/utilsFunctions";
+import LoadingSnackBar from "@components/LoadingSnackBar";
+import SnackBar from "@components/SnackBar";
+import { useLocalSearchParams } from "expo-router";
+import { useSnackBar } from "@/contexts/SnackBarContext";
 
 export default function DocumentRequestsList() {
+  const { message, setMessage } = useSnackBar();
+  const { messageSnackBar } = useLocalSearchParams();
   const { proceduresInProgress } = useProcedures();
   const { setModalVisible } = useProcedures();
   const [dataDisplay, setDataDisplay] = useState({});
-  const { setIsVisible, setIsMsgLoading } = useSnackBar();
-  const { isPending } = useGetProceduresInProgress();
+  const { isFetching } = useGetProceduresInProgress();
 
   useEffect(() => {
-    setIsMsgLoading(isPending);
-    setIsVisible(isPending);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPending]);
+    if (messageSnackBar) {
+      setMessage(messageSnackBar);
+    }
+  }, []);
 
-  const formatDate = (timestamp) => {
-    const date = new Date(timestamp);
-
-    return date
-      .toLocaleString("en-US", {
-        month: "2-digit",
-        day: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      })
-      .replace(",", "");
-  };
   const renderItem = ({ item }) => (
-    <TouchableOpacity
-      className="flex-row bg-white rounded-lg p-4 mb-4 shadow-md"
-      onPress={() => {
-        setDataDisplay(item);
-        setModalVisible(true);
-      }}
-    >
-      <View className="mr-3 justify-center">
-        <FileText size={52} color="#007AFF" strokeWidth={1.5} />
+    <View className="flex-row bg-white rounded-lg p-4 mb-4 shadow-md">
+      <View className="mr-2 justify-center">
+        <FileText size={54} color="#007AFF" strokeWidth={1} />
       </View>
-      <View className="flex-1">
-        <Text className="text-slate-600 text-right text-xs -mt-1">
-          id: {item.uuid}
-        </Text>
-
-        <Text className="text-base font-SenSemiBold mb-1">
+      <View className="flex-1 gap-1.5">
+        <Text className="text-base font-SenSemiBold">
           Solicitud de {item.procedureName}
         </Text>
-        <Text className="text-sm text-gray-600 mb-1">
+        <Text className="text-sm text-gray-600">
           Fecha de envío: {formatDate(item.submissionDate)}
         </Text>
         <View className="flex-row justify-between items-center">
           <Text className="text-sm font-medium text-green-600">
             Estado: {item.isCompleted === 0 && "En Proceso"}
           </Text>
-          {false && (
-            <TouchableOpacity>
-              <Text className="text-sm text-blue-500">Ver documento</Text>
-            </TouchableOpacity>
+          {item.additionalData && (
+            <Pressable
+              className="flex-row items-center justify-center gap-0.5 active:opacity-60"
+              onPress={() => {
+                if (!item.additionalData) return;
+                setDataDisplay(item);
+                setModalVisible(true);
+              }}
+            >
+              <Eye color="#3b82f6" size={18} />
+              <Text className="text-sm text-blue-500">Ver tramite</Text>
+            </Pressable>
           )}
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 
   return (
     <>
+      {isFetching && <LoadingSnackBar />}
+      {message && !isFetching && <SnackBar />}
       <FlatList
         className="bg-[#e6f2ec]"
         data={proceduresInProgress}
@@ -83,7 +80,9 @@ export default function DocumentRequestsList() {
           </Text>
         )}
       />
-      <ProcedureModal dataDisplay={dataDisplay} />
+      {Object.keys(dataDisplay).length > 0 && (
+        <ProcedureModal dataDisplay={dataDisplay} />
+      )}
     </>
   );
 }

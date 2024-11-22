@@ -7,7 +7,7 @@ export const ProcedureTypes = {
       {
         id: "placeOfExecution",
         label: "Lugar de Ejecucion",
-        icon: MapPin, // Icono asociado al campo
+        icon: MapPin,
         type: "text",
       },
       {

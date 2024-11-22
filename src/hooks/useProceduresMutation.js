@@ -4,17 +4,10 @@ import { useEffect } from "react";
 import { useProcedures } from "@/contexts/ProceduresContext";
 
 export function useGetProceduresTypes() {
-  const { setProcedureTypes } = useProcedures();
   const query = useQuery({
     queryKey: ["proceduresTypes"],
     queryFn: () => client("/user/procedures"),
   });
-  useEffect(() => {
-    if (query.data) {
-      setProcedureTypes(query.data);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
 
   return query;
 }
@@ -43,7 +36,6 @@ export function useGetProceduresInProgress() {
     if (query.data) {
       setProceduresInProgress(query.data);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   return query;

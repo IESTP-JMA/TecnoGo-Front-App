@@ -1,23 +1,20 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
 const SnackBarContext = createContext();
 
 export function SnackBarProvider({ children }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isMsgLoading, setIsMsgLoading] = useState(false);
+  const [isShowLoading, setIsShowLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [type, setType] = useState("Loading");
+  const [type, setType] = useState("Info");
 
-  function resetVals() {
-    setIsVisible(false);
-    setIsMsgLoading(false);
+  function resetSnackBar() {
+    setIsShowLoading(false);
     setMessage("");
-    setType("Loading");
+    setType("Info");
   }
+
   function getVals() {
     return {
-      isVisible,
-      isMsgLoading,
       message,
       type,
     };
@@ -26,15 +23,13 @@ export function SnackBarProvider({ children }) {
   return (
     <SnackBarContext.Provider
       value={{
-        isVisible,
-        setIsVisible,
-        isMsgLoading,
-        setIsMsgLoading,
+        isShowLoading,
+        setIsShowLoading,
         message,
         setMessage,
         type,
         setType,
-        resetVals,
+        resetSnackBar,
         getVals,
       }}
     >

@@ -1,48 +1,34 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  TextInput,
-  Share,
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { View, Text, FlatList, TextInput, Pressable } from "react-native";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
+import { Cloud, Download, FileText, Forward } from "lucide-react-native";
+import { formatDate } from "@/utils/utilsFunctions";
 
 const documents = [
   {
-    id: "1",
+    uuid: "1",
     title: "Ejemplo Documento",
-    date: "05/12/2020",
-    time: "20:18",
-    type: "pdf",
-    urlDownload: "https://example.com/document1.pdf",
+    completedDate: 1732249207000,
+    downloadUrl: "https://example.com/document1.pdf",
   },
   {
-    id: "2",
+    uuid: "2",
     title: "Ejemplo Documento 2",
-    date: "01/03/2023",
-    time: "05:00",
-    type: "doc",
-    urlDownload: "https://example.com/document2.doc",
+    completedDate: 1732249207000,
+    downloadUrl: "https://example.com/document2.doc",
   },
   {
-    id: "3",
+    uuid: "3",
     title: "Ejemplo Documento 3",
-    date: "05/12/2020",
-    time: "08:05",
-    type: "xls",
-    urlDownload: "https://example.com/document3.xls",
+    completedDate: 1732249207000,
+    downloadUrl: "https://example.com/document3.xls",
   },
   {
-    id: "4",
+    uuid: "4",
     title: "Ejemplo Documento 4",
-    date: "08/10/2024",
-    time: "21:00",
-    type: "doc",
-    urlDownload: "https://example.com/document4.doc",
+    completedDate: 1732249207000,
+    downloadUrl: "https://example.com/document4.doc",
   },
 ];
 
@@ -50,40 +36,12 @@ export default function DocumentList() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredDocuments = documents.filter((doc) =>
-    // eslint-disable-next-line prettier/prettier
     doc.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  const getFileIcon = (type) => {
-    switch (type) {
-      case "pdf":
-        return "document-text";
-      case "doc":
-        return "document-text-outline";
-      case "xls":
-        return "grid-outline";
-      default:
-        return "document-outline";
-    }
-  };
-
-  const getFileColor = (type) => {
-    switch (type) {
-      case "pdf":
-        return "text-red-500";
-      case "doc":
-        return "text-blue-500";
-      case "xls":
-        return "text-green-500";
-      default:
-        return "text-gray-500";
-    }
-  };
 
   const downloadFile = async (url, filename) => {
     const result = await FileSystem.downloadAsync(
       url,
-      // eslint-disable-next-line prettier/prettier
       FileSystem.documentDirectory + filename
     );
 
@@ -96,61 +54,53 @@ export default function DocumentList() {
 
   const shareFile = async (url, title) => {
     try {
-      const result = await Share.share({
-        title: title,
-        message: url,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          console.log("shared with activity type of", result.activityType);
-        } else {
-          console.log("shared");
-        }
-      } else if (result.action === Share.dismissedAction) {
-        console.log("dismissed");
+      // Descargar el archivo al directorio temporal del dispositivo
+      const fileUri = FileSystem.cacheDirectory + title; // Nombre del archivo
+      console.log(fileUri);
+      console.log(FileSystem.documentDirectory);
+      const downloadedFile = await FileSystem.downloadAsync(url, fileUri);
+
+      if (await Sharing.isAvailableAsync()) {
+        // Compartir el archivo descargado
+        await Sharing.shareAsync(downloadedFile.uri, {
+          mimeType: "application/pdf", // Cambia según el tipo de archivo
+          dialogTitle: title,
+        });
+        console.log("Archivo compartido con éxito");
+      } else {
+        console.error(
+          "El uso compartido no está disponible en este dispositivo"
+        );
       }
     } catch (error) {
-      alert(error.message);
+      console.error("Error al compartir el archivo:", error);
+      alert("No se pudo compartir el archivo: " + error.message);
     }
   };
 
   const renderItem = ({ item }) => (
     <View className="bg-white rounded-lg p-4 mb-4 shadow-md flex-row items-center">
       <View className="mr-4">
-        <Ionicons
-          name={getFileIcon(item.type)}
-          size={24}
-          className={getFileColor(item.type)}
-        />
+        <FileText color="#007AFF" size={54} strokeWidth={1} />
       </View>
-      <View className="flex-1">
+      <View className="flex-1 gap-1.5">
         <Text className="text-lg font-semibold">{item.title}</Text>
-        <View className="flex-row items-center mt-1">
-          <Ionicons
-            name="cloud-outline"
-            size={16}
-            className="text-gray-500 mr-1"
-          />
+        <View className="flex-row items-center gap-1">
+          <Cloud size={18} color="#6b7280" />
           <Text className="text-sm text-gray-500">
-            {item.date} {item.time}
+            {formatDate(item.completedDate)}
           </Text>
         </View>
       </View>
-      <TouchableOpacity
-        onPress={() => shareFile(item.urlDownload, item.title)}
+      <Pressable
+        onPress={() => shareFile(item.downloadUrl, item.title)}
         className="mr-4"
       >
-        <Ionicons
-          name="share-social-outline"
-          size={24}
-          className="text-gray-500"
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => downloadFile(item.urlDownload, item.title)}
-      >
-        <Ionicons name="download-outline" size={24} className="text-gray-500" />
-      </TouchableOpacity>
+        <Forward size={24} color="#6b7280" />
+      </Pressable>
+      <Pressable onPress={() => downloadFile(item.downloadUrl, item.title)}>
+        <Download size={24} color="#6b7280" />
+      </Pressable>
     </View>
   );
 
@@ -167,7 +117,7 @@ export default function DocumentList() {
       <FlatList
         data={filteredDocuments}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uuid}
       />
     </View>
   );

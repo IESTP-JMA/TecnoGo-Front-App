@@ -1,3 +1,4 @@
+import { formatPrettyDate } from "@/utils/utilsFunctions";
 import StyledDatePicker from "@components/form/StyledDatePicker";
 import StyledLabel from "@components/form/StyledLabel";
 import StyledTextInput from "@components/form/StyledTextInput";
@@ -6,21 +7,32 @@ import { CalendarPlus } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 
-const opciones = {
-  weekday: "long",
-  day: "numeric",
-  month: "long",
-  year: "numeric",
+const isFormValid = (formData, inputs) => {
+  for (const input of inputs) {
+    if (!formData[input.id] || formData[input.id] === "") {
+      return false;
+    }
+  }
+  return true;
 };
 
-export default function TramiteForm({ formData, setFormData, inputs }) {
+export default function ProcedureForm({
+  formData,
+  setFormData,
+  inputs,
+  setIsFormValid,
+}) {
   const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    setIsFormValid(isFormValid(formData, inputs));
+  }, [formData, inputs, setIsFormValid]);
 
   const handleInputChange = (id, value) => {
     setFormData({ ...formData, [id]: value });
   };
 
-  function showDatepicker(id) {
+  function showDatePicker(id) {
     DateTimePickerAndroid.open({
       value: date,
       onChange: (e, selectedDate) => {
@@ -31,10 +43,6 @@ export default function TramiteForm({ formData, setFormData, inputs }) {
       mode: "date",
     });
   }
-  const dateFormated = (timestamp) => {
-    const date = new Date(timestamp);
-    return date.toLocaleDateString("es-ES", opciones);
-  };
 
   return (
     <>
@@ -46,11 +54,11 @@ export default function TramiteForm({ formData, setFormData, inputs }) {
               <StyledDatePicker
                 value={
                   formData[id]
-                    ? dateFormated(formData[id])
+                    ? formatPrettyDate(formData[id])
                     : `Seleccione ${label.toLowerCase()}`
                 }
                 onPress={() => {
-                  showDatepicker(id);
+                  showDatePicker(id);
                 }}
                 icon={CalendarPlus}
                 isPlaceHolder={formData[id] === undefined}
