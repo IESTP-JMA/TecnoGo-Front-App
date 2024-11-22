@@ -1,8 +1,9 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { SnackBarProvider } from "@/contexts/SnackBarContext";
+import { memo } from "react";
 
-export default function TramitesLayout() {
+const TramitesLayout = () => {
   return (
     <SnackBarProvider>
       <StatusBar backgroundColor="#064E3B" barStyle="light-content" />
@@ -24,4 +25,6 @@ export default function TramitesLayout() {
       />
     </SnackBarProvider>
   );
-}
+};
+
+export default memo(TramitesLayout);
