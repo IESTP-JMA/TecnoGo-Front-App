@@ -22,10 +22,6 @@
       },
       "package": "com.ietsppjma.tecnogo"
     },
-    "web": {
-      "bundler": "metro",
-      "favicon": "./assets/favicon.png"
-    },
     "plugins": [
       "expo-router",
       "expo-font",
@@ -36,6 +32,8 @@
         "projectId": "a4752093-0ad8-4117-8065-320eaed9618a"
       }
     },
-    "owner": "yerald"
+    "owner": "yerald",
+    "newArchEnabled": true  
+
   }
 }
