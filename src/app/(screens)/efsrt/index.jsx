@@ -1,13 +1,76 @@
 import { View, Text, Pressable } from "react-native";
-import {
-  BriefcaseIcon,
-  ChatsIcon,
-  ChevronRigthIcon,
-} from "../../../components/Icons";
+import { BriefcaseIcon, ChatsIcon } from "../../../components/Icons";
 import { Stack, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import { ChevronRightIcon } from "lucide-react-native";
+import { useGetEFSRT } from "@/hooks/useEFSRTMutation";
+import { useSnackBar } from "@/contexts/SnackBarContext";
+import LoadingSnackBar from "@components/LoadingSnackBar";
+import SnackBar from "@components/SnackBar";
+
+const ModuleCard = ({ label, isActive, hasUuid, progress, onPress }) => (
+  <Pressable
+    disabled={!isActive && !hasUuid}
+    className="bg-white rounded-lg p-4 justify-between gap-2 disabled:opacity-60 active:scale-95"
+    onPress={onPress}
+  >
+    <View className="flex-row justify-between">
+      <View className="flex-row items-center gap-4">
+        <BriefcaseIcon size={36} color="#4ade80" />
+        <Text className="text-lg font-SenSemiBold">{label}</Text>
+      </View>
+
+      <View className="flex-row items-center">
+        {isActive && (
+          <Text className="text-[#4ade80] mr-2 font-SenRegular">
+            En desarrollo
+          </Text>
+        )}
+        {hasUuid && <ChevronRightIcon size={28} color="#f87171" />}
+      </View>
+    </View>
+    {isActive && (
+      <View className="h-2 bg-[#fee2e2] rounded-full mt-2">
+        <View
+          style={{ width: `${progress}%` }}
+          className="h-2 bg-[#f87171] rounded-full"
+        />
+      </View>
+    )}
+  </Pressable>
+);
 
 export default function InicioEfsrt() {
   const router = useRouter();
+  const { message } = useSnackBar();
+  const { data, isFetching } = useGetEFSRT();
+  const [moduleData, setModuleData] = useState({
+    moduleActive: 0,
+    module_1ProcedureUuid: null,
+    module_2ProcedureUuid: null,
+    module_3ProcedureUuid: null,
+    progressPercentage: 0,
+  });
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      setModuleData(data);
+    }
+  }, [data]);
+
+  const handleModulePress = (module) => {
+    const cdpUuid = moduleData[`module_${module.number}ProcedureUuid`];
+    if (cdpUuid) {
+      router.push({
+        pathname: "efsrt/module/information",
+        params: {
+          headerTitle: module.label,
+          procedure_CDP_uuid: cdpUuid,
+        },
+      });
+    }
+  };
 
   function headerHandler() {
     return (
@@ -16,7 +79,9 @@ export default function InicioEfsrt() {
         onPress={() => {
           router.push({
             pathname: "efsrt/chats",
-            params: { headerTitle: "Chats" },
+            params: {
+              headerTitle: "Chats",
+            },
           });
         }}
       >
@@ -27,52 +92,37 @@ export default function InicioEfsrt() {
       </Pressable>
     );
   }
+
+  const modules = [
+    { number: 1, label: "I Modulo" },
+    { number: 2, label: "II Modulo" },
+    { number: 3, label: "III Modulo" },
+  ];
+
   return (
-    <View className="flex-1 bg-[#E6F2EC] p-4 gap-5">
+    <>
       <Stack.Screen options={{ headerRight: headerHandler }} />
-      {/* Module I */}
-      <Pressable
-        className="bg-white rounded-lg p-4"
-        onPress={() => {
-          router.push({
-            pathname: "efsrt/module_id98/informacion",
-            params: { headerTitle: "I Modulo" },
-          });
-        }}
-      >
-        <View className="flex-row items-center justify-between">
-          <View className="flex-row items-center gap-3">
-            <BriefcaseIcon size={30} color="#4ade80" />
-            <Text className="text-lg font-SenSemiBold">I Modulo</Text>
-          </View>
-          <View className="flex-row items-center ">
-            <Text className="text-[#4ade80] mr-2 font-SenRegular">
-              En desarrollo
-            </Text>
-            <ChevronRigthIcon size={32} color="#f87171" />
-          </View>
-        </View>
-        <View className="h-2 bg-[#fee2e2] rounded-full mt-2">
-          <View className="h-2 bg-[#f87171] rounded-full w-3/4" />
-        </View>
-      </Pressable>
+      {isFetching && <LoadingSnackBar />}
+      {message && !isFetching && <SnackBar />}
+      <View className="flex-1 bg-[#E6F2EC] p-4 gap-5">
+        {modules.map((module) => {
+          const isActive = moduleData.moduleActive === module.number;
+          const hasUuid = Boolean(
+            moduleData[`module_${module.number}ProcedureUuid`]
+          );
 
-      {/* Module II */}
-      <Pressable className="bg-white rounded-lg p-4 opacity-60">
-        <View className="flex-row items-center gap-3">
-          <BriefcaseIcon size={32} color="#4ade80" />
-
-          <Text className="text-lg font-SenSemiBold">II Modulo</Text>
-        </View>
-      </Pressable>
-
-      {/* Module III */}
-      <Pressable className="bg-white rounded-lg p-4 opacity-60">
-        <View className="flex-row items-center gap-3">
-          <BriefcaseIcon size={32} color="#4ade80" />
-          <Text className="text-lg font-SenSemiBold">III Modulo</Text>
-        </View>
-      </Pressable>
-    </View>
+          return (
+            <ModuleCard
+              key={module.number}
+              label={module.label}
+              isActive={isActive && !isFetching}
+              hasUuid={hasUuid && !isFetching}
+              progress={moduleData.progressPercentage}
+              onPress={() => handleModulePress(module)}
+            />
+          );
+        })}
+      </View>
+    </>
   );
 }

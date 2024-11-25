@@ -1,11 +1,13 @@
-import { Link, Stack, usePathname } from "expo-router";
+import { Link, Stack, useLocalSearchParams, usePathname } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
-export default function EfsrtLaoyout() {
+export default function ModuleLaoyout() {
   const pathname = usePathname();
+  const { headerTitle } = useLocalSearchParams();
+
   const tabs = [
-    { id: "informacion", title: "Informacion", href: "./informacion" },
-    { id: "itinerario", title: "Itinerario", href: "./itinerario" },
+    { id: "information", title: "Informacion", href: "./information" },
+    { id: "itinerary", title: "Itinerario", href: "./itinerary" },
   ];
 
   const isActive = (route) => pathname.includes(route);
@@ -33,7 +35,7 @@ export default function EfsrtLaoyout() {
   };
   return (
     <>
-      <Stack.Screen options={{ headerTitle: "I Modulo" }} />
+      <Stack.Screen options={{ headerTitle: headerTitle }} />
       <Navbar />
       <Stack
         screenOptions={{
@@ -41,8 +43,8 @@ export default function EfsrtLaoyout() {
           animation: "slide_from_right",
         }}
       >
-        <Stack.Screen name="informacion" />
-        <Stack.Screen name="itinerario" />
+        <Stack.Screen name="information" />
+        <Stack.Screen name="itinerary" />
       </Stack>
     </>
   );

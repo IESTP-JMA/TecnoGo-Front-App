@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
+import { CalendarRange, MapPin, User2 } from "lucide-react-native";
 
 const ProgramInfo = ({
   location,
@@ -9,17 +9,17 @@ const ProgramInfo = ({
   supervisor,
   progress,
 }) => {
-  const { module_id } = useLocalSearchParams(); // Obtén el valor del ID desde la URL
+  const { module_id } = useLocalSearchParams();
 
   return (
     <View className="flex-1 bg-[#e6f7f1] p-4 items-center">
       <View className="bg-white rounded-lg p-6 w-full max-w-sm shadow-md">
         <View className="mb-4">
           <Text className="text-lg font-bold text-[#2c3e50] mb-2">
-            Lugar de Ejecución - {module_id}
+            Lugar de Ejecución
           </Text>
           <View className="flex-row items-center">
-            <Ionicons name="location-outline" size={20} color="#34495e" />
+            <MapPin size={20} color="#34495e" />
             <Text className="ml-2 text-[#34495e]">{location}</Text>
           </View>
         </View>
@@ -30,7 +30,7 @@ const ProgramInfo = ({
               Fecha de Inicio
             </Text>
             <View className="flex-row items-center">
-              <Ionicons name="calendar-outline" size={16} color="#34495e" />
+              <CalendarRange size={16} color="#34495e" />
               <Text className="ml-1 text-[#34495e]">{startDate}</Text>
             </View>
           </View>
@@ -39,7 +39,7 @@ const ProgramInfo = ({
               Fecha de Finalización
             </Text>
             <View className="flex-row items-center">
-              <Ionicons name="calendar-outline" size={16} color="#34495e" />
+              <CalendarRange size={16} color="#34495e" />
               <Text className="ml-1 text-[#34495e]">{endDate}</Text>
             </View>
           </View>
@@ -50,7 +50,7 @@ const ProgramInfo = ({
             Docente Supervisor
           </Text>
           <View className="flex-row items-center">
-            <Ionicons name="person-outline" size={18} color="#34495e" />
+            <User2 size={18} color="#34495e" />
             <Text className="ml-2 text-[#34495e]">{supervisor}</Text>
           </View>
         </View>

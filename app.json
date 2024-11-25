@@ -8,9 +8,9 @@
     "userInterfaceStyle": "automatic",
     "scheme": "tecnogo",
     "splash": {
-      "image": "./assets/splash.jpeg",
+      "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#006634"
     },
     "ios": {
       "supportsTablet": true
@@ -18,14 +18,15 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#FEF9B0"
       },
       "package": "com.ietsppjma.tecnogo"
     },
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-sqlite"
     ],
     "extra": {
       "eas": {
@@ -33,7 +34,6 @@
       }
     },
     "owner": "yerald",
-    "newArchEnabled": true  
-
+    "newArchEnabled": true
   }
 }

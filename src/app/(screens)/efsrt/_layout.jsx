@@ -1,9 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
+import { SnackBarProvider } from "@/contexts/SnackBarContext";
 
 export default function EfsrtLaoyout() {
   return (
-    <>
+    <SnackBarProvider>
       <StatusBar backgroundColor="#064E3B" barStyle="light-content" />
       <Stack
         screenOptions={{
@@ -19,16 +20,11 @@ export default function EfsrtLaoyout() {
           animation: "fade",
         }}
       >
-        <Stack.Screen name="[module_id]" />
+        <Stack.Screen name="module" />
         <Stack.Screen name="chats/index" />
         <Stack.Screen name="apuntes/index" />
       </Stack>
-      {/* <View>
-        <Text className="text-center font-SenRegular">
-          Loading Indicator ....
-        </Text>
-      </View> */}
-    </>
+    </SnackBarProvider>
   );
 }
 

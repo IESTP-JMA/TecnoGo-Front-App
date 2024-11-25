@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import { ImageBackground, StatusBar } from "react-native";
 import { LoginProvider } from "../../contexts/LoginContext";
 
-const imamgeSplash = require("../../../assets/splash.jpeg");
+const imamgeSplash = require("../../../assets/splash.png");
 
 export default function AuthLayout() {
   return (
