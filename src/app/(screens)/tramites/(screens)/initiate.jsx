@@ -14,11 +14,11 @@ import StyledTextInput from "@components/form/StyledTextInput";
 import { useEffect, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import {
-  useGetProceduresTypes,
+  useGetProcedureTypes,
   useProceduresInitiate,
 } from "@/hooks/useProceduresMutation";
 import { useProcedures } from "@/contexts/ProceduresContext";
-import { CircleLoader } from "@components/IconsAnimated";
+import { LoaderAnimated } from "@components/IconsAnimated";
 import { useSnackBar } from "@/contexts/SnackBarContext";
 import { router } from "expo-router";
 import { useUser } from "@/contexts/UserContext";
@@ -31,7 +31,7 @@ const getFirstProcedureType = () => Object.keys(ProcedureTypes)[0];
 
 export default function Initiate() {
   const { message, setMessage, setType } = useSnackBar();
-  const { data, isFetching } = useGetProceduresTypes();
+  const { data, isFetching } = useGetProcedureTypes();
   const { user } = useUser();
   const [additionalDataHeight, setadditionalDataHeight] = useState(40); // Altura mínima inicial
   const [formData, setFormData] = useState({});
@@ -74,10 +74,10 @@ export default function Initiate() {
       {isFetching && <LoadingSnackBar />}
       {message && !isFetching && <SnackBar />}
 
-      <View className="flex-1 px-4 py-2  bg-[#E6F2EC]">
+      <View className="flex-1 px-4 py-2 bg-[#E6F2EC]">
         <StyledLabel label={"Tipo de Trámite"} />
         <View
-          className={`justify-center bg-white border  border-zinc-300 p-1 mb-3.5 rounded-lg h-10 ${isFetching && "opacity-50 border"}`}
+          className={`justify-center bg-white border border-zinc-300 p-1 mb-3.5 rounded-lg h-10 ${isFetching && "opacity-50 border"}`}
         >
           <Picker
             enabled={!isFetching}
@@ -146,7 +146,7 @@ export default function Initiate() {
             onPress={() => mutate({ procedureType, additionalData: formData })}
           >
             {isPendingInitiate ? (
-              <CircleLoader size={26} />
+              <LoaderAnimated size={26} />
             ) : (
               <Text className="font-SenMedium text-center  text-white">
                 Iniciar Tramite

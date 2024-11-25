@@ -21,7 +21,7 @@ export default function DocumentRequestsList() {
   const { messageSnackBar } = useLocalSearchParams();
   const { proceduresInProgress } = useProcedures();
   const { setModalVisible } = useProcedures();
-  const [dataDisplay, setDataDisplay] = useState({});
+  const [dataDisplay, setDataDisplay] = useState();
   const { isFetching } = useGetProceduresInProgress();
 
   useEffect(() => {
@@ -80,9 +80,7 @@ export default function DocumentRequestsList() {
           </Text>
         )}
       />
-      {Object.keys(dataDisplay).length > 0 && (
-        <ProcedureModal dataDisplay={dataDisplay} />
-      )}
+      {dataDisplay && <ProcedureModal dataDisplay={dataDisplay} />}
     </>
   );
 }

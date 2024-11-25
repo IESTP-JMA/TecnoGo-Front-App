@@ -4,6 +4,7 @@ const ProceduresContext = createContext();
 
 export function ProceduresProvider({ children }) {
   const [proceduresInProgress, setProceduresInProgress] = useState([]);
+  const [proceduresResponse, setProceduresResponse] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -11,6 +12,8 @@ export function ProceduresProvider({ children }) {
       value={{
         proceduresInProgress,
         setProceduresInProgress,
+        proceduresResponse,
+        setProceduresResponse,
         modalVisible,
         setModalVisible,
       }}

@@ -2,7 +2,6 @@ import { Calendar, MapPin } from "lucide-react-native";
 
 export const ProcedureTypes = {
   "PROCEDURE-CDP": {
-    title: "Solicitud Carta de Presentación",
     inputs: [
       {
         id: "placeOfExecution",
@@ -19,11 +18,9 @@ export const ProcedureTypes = {
     ],
   },
   "PROCEDURE-CDE": {
-    title: "Solicitud Certificados de Estudios",
     inputs: [],
   },
   "PROCEDURE-CAWS": {
-    title: "Solicitud Certificado AWS",
     inputs: [
       {
         id: "startDate",
@@ -46,15 +43,3 @@ export const ProcedureTypes = {
     ],
   },
 };
-
-export function getProcedureTypes() {
-  return Object.keys(ProcedureTypes);
-}
-
-//   minimumDate: today,
-//   maximumDate: new Date(
-//     today.getFullYear(),
-//     today.getMonth() + 6,
-//     // eslint-disable-next-line prettier/prettier
-//     today.getDate()
-//   ),

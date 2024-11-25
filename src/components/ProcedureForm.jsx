@@ -41,6 +41,7 @@ export default function ProcedureForm({
         handleInputChange(id, selectedDate.getTime());
       },
       mode: "date",
+      minimumDate: date,
     });
   }
 

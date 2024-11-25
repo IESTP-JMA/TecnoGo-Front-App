@@ -42,7 +42,7 @@ export default function LayoutProcedure() {
     if ((isShowLoading && message) || pathname.includes(id)) return;
 
     resetSnackBar();
-    router.navigate(`./${id}`);
+    router.replace(`./${id}`);
   };
 
   return (

@@ -14,7 +14,7 @@ import { useLoginContext } from "../../contexts/LoginContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { ArrowLeft } from "lucide-react-native";
 import { useVerifyOTP } from "@/hooks/useAuthMutations";
-import { CircleLoader } from "@components/IconsAnimated";
+import { LoaderAnimated } from "@components/IconsAnimated";
 
 /* global clearTimeout setTimeout*/
 export default function OTP() {
@@ -149,7 +149,7 @@ export default function OTP() {
               disabled={!isOtpComplete || isPending || isExpired}
             >
               {isPending ? (
-                <CircleLoader />
+                <LoaderAnimated />
               ) : (
                 <Text className="text-white font-SenMedium text-lg">
                   Verificar

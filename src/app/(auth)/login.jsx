@@ -11,7 +11,7 @@ import { Image } from "expo-image";
 import { useLoginContext } from "../../contexts/LoginContext";
 import { useState, useEffect } from "react";
 import { LogIn } from "lucide-react-native";
-import { CircleLoader } from "../../components/IconsAnimated";
+import { LoaderAnimated } from "../../components/IconsAnimated";
 import { useSendOTP } from "@/hooks/useAuthMutations";
 
 export default function LoginModal() {
@@ -21,7 +21,6 @@ export default function LoginModal() {
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(
-    // eslint-disable-next-line prettier/prettier
     "Por favor, ingrese un correo electrónico válido."
   );
   const router = useRouter();
@@ -102,7 +101,7 @@ export default function LoginModal() {
                 }}
               >
                 <Text className="text-white text-center font-SenMedium text-lg">
-                  {isPending ? <CircleLoader /> : "Ingresar"}
+                  {isPending ? <LoaderAnimated /> : "Ingresar"}
                 </Text>
 
                 {!isPending && (

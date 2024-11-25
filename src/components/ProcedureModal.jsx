@@ -34,12 +34,12 @@ export default function ProcedureModal({ dataDisplay }) {
                   ID: {dataDisplay.uuid}
                 </Text>
                 <Text className="text-lg font-bold text-center mb-4">
-                  {procedureType.title}
+                  {dataDisplay.procedureName}
                 </Text>
               </>
             }
             data={procedureType.inputs}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.id}
             renderItem={({ item: input }) => (
               <View className="mb-4">
                 <Text className="font-semibold mb-1">{input.label}</Text>

@@ -12,7 +12,7 @@ export default function StyledLabel({
       {Icon && <Icon color="black" size={sizeIcon} />}
       <Text className="font-SenMedium text-base">
         {label}
-        {isRequired && <Asterisk size={16} strokeWidth={2.5} color="#ef4444" />}
+        {isRequired && <Asterisk size={14} strokeWidth={2} color="#ef4444" />}
       </Text>
     </View>
   );
