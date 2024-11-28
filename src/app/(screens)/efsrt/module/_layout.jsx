@@ -1,42 +1,18 @@
-import { Link, Stack, useLocalSearchParams, usePathname } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import NavBar from "@components/NavBar";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 export default function ModuleLaoyout() {
-  const pathname = usePathname();
   const { headerTitle } = useLocalSearchParams();
 
   const tabs = [
-    { id: "information", title: "Informacion", href: "./information" },
-    { id: "itinerary", title: "Itinerario", href: "./itinerary" },
+    { id: "information", title: "Informacion" },
+    { id: "itinerary", title: "Itinerario" },
   ];
 
-  const isActive = (route) => pathname.includes(route);
-
-  const Navbar = () => {
-    return (
-      <View className="flex-row justify-evenly bg-[#E6F2EC] px-3">
-        {tabs.map(({ id, title, href }) => (
-          <Link key={id} href={href} className="flex-1" asChild>
-            <Pressable
-              className={isActive(id) ? "border-b border-emerald-800" : ""}
-            >
-              <Text
-                className={`font-SenRegular pb-2 text-base text-center ${
-                  isActive(id) ? "text-emerald-800" : "text-neutral-500"
-                }`}
-              >
-                {title}
-              </Text>
-            </Pressable>
-          </Link>
-        ))}
-      </View>
-    );
-  };
   return (
     <>
       <Stack.Screen options={{ headerTitle: headerTitle }} />
-      <Navbar />
+      <NavBar tabs={tabs} />
       <Stack
         screenOptions={{
           headerShown: false,

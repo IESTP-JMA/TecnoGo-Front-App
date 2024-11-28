@@ -7,6 +7,7 @@ import {
   Platform,
   SafeAreaView,
   Button,
+  ScrollView,
 } from "react-native";
 import { ScrollScren } from "../../../../components/Screens";
 import StyledLabel from "@components/form/StyledLabel";
@@ -70,7 +71,7 @@ export default function Initiate() {
     setInputs(ProcedureTypes[newProcedureType]?.inputs || []);
   };
   return (
-    <>
+    <ScrollView>
       {isFetching && <LoadingSnackBar />}
       {message && !isFetching && <SnackBar />}
 
@@ -155,6 +156,6 @@ export default function Initiate() {
           </Pressable>
         </View>
       </View>
-    </>
+    </ScrollView>
   );
 }
