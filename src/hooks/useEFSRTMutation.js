@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { client } from "@/api/client";
 import { useEffect } from "react";
 import { useProcedures } from "@/contexts/ProceduresContext";
+import { useEfsrtContext } from "@/contexts/efsrtContext";
 
 export function useGetEFSRT() {
   const query = useQuery({
@@ -12,29 +13,15 @@ export function useGetEFSRT() {
   return query;
 }
 
-export function useProceduresInitiate(onSuccess) {
-  return useMutation({
-    mutationFn: (body) =>
-      client("/user/procedure/initiate", {
-        method: "POST",
-        body: body,
-      }),
-    onSuccess,
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-}
-
-export function useGetProceduresInProgress() {
-  const { setProceduresInProgress } = useProcedures();
+export function useGetModule(moduleNumber) {
+  const { setModuleData } = useEfsrtContext();
   const query = useQuery({
-    queryKey: ["proceduresInProgress"],
-    queryFn: () => client("/user/procedure/progress"),
+    queryKey: ["module"],
+    queryFn: () => client(`/user/efsrt/module?number=${moduleNumber}`),
   });
   useEffect(() => {
     if (query.data) {
-      setProceduresInProgress(query.data);
+      setModuleData(query.data);
     }
   }, [query]);
 

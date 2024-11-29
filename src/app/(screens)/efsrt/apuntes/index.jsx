@@ -1,5 +1,5 @@
 import { Stack, useLocalSearchParams } from "expo-router";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -70,7 +70,6 @@ export default function DailyNote() {
       });
 
       const { recording } = await Audio.Recording.createAsync(
-        // eslint-disable-next-line prettier/prettier
         Audio.RecordingOptionsPresets.HIGH_QUALITY
       );
       setRecording(recording);
@@ -106,15 +105,12 @@ export default function DailyNote() {
             setAttachments(newAttachments);
           },
         },
-        // eslint-disable-next-line prettier/prettier
       ]
     );
   };
-
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <Stack.Screen options={{ headerTitle: `Apunte - ${headerTitle}` }} />
-
+      <Stack.Screen options={{ headerTitle: `Apunte  ${headerTitle}` }} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"

@@ -68,7 +68,7 @@ export default function IndexHome() {
           </Link>
         ))}
       </View>
-      <Pressable
+      {/* <Pressable
         className="self-center mt-10 px-1 py-2 rounded bg-fuchsia-400"
         onPress={async () => {
           await removeJWT();
@@ -91,7 +91,7 @@ export default function IndexHome() {
         onPress={() => console.log(user)}
       >
         <Text>LOG user</Text>
-      </Pressable>
+      </Pressable> */}
     </ScrollView>
   );
 }

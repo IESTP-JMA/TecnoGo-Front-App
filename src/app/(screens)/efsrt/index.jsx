@@ -7,6 +7,7 @@ import { useGetEFSRT } from "@/hooks/useEFSRTMutation";
 import { useSnackBar } from "@/contexts/SnackBarContext";
 import LoadingSnackBar from "@components/LoadingSnackBar";
 import SnackBar from "@components/SnackBar";
+import { useEfsrtContext } from "@/contexts/efsrtContext";
 
 const ModuleCard = ({ label, isActive, hasUuid, progress, onPress }) => (
   <Pressable
@@ -42,6 +43,7 @@ const ModuleCard = ({ label, isActive, hasUuid, progress, onPress }) => (
 
 export default function InicioEfsrt() {
   const router = useRouter();
+  const { setModuleNumber } = useEfsrtContext();
   const { message } = useSnackBar();
   const { data, isFetching } = useGetEFSRT();
   const [moduleData, setModuleData] = useState({
@@ -62,11 +64,11 @@ export default function InicioEfsrt() {
   const handleModulePress = (module) => {
     const cdpUuid = moduleData[`module_${module.number}ProcedureUuid`];
     if (cdpUuid) {
+      setModuleNumber(cdpUuid);
       router.push({
         pathname: "efsrt/module/information",
         params: {
           headerTitle: module.label,
-          procedure_CDP_uuid: cdpUuid,
         },
       });
     }
@@ -94,9 +96,9 @@ export default function InicioEfsrt() {
   }
 
   const modules = [
-    { number: 1, label: "I Modulo" },
-    { number: 2, label: "II Modulo" },
-    { number: 3, label: "III Modulo" },
+    { number: 1, label: "Modulo I" },
+    { number: 2, label: "Modulo II" },
+    { number: 3, label: "Modulo III" },
   ];
 
   return (

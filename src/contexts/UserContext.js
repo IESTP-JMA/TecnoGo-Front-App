@@ -4,8 +4,8 @@ const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState({
-    firstNames: "Ruth Marina",
-    lastNames: "Castillo Huamani",
+    firstNames: "Cargando ...",
+    lastNames: "Cargando ...",
     email: "ejemplo@gmail.com",
     phoneNumber: "932002001",
     professionalCareer: "APSTI",
