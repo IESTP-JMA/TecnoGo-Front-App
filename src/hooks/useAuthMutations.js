@@ -44,7 +44,7 @@ export function useSendOTP({ onSuccess } = {}) {
   });
 }
 
-export function useVerifyOTP() {
+export function useVerifyOTP(onSuccess) {
   return useMutation({
     mutationFn: ({ email, otpId, otp }) => {
       return customClient("/verify-otp", {
@@ -52,25 +52,9 @@ export function useVerifyOTP() {
         body: { email, otpId, otp },
       });
     },
-    onSuccess: async (response) => {
-      if (!response) return;
-      const dataJson = await response.json();
-      console.log("dataJson", dataJson);
-      if (dataJson.isValid) {
-        const token = response.headers.get("authorization");
-        if (token) {
-          const jwtToken = token.replace("Bearer ", "");
-          await saveJWT(jwtToken);
-          router.replace("/home");
-        } else {
-          console.log("isValid but Token not Found");
-        }
-      } else {
-        console.log(dataJson.message);
-      }
-    },
+    onSuccess,
     onError: (error) => {
       console.error("Error al verificar OTP:", error);
-    },
+    }
   });
 }

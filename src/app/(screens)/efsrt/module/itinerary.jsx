@@ -113,7 +113,7 @@ export default function AsistenciaCalendario() {
 
       const dayMarking = {};
       // Ignorar sábados (6) y domingos (0)
-      if (dayOfWeek !== 6 && dayOfWeek !== 5) {
+      if (dayOfWeek !== 6 && dayOfWeek !== 0) {
         dayMarking.color = "#D1FAE5";
 
         if (dateString === startDate) {

@@ -15,8 +15,8 @@ import { useAuth } from "../../contexts/AuthContext";
 import { ArrowLeft } from "lucide-react-native";
 import { useVerifyOTP } from "@/hooks/useAuthMutations";
 import { LoaderAnimated } from "@components/IconsAnimated";
+import { saveJWT } from "@/utils/jwtStorage";
 
-/* global clearTimeout setTimeout*/
 export default function OTP() {
   const { login } = useAuth();
   const { email, otpId } = useLocalSearchParams();
@@ -27,7 +27,21 @@ export default function OTP() {
   const [isExpired, setIsExpired] = useState(false);
   const router = useRouter();
   const timerRef = useRef(null);
-  const { mutate, isPending } = useVerifyOTP();
+  const { mutate, isPending } = useVerifyOTP(async (response) => {
+    if (!response) return;
+    const dataJson = await response.json();
+    console.log("dataJson", dataJson);
+    if (dataJson.isValid) {
+      const token = response.headers.get("authorization");
+      if (token) {
+        const jwtToken = token.replace("Bearer ", "");
+        await saveJWT(jwtToken);
+        router.replace("/home");
+      }
+    } else {
+      console.log(dataJson.message);
+    }
+  })
 
   useEffect(() => {
     startTimer();
@@ -117,10 +131,11 @@ export default function OTP() {
             <Text className="text-center text-3xl font-SenSemiBold text-green-800 mt-4">
               Verificación OTP
             </Text>
-            <Text className="font-SenRegular text-gray-600 text-center my-6">
-              Ingrese el código de 6 dígitos enviado a{" "}
-              <Text className="font-SenMedium  text-emerald-800">{email}</Text>
-            </Text>
+            <View className="my-6">
+              <Text className="font-SenRegular text-gray-600 text-center mb-1">Ingrese el código de 6 dígitos enviado a:</Text>
+              <Text className="font-SenMedium  text-emerald-800 text-base text-center">{email}</Text>
+              
+            </View>
             <View className="flex-row justify-center gap-1.5">
               {otp.map((digit, index) => (
                 <TextInput

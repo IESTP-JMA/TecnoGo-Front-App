@@ -40,7 +40,7 @@ export default function LoginModal() {
           params: { email, otpId: dataJson.otpId },
         });
       } else {
-        setErrorMessage("Error al generar el OTP");
+        setErrorMessage(data.message || "Error al verficar el Correo");
         setShowError(true);
       }
     },
