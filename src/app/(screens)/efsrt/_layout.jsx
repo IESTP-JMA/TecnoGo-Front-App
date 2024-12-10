@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
 import { SnackBarProvider } from "@/contexts/SnackBarContext";
 import { EfsrtProvider } from "@/contexts/efsrtContext";
@@ -7,7 +6,6 @@ export default function EfsrtLaoyout() {
   return (
     <EfsrtProvider>
       <SnackBarProvider>
-        <StatusBar backgroundColor="#064E3B" barStyle="light-content" />
         <Stack
           screenOptions={{
             headerTitle: "Mis EFSRT",

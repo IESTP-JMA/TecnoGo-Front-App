@@ -8,9 +8,13 @@
     "userInterfaceStyle": "automatic",
     "scheme": "tecnogo",
     "splash": {
+      "backgroundColor": "#006634",
       "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#006634"
+      "resizeMode":"cover"
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#064E3B",
+      "barStyle": "light-content"
     },
     "ios": {
       "supportsTablet": true
