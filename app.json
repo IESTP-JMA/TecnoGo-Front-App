@@ -2,7 +2,7 @@
   "expo": {
     "name": "TecnoGO",
     "slug": "tecno-go",
-    "version": "1.0.0",
+    "version": "1.0.0-alpha",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -17,14 +17,17 @@
       "barStyle": "light-content"
     },
     "ios": {
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 1,
+      
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FEF9B0"
       },
-      "package": "com.ietsppjma.tecnogo"
+      "package": "com.iestpjma.tecnogo"
     },
     "plugins": [
       "expo-router",
