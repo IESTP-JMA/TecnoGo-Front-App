@@ -1,67 +1,67 @@
-import { View, Text, Pressable, ScrollView } from "react-native";
-import { Link } from "expo-router";
+import { View, Text, Pressable, ScrollView } from 'react-native'
+import { Link } from 'expo-router'
 import {
   CalendarIcon,
   DocumentCheckIcon,
   DocumentPlusIcon,
-  UserFolderIcon,
-} from "@components/Icons";
-import { getJWT, removeJWT } from "@/utils/jwtStorage";
-import { useGetUser } from "@/hooks/useUserMutation";
-import { useUser } from "@/contexts/UserContext";
+  UserFolderIcon
+} from '@components/Icons'
+import { getJWT, removeJWT } from '@/utils/jwtStorage'
+import { useGetUser } from '@/hooks/useUserMutation'
+import { useUser } from '@/contexts/UserContext'
 
-export default function IndexHome() {
-  const { user } = useUser();
-  const { isPending } = useGetUser();
+export default function IndexHome () {
+  const { user } = useUser()
+  const { isPending } = useGetUser()
 
   return (
-    <ScrollView className="flex-1 bg-[#e5f5f3] px-4 py-6">
-      <View className="flex-row flex-wrap justify-evenly">
+    <ScrollView className='flex-1 bg-[#e5f5f3] px-4 py-6'>
+      <View className='flex-row flex-wrap justify-evenly'>
         {[
           {
             isDisabled: false,
-            icon: "document-text-outline",
-            text: "Iniciar un nuevo tramite",
-            path: "tramites/initiate",
-            IconComponent: DocumentPlusIcon,
+            icon: 'document-text-outline',
+            text: 'Iniciar un nuevo tramite',
+            path: 'tramites/initiate',
+            IconComponent: DocumentPlusIcon
           },
           {
             isDisabled: false,
-            icon: "folder-outline",
-            text: "Mis EFSRT",
-            path: "efsrt",
-            IconComponent: UserFolderIcon,
+            icon: 'folder-outline',
+            text: 'Mis EFSRT',
+            path: 'efsrt',
+            IconComponent: UserFolderIcon
           },
           {
             isDisabled: true,
-            icon: "calendar-outline",
-            text: "Mis Horarios",
-            path: "tramites/start",
+            icon: 'calendar-outline',
+            text: 'Mis Horarios',
+            path: 'tramites/start',
 
-            IconComponent: CalendarIcon,
+            IconComponent: CalendarIcon
           },
           {
             isDisabled: true,
-            icon: "folder-outline",
-            text: "Mis calificaciones",
-            path: "tramites/start",
+            icon: 'folder-outline',
+            text: 'Mis calificaciones',
+            path: 'tramites/start',
 
-            IconComponent: DocumentCheckIcon,
-          },
+            IconComponent: DocumentCheckIcon
+          }
         ].map((item, index) => (
           <Link
             key={index}
             href={item.path}
-            className="bg-white w-[40%]"
+            className='bg-white w-[40%]'
             asChild
           >
             <Pressable
               disabled={item.isDisabled}
-              className={`${item.isDisabled ? "opacity-50" : "opacity-100 shadow"}  rounded-lg p-4 items-center justify-between mb-4 active:scale-95`}
+              className={`${item.isDisabled ? 'opacity-50' : 'opacity-100 shadow'}  rounded-lg p-4 items-center justify-between mb-4 active:scale-95`}
             >
-              <item.IconComponent size={72} accentColor="#9f1239" />
+              <item.IconComponent size={72} accentColor='#9f1239' />
 
-              <Text className="flex-1 text-md text-center text-[#005e54] justify-center">
+              <Text className='flex-1 text-md text-center text-[#005e54] justify-center'>
                 {item.text}
               </Text>
             </Pressable>
@@ -93,5 +93,5 @@ export default function IndexHome() {
         <Text>LOG user</Text>
       </Pressable> */}
     </ScrollView>
-  );
+  )
 }

@@ -1,30 +1,30 @@
-import { Stack } from "expo-router";
-import { SnackBarProvider } from "@/contexts/SnackBarContext";
-import { EfsrtProvider } from "@/contexts/efsrtContext";
+import { Stack } from 'expo-router'
+import { SnackBarProvider } from '@/contexts/SnackBarContext'
+import { EfsrtProvider } from '@/contexts/efsrtContext'
 
-export default function EfsrtLaoyout() {
+export default function EfsrtLaoyout () {
   return (
     <EfsrtProvider>
       <SnackBarProvider>
         <Stack
           screenOptions={{
-            headerTitle: "Mis EFSRT",
-            headerTitleAlign: "center",
+            headerTitle: 'Mis EFSRT',
+            headerTitleAlign: 'center',
             headerTitleStyle: {
-              fontFamily: "SenSemiBold",
-              color: "#064E3B",
-              fontSize: 20,
+              fontFamily: 'SenSemiBold',
+              color: '#064E3B',
+              fontSize: 20
             },
-            headerStyle: { backgroundColor: "#E6F2EC" },
+            headerStyle: { backgroundColor: '#E6F2EC' },
             headerShadowVisible: false,
-            animation: "fade",
+            animation: 'fade'
           }}
         >
-          <Stack.Screen name="module" />
-          <Stack.Screen name="chats/index" />
-          <Stack.Screen name="apuntes/index" />
+          <Stack.Screen name='module' />
+          <Stack.Screen name='chats/index' />
+          <Stack.Screen name='apuntes/index' />
         </Stack>
       </SnackBarProvider>
     </EfsrtProvider>
-  );
+  )
 }

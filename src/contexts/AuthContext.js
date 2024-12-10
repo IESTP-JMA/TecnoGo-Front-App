@@ -1,52 +1,52 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { createContext, useState, useContext, useEffect } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const AuthContext = createContext();
+const AuthContext = createContext()
 
-export function AuthProvider({ children }) {
+export function AuthProvider ({ children }) {
   const [userData, setUserData] = useState({
-    firstNames: "Ruth Marina",
-    lastNames: "Castillo Huamani",
-    email: "ejemplo@gmail.com",
-    phoneNumber: "932002001",
-    professionalCareer: "APSTI",
-    semester: "IV",
-    birthDate: "22/05/2006",
-    dni: "00000001",
-    uriImage: null,
-  });
-  const [uriImage, setUriImage] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [otpId, setOtpId] = useState();
-  const [isLogued, setIsLogued] = useState();
+    firstNames: 'Ruth Marina',
+    lastNames: 'Castillo Huamani',
+    email: 'ejemplo@gmail.com',
+    phoneNumber: '932002001',
+    professionalCareer: 'APSTI',
+    semester: 'IV',
+    birthDate: '22/05/2006',
+    dni: '00000001',
+    uriImage: null
+  })
+  const [uriImage, setUriImage] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [otpId, setOtpId] = useState()
+  const [isLogued, setIsLogued] = useState()
 
   useEffect(() => {
     // Check for the user token when the app loads
-    checkUserToken();
-  }, []);
+    checkUserToken()
+  }, [])
 
-  async function checkUserToken() {
+  async function checkUserToken () {
     try {
-      const userToken = await AsyncStorage.getItem("userToken");
+      const userToken = await AsyncStorage.getItem('userToken')
       if (userToken) {
         // If a token is found, assume the user is logged in
-        setUserData({ token: userToken });
+        setUserData({ token: userToken })
       }
     } catch (error) {
-      console.error("Failed to get user token", error);
+      console.error('Failed to get user token', error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 
   const logout = async () => {
     try {
-      await AsyncStorage.removeItem("userToken");
-      setUserData(null);
+      await AsyncStorage.removeItem('userToken')
+      setUserData(null)
     } catch (error) {
-      console.error("Failed to remove user token", error);
+      console.error('Failed to remove user token', error)
     }
-  };
+  }
 
   return (
     <AuthContext.Provider
@@ -58,14 +58,14 @@ export function AuthProvider({ children }) {
         uriImage,
         setUriImage,
         otpId,
-        setOtpId,
+        setOtpId
       }}
     >
       {children}
     </AuthContext.Provider>
-  );
+  )
 }
 
-export function useAuth() {
-  return useContext(AuthContext);
+export function useAuth () {
+  return useContext(AuthContext)
 }

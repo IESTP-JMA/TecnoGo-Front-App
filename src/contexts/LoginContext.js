@@ -1,10 +1,10 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from 'react'
 
-const LoginContext = createContext();
+const LoginContext = createContext()
 
-export function LoginProvider({ children }) {
-  const [isLoginVisible, setLoginVisible] = useState(true);
-  const [isOTPVisible, setOTPVisible] = useState(false); // Estado para OTP
+export function LoginProvider ({ children }) {
+  const [isLoginVisible, setLoginVisible] = useState(true)
+  const [isOTPVisible, setOTPVisible] = useState(false) // Estado para OTP
 
   return (
     <LoginContext.Provider
@@ -12,9 +12,9 @@ export function LoginProvider({ children }) {
     >
       {children}
     </LoginContext.Provider>
-  );
+  )
 }
 
-export function useLoginContext() {
-  return useContext(LoginContext);
+export function useLoginContext () {
+  return useContext(LoginContext)
 }

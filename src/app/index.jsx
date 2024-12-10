@@ -1,20 +1,20 @@
-import { Redirect } from "expo-router";
-import { useAuth } from "@/contexts/AuthContext";
-import { useEffect, useState } from "react";
-import { ActivityIndicator, View } from "react-native";
-import { hasJWT } from "@/utils/jwtStorage";
+import { Redirect } from 'expo-router'
+import { useAuth } from '@/contexts/AuthContext'
+import { useEffect, useState } from 'react'
+import { ActivityIndicator, View } from 'react-native'
+import { hasJWT } from '@/utils/jwtStorage'
 
-export default function IndexRoot() {
-  const { isLoading } = useAuth();
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+export default function IndexRoot () {
+  const { isLoading } = useAuth()
+  const [isLoggedIn, setIsLoggedIn] = useState(null)
 
   useEffect(() => {
-    checkLoginStatus();
-  }, [isLoggedIn]);
+    checkLoginStatus()
+  }, [isLoggedIn])
 
-  async function checkLoginStatus() {
-    const userHasJWT = await hasJWT();
-    setIsLoggedIn(userHasJWT);
+  async function checkLoginStatus () {
+    const userHasJWT = await hasJWT()
+    setIsLoggedIn(userHasJWT)
   }
 
   if (!isLoading) {
@@ -26,15 +26,15 @@ export default function IndexRoot() {
   }
 
   if (isLoggedIn) {
-    console.log("isLoggedIn redirect /home");
-    return <Redirect href="/home" />;
+    console.log('isLoggedIn redirect /home')
+    return <Redirect href='/home' />
   } else if (isLoggedIn === null) {
     return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="black" />
+      <View className='flex-1 justify-center items-center'>
+        <ActivityIndicator size='large' color='black' />
       </View>
-    );
+    )
   }
-  return <Redirect href="/login" />;
+  return <Redirect href='/login' />
   //  else return null; // O puedes devolver un componente alternativo
 }

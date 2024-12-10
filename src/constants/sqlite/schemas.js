@@ -1,4 +1,4 @@
-export const DATABASE_NAME = "app.db";
+export const DATABASE_NAME = 'app.db'
 
 export const SCHEMAS = {
   USERS: `
@@ -16,5 +16,5 @@ export const SCHEMAS = {
       day TEXT NOT NULL,
       activity TEXT
     )
-  `,
-};
+  `
+}

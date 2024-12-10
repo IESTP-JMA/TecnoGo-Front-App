@@ -1,45 +1,45 @@
-import { Calendar, MapPin } from "lucide-react-native";
+import { Calendar, MapPin } from 'lucide-react-native'
 
 export const ProcedureTypes = {
-  "PROCEDURE-CDP": {
+  'PROCEDURE-CDP': {
     inputs: [
       {
-        id: "placeOfExecution",
-        label: "Lugar de Ejecucion",
+        id: 'placeOfExecution',
+        label: 'Lugar de Ejecucion',
         icon: MapPin,
-        type: "text",
+        type: 'text'
       },
       {
-        id: "startDate",
-        label: "Fecha de Inicio",
+        id: 'startDate',
+        label: 'Fecha de Inicio',
         icon: Calendar,
-        type: "date",
-      },
-    ],
+        type: 'date'
+      }
+    ]
   },
-  "PROCEDURE-CDE": {
-    inputs: [],
+  'PROCEDURE-CDE': {
+    inputs: []
   },
-  "PROCEDURE-CAWS": {
+  'PROCEDURE-CAWS': {
     inputs: [
       {
-        id: "startDate",
-        label: "Fecha de Inicio",
+        id: 'startDate',
+        label: 'Fecha de Inicio',
         icon: Calendar,
-        type: "date",
+        type: 'date'
       },
       {
-        id: "endDate",
-        label: "Nivel de Estudios",
+        id: 'endDate',
+        label: 'Nivel de Estudios',
         icon: null,
-        type: "text",
+        type: 'text'
       },
       {
-        id: "some",
-        label: "rason",
+        id: 'some',
+        label: 'rason',
         icon: null,
-        type: "text",
-      },
-    ],
-  },
-};
+        type: 'text'
+      }
+    ]
+  }
+}

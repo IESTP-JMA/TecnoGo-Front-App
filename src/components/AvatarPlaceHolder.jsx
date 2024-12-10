@@ -1,13 +1,13 @@
-import { Text, View } from "react-native";
-import { useUser } from "@/contexts/UserContext";
+import { Text, View } from 'react-native'
+import { useUser } from '@/contexts/UserContext'
 
-export default function AvatarPlaceHolder({
+export default function AvatarPlaceHolder ({
   customStyle,
   customClass,
   customTextStyle,
-  customTextClass,
+  customTextClass
 }) {
-  const { user } = useUser();
+  const { user } = useUser()
 
   return (
     <View
@@ -21,5 +21,5 @@ export default function AvatarPlaceHolder({
         {user.firstNames[0].toUpperCase() + user.lastNames[0].toUpperCase()}
       </Text>
     </View>
-  );
+  )
 }

@@ -1,11 +1,11 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext } from 'react'
 
-const ProceduresContext = createContext();
+const ProceduresContext = createContext()
 
-export function ProceduresProvider({ children }) {
-  const [proceduresInProgress, setProceduresInProgress] = useState([]);
-  const [proceduresResponse, setProceduresResponse] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
+export function ProceduresProvider ({ children }) {
+  const [proceduresInProgress, setProceduresInProgress] = useState([])
+  const [proceduresResponse, setProceduresResponse] = useState([])
+  const [modalVisible, setModalVisible] = useState(false)
 
   return (
     <ProceduresContext.Provider
@@ -15,14 +15,14 @@ export function ProceduresProvider({ children }) {
         proceduresResponse,
         setProceduresResponse,
         modalVisible,
-        setModalVisible,
+        setModalVisible
       }}
     >
       {children}
     </ProceduresContext.Provider>
-  );
+  )
 }
 
-export function useProcedures() {
-  return useContext(ProceduresContext);
+export function useProcedures () {
+  return useContext(ProceduresContext)
 }

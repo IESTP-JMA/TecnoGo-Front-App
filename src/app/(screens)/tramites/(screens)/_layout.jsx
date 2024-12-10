@@ -1,14 +1,14 @@
-import { ProceduresProvider } from "@/contexts/ProceduresContext";
-import { Stack } from "expo-router";
-import NavBar from "@components/NavBar";
+import { ProceduresProvider } from '@/contexts/ProceduresContext'
+import { Stack } from 'expo-router'
+import NavBar from '@components/NavBar'
 
 const tabs = [
-  { id: "initiate", title: "Iniciar" },
-  { id: "progress", title: "Progreso" },
-  { id: "response", title: "Respuesta" },
-];
+  { id: 'initiate', title: 'Iniciar' },
+  { id: 'progress', title: 'Progreso' },
+  { id: 'response', title: 'Respuesta' }
+]
 
-export default function LayoutProcedure() {
+export default function LayoutProcedure () {
   return (
     <ProceduresProvider>
       <NavBar tabs={tabs} />
@@ -16,13 +16,13 @@ export default function LayoutProcedure() {
       <Stack
         screenOptions={{
           headerShown: false,
-          animation: "slide_from_right",
+          animation: 'slide_from_right'
         }}
       >
-        <Stack.Screen name="initiate" />
-        <Stack.Screen name="progress" />
-        <Stack.Screen name="response" />
+        <Stack.Screen name='initiate' />
+        <Stack.Screen name='progress' />
+        <Stack.Screen name='response' />
       </Stack>
     </ProceduresProvider>
-  );
+  )
 }

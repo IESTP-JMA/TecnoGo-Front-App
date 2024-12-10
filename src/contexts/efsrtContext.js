@@ -1,10 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from 'react'
 
-const efsrtContext = createContext();
+const efsrtContext = createContext()
 
-export function EfsrtProvider({ children }) {
-  const [moduleNumber, setModuleNumber] = useState(null);
-  const [moduleData, setModuleData] = useState();
+export function EfsrtProvider ({ children }) {
+  const [moduleNumber, setModuleNumber] = useState(null)
+  const [moduleData, setModuleData] = useState()
 
   return (
     <efsrtContext.Provider
@@ -12,9 +12,9 @@ export function EfsrtProvider({ children }) {
     >
       {children}
     </efsrtContext.Provider>
-  );
+  )
 }
 
-export function useEfsrtContext() {
-  return useContext(efsrtContext);
+export function useEfsrtContext () {
+  return useContext(efsrtContext)
 }
