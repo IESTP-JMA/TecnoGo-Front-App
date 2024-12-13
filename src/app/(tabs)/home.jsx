@@ -68,30 +68,30 @@ export default function IndexHome () {
           </Link>
         ))}
       </View>
-      {/* <Pressable
-        className="self-center mt-10 px-1 py-2 rounded bg-fuchsia-400"
+      <Pressable
+        className='self-center mt-10 px-1 py-2 rounded bg-fuchsia-400'
         onPress={async () => {
-          await removeJWT();
-          console.log("JWT deleted");
+          await removeJWT()
+          console.log('JWT deleted')
         }}
       >
         <Text>Delete JWT</Text>
       </Pressable>
       <Pressable
-        className="self-center mt-1 px-1 py-2 rounded bg-fuchsia-400"
+        className='self-center mt-1 px-1 py-2 rounded bg-fuchsia-400'
         onPress={async () => {
-          const token = await getJWT();
-          console.log(token);
+          const token = await getJWT()
+          console.log(token)
         }}
       >
         <Text>Log JWT</Text>
       </Pressable>
       <Pressable
-        className="self-center mt-10 px-1 py-2 rounded bg-fuchsia-400"
+        className='self-center mt-10 px-1 py-2 rounded bg-fuchsia-400'
         onPress={() => console.log(user)}
       >
         <Text>LOG user</Text>
-      </Pressable> */}
+      </Pressable>
     </ScrollView>
   )
 }
