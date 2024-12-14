@@ -1,6 +1,5 @@
-# TecnoGo
 <img style='background-color: black; display: block;
-    margin: 0 auto; border-radius: 20px; justify-content:center' src="./assets/adaptive-icon.png" alt="Logo Tecno Go" width="120">
+    margin: 0 auto; border-radius: 25px;' src="./assets/adaptive-icon.png" alt="Logo Tecno Go" width="120">
 
 **Tecno Go** es una aplicación móvil diseñada para ayudar a los estudiantes en la gestión y ejecución de sus **Experiencias Formativas en Situaciones Reales de Trabajo**. La aplicación busca simplificar el desarrollo y  seguimiento, permitiendo a los estudiantes y asesores mantenerse organizados y conectados.
 
