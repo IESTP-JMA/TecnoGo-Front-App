@@ -1,10 +1,8 @@
 # TecnoGo
-<img src="./assets/new-adaptive-icon.png" alt="Logo Tecno Go" width="120">
+<img style='background-color: black; display: block;
+    margin: 0 auto; border-radius: 20px; justify-content:center' src="./assets/adaptive-icon.png" alt="Logo Tecno Go" width="120">
 
-(New app icons)
-https://www.figma.com/design/oPMOv3YR9WfkKMSRNw2yUH/Expo-App-Icon-%26-Splash-(Community)?node-id=1-1357&t=Jnwo7bXYs7dsrInO-1
-
-**TecnoGo** es una aplicación móvil diseñada para ayudar a los estudiantes de una institución educativa en la gestión y ejecución de sus **Experiencias Formativas en Situaciones Reales de Trabajo**. La aplicación busca simplificar la planificación, seguimiento, permitiendo a los estudiantes y asesores mantenerse organizados y conectados.
+**Tecno Go** es una aplicación móvil diseñada para ayudar a los estudiantes en la gestión y ejecución de sus **Experiencias Formativas en Situaciones Reales de Trabajo**. La aplicación busca simplificar el desarrollo y  seguimiento, permitiendo a los estudiantes y asesores mantenerse organizados y conectados.
 
 ## 🚀 Tecnologías
 
