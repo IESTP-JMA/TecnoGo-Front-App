@@ -13,7 +13,7 @@ import {
   Cake,
   IdCard
 } from 'lucide-react-native'
-import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker'
+import { launchImageLibraryAsync } from 'expo-image-picker'
 import AvatarPlaceHolder from '../../components/AvatarPlaceHolder'
 import { useImageUpload } from '@/hooks/useImageUpload '
 import { useUser } from '@/contexts/UserContext'
@@ -90,7 +90,7 @@ export default function Profile () {
 
   const handleUpload = async () => {
     const result = await launchImageLibraryAsync({
-      mediaTypes: MediaTypeOptions.Images,
+      mediaTypes: 'images',
       quality: 1,
       allowsEditing: true,
       aspect: [1, 1],
