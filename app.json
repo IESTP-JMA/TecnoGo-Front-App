@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "TecnoGO",
+    "name": "Tecno Go",
     "slug": "tecno-go",
     "version": "1.0.0-alpha",
     "orientation": "portrait",
@@ -8,8 +8,8 @@
     "userInterfaceStyle": "automatic",
     "scheme": "tecnogo",
     "splash": {
-      "backgroundColor": "#006634",
       "image": "./assets/splash.png",
+      "backgroundColor": "#064E3B",
       "resizeMode":"cover"
     },
     "androidStatusBar": {
@@ -22,7 +22,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#881337"
+        "backgroundColor": "#000000"
       },
       "package": "com.iestpjma.tecnogo"
     },
