@@ -1,92 +1,100 @@
-import { Pressable, ScrollView, Text, View, Image } from 'react-native'
-import { useState, useLayoutEffect, useCallback } from 'react'
-import { useFocusEffect, useNavigation } from 'expo-router'
-import EditButton from '@components/EditButton'
-import StyledTextInput from '@components/form/StyledTextInput'
+import { Pressable, ScrollView, Text, View } from 'react-native'
+import React, { useState } from 'react'
 import {
   Camera,
-  User,
   Mail,
   Phone,
   GraduationCap,
   Calendar,
   Cake,
-  IdCard
+  IdCard,
+  Pencil
 } from 'lucide-react-native'
 import { launchImageLibraryAsync } from 'expo-image-picker'
-import AvatarPlaceHolder from '../../components/AvatarPlaceHolder'
 import { useImageUpload } from '@/hooks/useImageUpload '
 import { useUser } from '@/contexts/UserContext'
 import { useUpdateUser } from '@/hooks/useUserMutation'
+import BottomUpModal from '@components/BottomUpModal'
+import { Snackbar, ProgressBar } from 'react-native-paper'
+import AvatarPlaceHolder from '@components/AvatarPlaceHolder'
+import { Image } from 'expo-image'
+import { Blurhash } from 'react-native-blurhash'
 
-const IconWithLabel = ({ icon: Icon, label }) => {
-  return (
-    <View className='flex-row items-center mb-1'>
-      <Icon color='#065F46' />
-      <Text className='text-base font-SenBold ml-1 text-emerald-900'>
-        {label}
-      </Text>
-    </View>
-  )
-}
+const profileFields = [
+  {
+    icon: Mail,
+    label: 'Correo Electrónico',
+    key: 'email',
+    isEditable: true
+  },
+  {
+    icon: Phone,
+    label: 'Número de Teléfono',
+    key: 'phoneNumber',
+    isEditable: true
+  },
+  {
+    icon: Cake,
+    label: 'Fecha de Nacimiento',
+    key: 'birthDate',
+    isEditable: false
+  },
+  {
+    icon: IdCard,
+    label: 'DNI',
+    key: 'dni',
+    isEditable: false
+  }
+]
 
 const ValueDisplay = ({ value }) => {
   return (
-    <View className='h-12 mt-0.5 mb-1 '>
-      <Text className='self-start text-lg font-SenMedium ml-6  text-gray-700 border-b border-emerald-900'>
-        {value || 'No establecido'}
-      </Text>
+    <Text className='self-start text-lg font-SenMedium text-gray-800'>
+      {value || 'No establecido'}
+    </Text>
+  )
+}
+
+function FieldDisplay ({ icon: Icon, label, value, isEditable, onEdit }) {
+  return (
+    <View className='flex-row items-center gap-2'>
+      <Icon color='#022c22' size={26} />
+      <Pressable className='flex-1 flex-row items-center' onPress={onEdit}>
+        <View className='flex-1 ml-3'>
+          <Text className='text-base font-SenBold text-emerald-900'>
+            {label}
+          </Text>
+          <ValueDisplay value={value} />
+        </View>
+        {isEditable && <Pencil color='#881337' size={20} />}
+      </Pressable>
     </View>
   )
 }
 
+const Divider = () => {
+  return <View className='bg-gray-200 h-0.5 mx-3 rounded-full' />
+}
+
 export default function Profile () {
-  const { user, setUser } = useUser()
-  const [isEditing, setIsEditing] = useState(false)
-  const [tempData, setTempData] = useState(user)
-  const navigation = useNavigation()
+  const [blurhash, setBlurhash] = useState()
+  const [nameField, setNameField] = useState('')
+  const [nameKey, setNameKey] = useState('')
+  const [editValue, setEditValue] = useState('')
+  const [originalValue, setOriginalValue] = useState('')
+  const [messageSnackbar, setMessageSnackbar] = useState('')
+  const [visibleSnackbar, setVisibleSnackbar] = useState(false)
+  const [isVisibleModal, setIsVisibleModal] = useState(false)
+  const { user } = useUser()
   const {
     mutate: updateUser,
-    isPending: isPendingUser,
-    error: errorUser
+    isPending: isPendingUser
   } = useUpdateUser()
-  const { mutate, isPending, error } = useImageUpload((data) => {
-    console.log('data.display_url -> ', data.display_url)
-    updateUser({ ...user, urlImage: data.display_url })
+
+  const { mutate, isPending } = useImageUpload((data) => {
+    console.log('data.display_url -> ', data.display_url, blurhash)
+    updateUser({ urlImage: data.display_url, blurhash })
   })
-  const [isLoadingImage, setIsLoadingImage] = useState(true)
-
-  useFocusEffect(
-    useCallback(() => {
-      return () => setIsEditing(false)
-    }, [])
-  )
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <EditButton
-          isEditing={isEditing}
-          onPress={() => {
-            if (isPendingUser) return
-            if (isEditing) {
-              updateUser(tempData)
-              setIsEditing(false)
-            } else {
-              setIsEditing(true)
-            }
-          }}
-        />
-      )
-    })
-  }, [navigation, isEditing, setUser, tempData, isPendingUser, updateUser])
-
-  const updateField = useCallback(
-    (field) => (value) => {
-      setTempData((prev) => ({ ...prev, [field]: value }))
-    },
-    []
-  )
 
   const handleUpload = async () => {
     const result = await launchImageLibraryAsync({
@@ -98,166 +106,141 @@ export default function Profile () {
     })
 
     if (!result.didCancel) {
+      const blurhash = await Blurhash.encode(result.assets[0].uri, 3, 3)
+      setBlurhash(blurhash)
       mutate(result.assets[0].base64)
     }
   }
 
+  function onEdit (label, key) {
+    setNameField(label)
+    setNameKey(key)
+    // Set initial value to current value of the field
+    const currentValue = user[key] || ''
+    setEditValue(currentValue)
+    setOriginalValue(currentValue)
+    setIsVisibleModal(true)
+  }
+
+  function handleSave () {
+    updateUser({
+      [nameKey]: editValue
+    }, {
+      onSuccess: () => {
+        setMessageSnackbar(`${nameField} actualizado exitosamente`)
+        setVisibleSnackbar(true)
+      },
+      onError: () => {
+        setMessageSnackbar(`Error al actualizar ${nameField}`)
+        setVisibleSnackbar(true)
+      }
+    })
+    setIsVisibleModal(false)
+  }
+
   return (
     <>
-      {isPendingUser ||
-        (isPending && (
-          <View className='bg-[#00695c]'>
-            <Text className='animate-pulse text-sm py-0.5 text-center text-white'>
-              Cargando...
+      <View className='bg-[#E6F2EC]'>
+        <ProgressBar visible={isPendingUser || isPending} style={{ backgroundColor: '#E6F2EC' }} indeterminate color='#00695c' />
+      </View>
+      <ScrollView className='bg-[#E6F2EC] px-4 py-3'>
+        <View className='flex-row gap-2.5 mb-6'>
+          <View className='justify-center'>
+            <View className='relative'>
+
+              {user.urlImage && (
+                <Image
+                  source={user.urlImage}
+                  style={{ width: 142, height: 142, borderRadius: 100 }}
+                  placeholder={{ blurhash: user.blurhash }}
+                  contentFit='cover'
+                  transition={1000}
+                />
+              )}
+
+              {!user.urlImage && (
+                <AvatarPlaceHolder
+                  customStyle={{ width: 142, height: 142 }}
+                  customTextClass='text-7xl -mb-3'
+                />
+              )}
+              <Pressable
+                className='bottom-0 right-0 bg-rose-900 rounded-full px-3 py-3 absolute'
+                onPress={handleUpload}
+              >
+                <Camera color='white' size={22} strokeWidth={1.75} />
+              </Pressable>
+            </View>
+          </View>
+          <View className=' flex-1 gap-2.5 justify-center'>
+            <Text className='font-SenSemiBold text-2xl'>
+              {`${user.firstNames} ${user.lastNames}`}
             </Text>
-          </View>
-        ))}
-      <ScrollView className='bg-[#E6F2EC] p-4'>
-        <View className='relative items-center mb-6 h-40 '>
-          {user.urlImage && (
-            <Image
-              source={{ uri: user.urlImage }}
-              style={{ width: 142, height: 142 }}
-              className={`${isLoadingImage ? 'opacity-0' : 'opacity-100'} absolute rounded-full border-2 border-slate-200`}
-              onLoad={() => setIsLoadingImage(false)}
-            />
-          )}
-
-          {(!user.urlImage || isLoadingImage) && (
-            <AvatarPlaceHolder
-              customStyle={{ width: 142, height: 142 }}
-              customClass='border-4 border-slate-200'
-              customTextClass='text-7xl -mb-3'
-            />
-          )}
-
-          <Pressable
-            className='absolute right-[29%] bottom-0 bg-slate-200 rounded-full px-2 py-2'
-            onPress={handleUpload}
-          >
-            <Camera color='#4c0519' size={24} strokeWidth={2.5} />
-          </Pressable>
-        </View>
-
-        {isEditing
-          ? (
-            <View className='flex-1 flex-row justify-between'>
-              <View className='w-[45%]'>
-                <IconWithLabel icon={User} label='Nombres' />
-                <StyledTextInput
-                  value={isEditing ? tempData.firstNames : user.firstNames}
-                  onChangeText={updateField('firstNames')}
-                  isInProfile
-                />
+            <View className='ml-1 gap-1'>
+              <View className='flex-row items-center gap-2'>
+                <GraduationCap color='#4b5563' size={18} />
+                <View>
+                  <Text className='text-xs font-SenRegular text-gray-500'>
+                    Carrera profesional
+                  </Text>
+                  <Text className='font-SenMedium text-gray-600'>
+                    {user.professionalCareer}
+                  </Text>
+                </View>
               </View>
-              <View className='w-1/2'>
-                <IconWithLabel icon={User} label='Apellidos' />
-                <StyledTextInput
-                  value={isEditing ? tempData.lastNames : user.lastNames}
-                  onChangeText={updateField('lastNames')}
-                  isInProfile
-                />
+              <View className='flex-row items-center gap-2'>
+                <Calendar color='#4b5563' size={18} />
+                <View>
+                  <Text className='text-xs font-SenRegular text-gray-500'>
+                    Semestre
+                  </Text>
+                  <Text className='font-SenMedium text-gray-600'>
+                    {user.semester}
+                  </Text>
+                </View>
               </View>
             </View>
-            )
-          : (
-            <View className='flex-col'>
-              <IconWithLabel icon={User} label='Nombre Completo' />
-              <ValueDisplay value={`${user.firstNames} ${user.lastNames}`} />
-            </View>
-            )}
-
-        <IconWithLabel icon={Mail} label='Correo Electronico' />
-        {isEditing
-          ? (
-            <StyledTextInput
-              value={isEditing ? tempData.email : user.email}
-              onChangeText={updateField('email')}
-              keyboardType='email-address'
-              isInProfile
-            />
-            )
-          : (
-            <ValueDisplay value={user.email} />
-            )}
-
-        <IconWithLabel icon={Phone} label='Numero de Telefono' />
-        {isEditing
-          ? (
-            <StyledTextInput
-              value={isEditing ? tempData.phoneNumber : user.phoneNumber}
-              onChangeText={updateField('phoneNumber')}
-              keyboardType='numeric'
-              isInProfile
-            />
-            )
-          : (
-            <ValueDisplay value={user.phoneNumber} />
-            )}
-
-        <View className='flex-row gap-x-6'>
-          <View>
-            <IconWithLabel icon={GraduationCap} label='Carrera Profesional' />
-            {isEditing
-              ? (
-                <StyledTextInput
-                  value={
-                  isEditing
-                    ? tempData.professionalCareer
-                    : user.professionalCareer
-                }
-                  onChangeText={updateField('professionalCareer')}
-                  isInProfile
-                />
-                )
-              : (
-                <ValueDisplay value={user.professionalCareer} />
-                )}
           </View>
 
-          <View>
-            <IconWithLabel icon={Calendar} label='Semestre' />
-            {isEditing
-              ? (
-                <StyledTextInput
-                  value={isEditing ? tempData.semester : user.semester}
-                  onChangeText={updateField('semester')}
-                  isInProfile
-                />
-                )
-              : (
-                <ValueDisplay value={user.semester} />
-                )}
-          </View>
         </View>
 
-        <IconWithLabel icon={Cake} label='Fecha de Nacimiento' />
-        {isEditing
-          ? (
-            <StyledTextInput
-              value={isEditing ? tempData.birthDate : user.birthDate}
-              onChangeText={updateField('birthDate')}
-              isInProfile
-            />
-            )
-          : (
-            <ValueDisplay value={user.birthDate} />
-            )}
+        <View className='ml-2 mr-1 gap-2.5'>
+          {profileFields.map((field, index) => (
+            <React.Fragment key={field.key}>
+              <FieldDisplay
+                icon={field.icon}
+                label={field.label}
+                value={user[field.key]}
+                isEditable={field.isEditable}
+                onEdit={field.isEditable
+                  ? () => onEdit(field.label, field.key)
+                  : undefined}
+              />
+              {index < profileFields.length - 1 && <Divider />}
+            </React.Fragment>
+          ))}
 
-        <IconWithLabel icon={IdCard} label='DNI' />
-        {isEditing
-          ? (
-            <StyledTextInput
-              value={isEditing ? tempData.dni : user.dni}
-              onChangeText={updateField('dni')}
-              keyboardType='numeric'
-              isInProfile
-            />
-            )
-          : (
-            <ValueDisplay value={user.dni} />
-            )}
+        </View>
+
       </ScrollView>
+      <BottomUpModal
+        isVisible={isVisibleModal}
+        onClose={() => setIsVisibleModal(false)}
+        label={nameField}
+        value={editValue}
+        originalValue={originalValue}
+        onChangeText={setEditValue}
+        onSave={handleSave}
+      />
+
+      <Snackbar
+        visible={visibleSnackbar}
+        onDismiss={() => setVisibleSnackbar(false)}
+        onIconPress={() => setVisibleSnackbar(false)}
+
+      >
+        <Text>{messageSnackbar}</Text>
+      </Snackbar>
     </>
   )
 }

@@ -12,7 +12,8 @@ export function UserProvider ({ children }) {
     semester: 'IV',
     birthDate: '22/05/2006',
     dni: '00000001',
-    urlImage: null
+    urlImage: null,
+    blurhash: ''
   })
 
   return (

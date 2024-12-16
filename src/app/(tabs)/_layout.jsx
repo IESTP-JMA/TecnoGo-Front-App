@@ -1,9 +1,10 @@
-import { Text, Image, Pressable } from 'react-native'
+import { Text, Pressable } from 'react-native'
 import { Tabs, useRouter } from 'expo-router'
 import { HomeIcon, HomeIconOutline } from '../../components/Icons'
 import { Bell, User } from 'lucide-react-native'
 import AvatarPlaceHolder from '../../components/AvatarPlaceHolder'
 import { useUser } from '@/contexts/UserContext'
+import { Image } from 'expo-image'
 
 export default function TabsLayout () {
   const router = useRouter()
@@ -20,7 +21,6 @@ export default function TabsLayout () {
         },
         tabBarActiveTintColor: '#881337',
         tabBarStyle: {
-          position: 'absolute',
           paddingBottom: 5,
           paddingTop: 5,
           height: 55,
@@ -48,9 +48,13 @@ export default function TabsLayout () {
               {user.urlImage
                 ? (
                   <Image
-                    className='rounded-full w-14 h-14'
-                    source={{ uri: user.urlImage }}
+                    source={user.urlImage}
+                    style={{ width: 56, height: 56, borderRadius: 100 }}
+                    placeholder={{ blurhash: user.blurhash }}
+                    contentFit='cover'
+                    transition={1000}
                   />
+
                   )
                 : (
                   <AvatarPlaceHolder
