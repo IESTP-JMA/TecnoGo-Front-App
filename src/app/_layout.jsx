@@ -8,6 +8,7 @@ import { UserProvider } from '@/contexts/UserContext'
 import './global.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SQLiteProvider } from 'expo-sqlite'
+import { PaperProvider } from 'react-native-paper'
 
 enableScreens()
 SplashScreen.preventAutoHideAsync()
@@ -44,7 +45,9 @@ export default function RootLayout () {
       <UserProvider>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-            <Slot />
+            <PaperProvider>
+              <Slot />
+            </PaperProvider>
           </AuthProvider>
         </QueryClientProvider>
       </UserProvider>

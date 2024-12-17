@@ -1,7 +1,7 @@
 import { Text, Pressable, View } from 'react-native'
 import { Tabs, useRouter } from 'expo-router'
 import { HomeIcon, HomeIconOutline } from '../../components/Icons'
-import { Bell, User } from 'lucide-react-native'
+import { CircleHelp, User } from 'lucide-react-native'
 import { useUser } from '@/contexts/UserContext'
 import Avatar from '@components/Avatar'
 
@@ -56,8 +56,8 @@ export default function TabsLayout () {
             </View>
           ),
           headerRight: () => (
-            <Pressable className='p-2.5  mr-1'>
-              <Bell color='white' />
+            <Pressable className='p-2.5 mr-2'>
+              <CircleHelp color='white' />
             </Pressable>
           ),
           tabBarIcon: ({ color, focused }) => {
