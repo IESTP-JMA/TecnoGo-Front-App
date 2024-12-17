@@ -49,7 +49,7 @@ export default function Home () {
             <Link
               key={index}
               href={item.path}
-              className={`${item.isDisabled ? 'bg-gray-200 ' : 'bg-white'} w-40`}
+              className={`${item.isDisabled ? 'bg-gray-100' : 'bg-white'} w-40`}
               asChild
             >
               <Pressable
