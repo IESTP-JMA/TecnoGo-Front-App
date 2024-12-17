@@ -16,9 +16,8 @@ import { useUser } from '@/contexts/UserContext'
 import { useUpdateUser } from '@/hooks/useUserMutation'
 import BottomUpModal from '@components/BottomUpModal'
 import { Snackbar, ProgressBar } from 'react-native-paper'
-import AvatarPlaceHolder from '@components/AvatarPlaceHolder'
-import { Image } from 'expo-image'
 import { Blurhash } from 'react-native-blurhash'
+import Avatar from '@components/Avatar'
 
 const profileFields = [
   {
@@ -144,26 +143,10 @@ export default function Profile () {
         <ProgressBar visible={isPendingUser || isPending} style={{ backgroundColor: '#E6F2EC' }} indeterminate color='#00695c' />
       </View>
       <ScrollView className='bg-[#E6F2EC] px-4 py-3'>
-        <View className='flex-row gap-2.5 mb-6'>
+        <View className='flex-row gap-3 mb-6'>
           <View className='justify-center'>
             <View className='relative'>
-
-              {user.urlImage && (
-                <Image
-                  source={user.urlImage}
-                  style={{ width: 142, height: 142, borderRadius: 100 }}
-                  placeholder={{ blurhash: user.blurhash }}
-                  contentFit='cover'
-                  transition={1000}
-                />
-              )}
-
-              {!user.urlImage && (
-                <AvatarPlaceHolder
-                  customStyle={{ width: 142, height: 142 }}
-                  customTextClass='text-7xl -mb-3'
-                />
-              )}
+              <Avatar size={142} textFontSize={52} />
               <Pressable
                 className='bottom-0 right-0 bg-rose-900 rounded-full px-3 py-3 absolute'
                 onPress={handleUpload}
@@ -173,7 +156,7 @@ export default function Profile () {
             </View>
           </View>
           <View className=' flex-1 gap-2.5 justify-center'>
-            <Text className='font-SenSemiBold text-2xl'>
+            <Text style={{ lineHeight: 22 }} className='font-SenSemiBold text-2xl text-emerald-950'>
               {`${user.firstNames} ${user.lastNames}`}
             </Text>
             <View className='ml-1 gap-1'>
@@ -239,7 +222,7 @@ export default function Profile () {
         onIconPress={() => setVisibleSnackbar(false)}
 
       >
-        <Text>{messageSnackbar}</Text>
+        {messageSnackbar}
       </Snackbar>
     </>
   )

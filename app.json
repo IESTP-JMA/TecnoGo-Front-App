@@ -7,11 +7,6 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "scheme": "tecnogo",
-    "splash": {
-      "image": "./assets/splash.png",
-      "backgroundColor": "#064E3B",
-      "resizeMode":"cover"
-    },
     "androidStatusBar": {
       "backgroundColor": "#064E3B",
       "barStyle": "light-content"
@@ -27,8 +22,21 @@
       "package": "com.iestpjma.tecnogo"
     },
     "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#064E3B",
+          "image": "./assets/adaptive-icon.png", 
+          "imageWidth": 300
+        }
+      ],
       "expo-router",
-      "expo-font",
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/OpenDyslexic-Bold.otf"]
+        }
+      ],
       "expo-secure-store",
       "expo-sqlite"
     ],
