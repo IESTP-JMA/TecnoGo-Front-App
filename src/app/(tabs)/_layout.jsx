@@ -21,7 +21,7 @@ export default function TabsLayout () {
           height: 55,
           borderTopLeftRadius: 15,
           borderTopRightRadius: 15
-        // marginHorizontal: 45,
+          // marginHorizontal: 45,
         },
         tabBarLabelStyle: {
           fontFamily: 'SenMedium',
@@ -31,7 +31,7 @@ export default function TabsLayout () {
       }}
     >
       <Tabs.Screen
-        name='home'
+        name='home/index'
         options={{
           headerStyle: {
             backgroundColor: '#064E3B',
@@ -56,7 +56,7 @@ export default function TabsLayout () {
             </View>
           ),
           headerRight: () => (
-            <Pressable className='p-2.5 mr-2'>
+            <Pressable className='p-2.5 mr-2' onPress={() => router.navigate('/(tabs)/home/help')}>
               <CircleHelp color='white' />
             </Pressable>
           ),
@@ -91,6 +91,13 @@ export default function TabsLayout () {
           tabBarIcon: ({ color, focused }) => (
             <User size={28} color={color} fill={focused ? color : 'none'} />
           )
+        }}
+      />
+      <Tabs.Screen
+        name='home/help'
+        options={{
+          href: null,
+          title: 'Ayuda'
         }}
       />
     </Tabs>

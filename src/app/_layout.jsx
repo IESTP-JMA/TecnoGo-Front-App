@@ -9,6 +9,7 @@ import './global.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SQLiteProvider } from 'expo-sqlite'
 import { PaperProvider } from 'react-native-paper'
+import { CREATE_PROFESSIONAL_CAREERS_TABLE, CREATE_USERS_TABLE } from '@/constants/schemes_database'
 
 enableScreens()
 SplashScreen.preventAutoHideAsync()
@@ -25,7 +26,14 @@ export default function RootLayout () {
   })
 
   const handleDbInitialization = async (db) => {
-    // await InitializeDatabaseTables(db);
+    console.log(db)
+    try {
+      await db.execAsync(CREATE_PROFESSIONAL_CAREERS_TABLE)
+      await db.execAsync(CREATE_USERS_TABLE)
+      console.log('Database tables initialized successfully.')
+    } catch (error) {
+      console.error('Error initializing database tables:', error)
+    }
     setDbInitialized(true)
   }
 
